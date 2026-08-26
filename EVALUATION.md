@@ -84,19 +84,28 @@
 
 **Závěr:** Enrichment pomáhá pro Precision@3 (relevantnější top-3), ale zhoršuje MRR (první výsledek méně relevantní).
 
-### 1B.5 Konfigurace
+### 1B.6 GloVe Pre-trained (Varianta 2)
+
+| Metrika | SequenceMatcher | BM25 | GloVe | Hybrid RRF |
+|---------|-----------------|------|-------|------------|
+| **Prec@3** | 0.5800 | 0.5967 | 0.2700 | 0.5767 |
+| **Recall** | 0.6333 | **0.6617** | 0.3200 | 0.6200 |
+| **MRR** | **0.6613** | 0.6397 | 0.2607 | 0.5949 |
+| **Hits** | 38/50 | 40/50 | 20/50 | **42/50** |
+
+**Klíčový nález:** GloVe má 44.9% OOV rate — pre-trained modely na obecném korpusu neznají naše doménové termíny (GT-001, P9, cnc-tools). Hybrid RRF však dosáhl **42/50 hits** (nejlepší dosud).
+
+### 1B.7 Konfigurace
 
 | Parametr | Hodnota |
 |----------|---------|
 | BM25 k1 | 1.5 |
 | BM25 b | 0.75 |
 | RRF k | 60 |
-| Word2Vec vector_size | 100 |
-| Word2Vec window | 5 |
-| Word2Vec epochs | 100 |
-| TF-IDF vocab size | 2,071 |
-| Build time (BM25) | 0.012 s |
-| Build time (Word2Vec) | 0.838 s |
+| GloVe model | glove-wiki-gigaword-100 |
+| GloVe vocab | 400,000 |
+| GloVe dims | 100 |
+| GloVe OOV rate | 44.9% |
 
 ---
 
