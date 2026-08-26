@@ -107,6 +107,27 @@
 | GloVe dims | 100 |
 | GloVe OOV rate | 44.9% |
 
+### 1B.8 Ensemble A+B (BM25 + SequenceMatcher + RRF)
+
+| Metrika | SeqMatcher | BM25 default | BM25+Seq RRF | Ensemble+Seq RRF |
+|---------|------------|--------------|--------------|------------------|
+| **Prec@3** | 0.5800 | 0.5967 | **0.6733** | 0.6533 |
+| **Recall** | 0.6333 | 0.6617 | **0.6883** | 0.6667 |
+| **MRR** | 0.6613 | 0.6397 | **0.7067** | 0.6673 |
+| **Hits** | 38/50 | 40/50 | **43/50** | 43/50 |
+
+**Klíčový nález:** BM25+Seq RRF = **poprvé poráží SequenceMatcher na MRR i Recall** (+6.9% MRR, +8.7% Recall, +16.1% Prec@3).
+
+### 1B.9 Konfigurace Ensemble
+
+| BM25 varianta | k1 | b |
+|---------------|----|----|
+| BM25_k1.0_b0.75 | 1.0 | 0.75 |
+| BM25_k1.5_b0.75 | 1.5 | 0.75 |
+| BM25_k2.0_b0.75 | 2.0 | 0.75 |
+| BM25_k1.5_b0.50 | 1.5 | 0.50 |
+| BM25_k1.5_b0.90 | 1.5 | 0.90 |
+
 ---
 
 ## 2. KLÍČOVÉ NÁLEZY
