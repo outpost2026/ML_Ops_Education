@@ -208,6 +208,24 @@ Autor řeší konkrétní problém (vylepšení retrieval metrik pro GT postmort
 
 **Výsledek:** BM25+Seq RRF — MRR 0.7067, Recall 0.6883, Hits 43/50. **Poprvé poráží SequenceMatcher na MRR i Recall.**
 
+### Krok 6: TF-IDF+SVD (30 MB, ~30 min) ✅ HOTOVO
+
+**Co:** Latent Semantic Analysis přes scikit-learn.
+
+**Výsledek:** Selhalo — MRR 0.5413 (-18.1%). Příliš agresivní pro malý korpus (56.4% explained variance).
+
+### Krok 7: Query Expansion (0 B, ~20 min) ✅ HOTOVO
+
+**Co:** Synonymní slovník pro klíčové termíny.
+
+**Výsledek:** BM25+Expand = -4.9% MRR samostatně. **Exp+Seq RRF = +18.4% Prec@3, +6.9% MRR** — nejlepší Prec@3 dosud.
+
+### Krok 8: Weighted RRF (0 B, ~5 min) ✅ HOTOVO
+
+**Co:** Vážená fúze: α·BM25 + (1-α)·SequenceMatcher.
+
+**Výsledek:** Weighted RRF (0.6/0.4) = +3.8% MRR. Lepší než rovnocenný, horší než standardní RRF.
+
 ---
 
 ## 5. INSPIRACE Z MCP-Jobs: Skills ontology jako retrieval metadata
@@ -312,14 +330,15 @@ MCP-Jobs skills catalog (94 skills, 146 aliases) ukazuje, jak kategorizovat info
 | 1 | ~~Tokenizace + BM25 z stdlib~~ | A | 0 B | ✅ Hotovo |
 | 2 | ~~TF-IDF na numpy~~ | A | 0 B | ✅ Hotovo |
 | 3 | ~~RRF fusion~~ | A | 0 B | ✅ Hotovo |
-| 4 | ~~Benchmark (SequenceMatcher vs BM25 vs TF-IDF vs Hybrid)~~ | A | 0 B | ✅ Hotovo |
+| 4 | ~~Benchmark~~ | A | 0 B | ✅ Hotovo |
 | 5 | ~~Ensemble BM25+Seq RRF~~ | A+B | 0 B | ✅ **VÍTĚZ** (0.71 MRR) |
 | 6 | ~~GloVe pre-trained~~ | D | 128 MB | ✅ Selhalo (44.9% OOV) |
-| 7 | scikit-learn TF-IDF + SVD (latentní sémantika) | - | 30 MB | Plán |
-| 8 | Opravit 30 entries s "see source" root_cause | - | 0 B | Čeká na autorizaci |
-| 9 | Produkční implementace (API endpoint) | - | 0 B | Plán |
+| 7 | ~~TF-IDF+SVD~~ | - | 30 MB | ✅ Selhalo (0.54 MRR) |
+| 8 | ~~Query expansion~~ | - | 0 B | ✅ Exp+Seq RRF (nejlepší Prec@3) |
+| 9 | Opravit 30 entries s "see source" root_cause | - | 0 B | Čeká na autorizaci |
+| 10 | Produkční implementace (API endpoint) | - | 0 B | Plán |
 
 ---
 
-*Výzkumná zpráva + implementační plán. Vítěz: BM25+Seq RRF (MRR=0.7067, Recall=0.6883, Hits=43/50).*
+*Výzkumná zpráva + implementační plán. Vítěz: BM25+Seq RRF (MRR=0.7067). Exp+Seq RRF (Prec@3=0.6867).*
 *PBL princip: Autor řeší vlastní problém a současně si osvojuje ontologii z oblasti ML ops / AI dev.*
