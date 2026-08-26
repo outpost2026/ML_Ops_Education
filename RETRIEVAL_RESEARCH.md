@@ -163,103 +163,50 @@ Autor řeší konkrétní problém (vylepšení retrieval metrik pro GT postmort
 | Stage | Implementace | Závislosti | Download |
 |-------|-------------|------------|----------|
 | BM25 | Z Python stdlib | `collections`, `math` | 0 B |
-| Dense | TF-IDF (numpy) + `fasttext` na Wikipedia subspace | `numpy`, `fasttext` | ~80 MB |
+| Dense | GloVe pre-trained (glove-wiki-gigaword-100) | `gensim`, `numpy` | 128 MB |
 | RRF | 3 řádky kódu | — | 0 B |
 | Rerank | TF-IDF rerank (ad-hoc) | — | 0 B |
-| **Celkem** | | | **~80 MB** |
+| **Celkem** | | | **~128 MB** |
 
-**Proč:** Kompromis — fasttext embeddings jsou lepší než TF-IDF, 80MB se vejde do limitu.
+**Proč:** Kompromis — GloVe embeddings jsou lepší než TF-IDF, 128MB se vejde do limitu.
+**Výsledek:** Selhalo — 44.9% OOV rate, GloVe nezná naše doménové termíny.
 
 ---
 
 ## 4. DETAILNÍ IMPLEMENTAČNÍ PLÁN (Cesta A: Zero-Download)
 
-### Krok 1: Tokenizace + BM25 (0 B, ~30 min)
+### Krok 1: Tokenizace + BM25 (0 B, ~30 min) ✅ HOTOVO
 
 **Co:** Implementovat BM25 z Python stdlib.
 
-**Ontologický kontext:**
-- **Inverted Index** = pro každý termín seznam dokumentů (naše 108 entries)
-- **IDF** = log(N/df) — termín "timeout" je v 5 entries → IDF = log(108/5) = 3.07
-- **TF** = četnost termínu v dokumentu — "timeout" se v GT-001 vyskytuje 2× → TF = 2
-- **BM25 score** = IDF × TF_upravené × length_normalized
+**Výsledek:** BM25 baseline — Recall +4.5%, MRR -3.3% vs SequenceMatcher.
 
-```python
-# Pseudokód
-class BM25:
-    def fit(self, docs):     # docs = [tokenized_entry_1, ...]
-        self.inverted_index = {}  # term → [(doc_id, tf), ...]
-        self.doc_lens = [len(d) for d in docs]
-        self.avg_dl = mean(self.doc_lens)
-    
-    def search(self, query, top_k=5):
-        scores = defaultdict(float)
-        for term in query:
-            if term in self.inverted_index:
-                idf = log(N / df[term])
-                for doc_id, tf in inverted_index[term]:
-                    scores[doc_id] += idf * tf_uprated(tf, k1, b, dl, avg_dl)
-        return sorted(scores.items(), key=-score)[:top_k]
-```
-
-### Krok 2: TF-IDF Dense (0 B, ~30 min)
+### Krok 2: TF-IDF Dense (0 B, ~30 min) ✅ HOTOVO
 
 **Co:** Implementovat TF-IDF jako "dense" náhradu.
 
-**Ontologický kontext:**
-- **Embedding** = vektor v N-dimenzionálním prostoru (N = velikost slovníku)
-- **TF-IDF vektor** = každá dimenze = jeden termín, hodnota = TF × IDF
-- **Cosine similarity** = dot produkt dvou L2-normalizovaných vektorů
-- **Dense vs Sparse:** TF-IDF je technicky sparse (většina dimenzí = 0), ale funguje jako dense pro similarity
+**Výsledek:** TF-IDF — Recall +1.8%, MRR -11.3% vs SequenceMatcher.
 
-```python
-# Pseudokód
-class TFIDFEmbedding:
-    def fit(self, docs):
-        self.vocab = sorted(set(term for doc in docs for term in doc))
-        self.idf = {t: log((N+1)/(df[t]+1))+1 for t in self.vocab}
-        self.matrix = zeros((N, len(self.vocab)))  # N entries × vocab_size
-        for i, doc in enumerate(docs):
-            for term, tf in Counter(doc).items():
-                self.matrix[i, vocab_idx[term]] = tf * self.idf[term]
-            self.matrix[i] /= norm(self.matrix[i])  # L2 normalize
-    
-    def search(self, query, top_k=5):
-        q_vec = encode_query(query)  # stejný postup
-        scores = self.matrix @ q_vec  # cosine similarity
-        return top_k by score
-```
-
-### Krok 3: RRF Fusion (0 B, ~5 min)
+### Krok 3: RRF Fusion (0 B, ~5 min) ✅ HOTOVO
 
 **Co:** Sloučit BM25 + TF-IDF výsledky.
 
-**Ontologický kontext:**
-- **Rank Fusion** = sloučení na úrovni pořadí (ne skóre)
-- **RRF** = 1/(k+rank) — k=60 = standard, k=30 = favor top-1
-- **Scale-invariant** — nezáleží na absolutních skóre, jen na pořadí
+**Výsledek:** Hybrid RRF — Recall +4.5%, MRR -4.9% vs SequenceMatcher.
 
-```python
-def rrf_fusion(results_bm25, results_tfidf, k=60):
-    scores = {}
-    for rank, (doc_id, _) in enumerate(results_bm25, 1):
-        scores[doc_id] = scores.get(doc_id, 0) + 1/(k + rank)
-    for rank, (doc_id, _) in enumerate(results_tfidf, 1):
-        scores[doc_id] = scores.get(doc_id, 0) + 1/(k + rank)
-    return sorted(scores.items(), key=lambda x: -x[1])
-```
+### Krok 4: Evaluace (0 B, ~20 min) ✅ HOTOVO
 
-### Krok 4: Evaluace (0 B, ~20 min)
+**Co:** Spustit 25 queries × 2 jazyky přes všechny pipeline.
 
-**Co:** Spustit 25 queries × 2 jazyky přes všechny 4 pipeline.
+**Výsledky:**
+- SequenceMatcher: MRR 0.6613 (baseline)
+- BM25: MRR 0.6397 (-3.3%)
+- BM25+Seq RRF: **MRR 0.7067 (+6.9%)** 🏆
 
-**Ontologický kontext:**
-- **Precision@3** = kvalita top-3 (málo šumu)
-- **Recall** = kolik relevantních jsme našli
-- **MRR** = jak brzo se první relevantní objeví
-- **NDCG** = ranking quality s graded relevance
+### Krok 5: Ensemble BM25+Seq RRF (0 B, ~30 min) ✅ HOTOVO
 
-**Výstup:** `results/hybrid_benchmark.json` — porovnání SequenceMatcher vs BM25 vs TF-IDF vs Hybrid
+**Co:** Kombinovat 5 BM25 konfigurací + SequenceMatcher přes RRF.
+
+**Výsledek:** BM25+Seq RRF — MRR 0.7067, Recall 0.6883, Hits 43/50. **Poprvé poráží SequenceMatcher na MRR i Recall.**
 
 ---
 
@@ -309,15 +256,16 @@ MCP-Jobs skills catalog (94 skills, 146 aliases) ukazuje, jak kategorizovat info
 
 ---
 
-## 7. ROZHODOVACÍ MATRIX
+## 7. ROZHODOVACÍ MATRIX (aktualizováno)
 
-| Scénář | Cesta | Důvod |
-|--------|-------|-------|
-| POC, žádný internet | **A (Zero-Download)** | 0 B, numpy stačí |
-| POC, malý download | **D (FastText)** | 80MB = lepší embeddings |
-| Plná kvalita | **B (sentence-transformers)** | 580MB, nejlepší open-source |
-| Plná kvalita + API | **C (OpenAI)** | 0 download, nejlepší celkově |
-| Produkce | **B + CI/CD monitoring** | MLOps, A/B test, drift detection |
+| Scénář | Cesta | MRR | Důvod |
+|--------|-------|-----|-------|
+| **Nejlepší výsledek** | **BM25+Seq RRF** | **0.7067** | Poprvé poráží SequenceMatcher na MRR i Recall |
+| POC, žádný internet | A (Zero-Download) | 0.6397 | 0 B, BM25 stačí |
+| POC, malý download | D (GloVe) | 0.2607 | ❌ Selhalo (44.9% OOV) |
+| Plná kvalita | B (sentence-transformers) | ~0.75-0.80 | 580MB, nejlepší open-source |
+| Plná kvalita + API | C (OpenAI) | ~0.80-0.85 | 0 download, nejlepší celkově |
+| Produkce | **BM25+Seq RRF + CI/CD** | 0.7067 | MLOps, A/B test, drift detection |
 
 ---
 
@@ -357,19 +305,21 @@ MCP-Jobs skills catalog (94 skills, 146 aliases) ukazuje, jak kategorizovat info
 
 ---
 
-## 10. NEXT STEPS (po schválení autorem)
+## 10. NEXT STEPS (aktualizováno)
 
-| # | Krok | Cesta | Download | Čas |
-|---|------|-------|----------|-----|
-| 1 | Tokenizace + BM25 z stdlib | A | 0 B | 30 min |
-| 2 | TF-IDF na numpy | A | 0 B | 30 min |
-| 3 | RRF fusion | A | 0 B | 5 min |
-| 4 | Benchmark (SequenceMatcher vs BM25 vs TF-IDF vs Hybrid) | A | 0 B | 20 min |
-| 5 | Aktualizace EVALUATION.md | A | 0 B | 10 min |
-| 6 | (Volitelné) FastText embeddings | D | 80 MB | +30 min |
-| 7 | (Volitelné) sentence-transformers + cross-encoder | B | 580 MB | +60 min |
+| # | Krok | Cesta | Download | Stav |
+|---|------|-------|----------|------|
+| 1 | ~~Tokenizace + BM25 z stdlib~~ | A | 0 B | ✅ Hotovo |
+| 2 | ~~TF-IDF na numpy~~ | A | 0 B | ✅ Hotovo |
+| 3 | ~~RRF fusion~~ | A | 0 B | ✅ Hotovo |
+| 4 | ~~Benchmark (SequenceMatcher vs BM25 vs TF-IDF vs Hybrid)~~ | A | 0 B | ✅ Hotovo |
+| 5 | ~~Ensemble BM25+Seq RRF~~ | A+B | 0 B | ✅ **VÍTĚZ** (0.71 MRR) |
+| 6 | ~~GloVe pre-trained~~ | D | 128 MB | ✅ Selhalo (44.9% OOV) |
+| 7 | scikit-learn TF-IDF + SVD (latentní sémantika) | - | 30 MB | Plán |
+| 8 | Opravit 30 entries s "see source" root_cause | - | 0 B | Čeká na autorizaci |
+| 9 | Produkční implementace (API endpoint) | - | 0 B | Plán |
 
 ---
 
-*Výzkumná zpráva + implementační plán. Všechny termíny jsou cross-ref s MCP-Jobs skills catalog (94 skills) a interní KB (CPM, RE_Methodology, ontologie).*
+*Výzkumná zpráva + implementační plán. Vítěz: BM25+Seq RRF (MRR=0.7067, Recall=0.6883, Hits=43/50).*
 *PBL princip: Autor řeší vlastní problém a současně si osvojuje ontologii z oblasti ML ops / AI dev.*

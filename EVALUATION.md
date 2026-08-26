@@ -95,17 +95,17 @@
 
 **Klíčový nález:** GloVe má 44.9% OOV rate — pre-trained modely na obecném korpusu neznají naše doménové termíny (GT-001, P9, cnc-tools). Hybrid RRF však dosáhl **42/50 hits** (nejlepší dosud).
 
-### 1B.7 Konfigurace
+### 1B.7 Konfigurace Ensemble
 
-| Parametr | Hodnota |
-|----------|---------|
-| BM25 k1 | 1.5 |
-| BM25 b | 0.75 |
-| RRF k | 60 |
-| GloVe model | glove-wiki-gigaword-100 |
-| GloVe vocab | 400,000 |
-| GloVe dims | 100 |
-| GloVe OOV rate | 44.9% |
+| BM25 varianta | k1 | b |
+|---------------|----|----|
+| BM25_k1.0_b0.75 | 1.0 | 0.75 |
+| BM25_k1.5_b0.75 | 1.5 | 0.75 |
+| BM25_k2.0_b0.75 | 2.0 | 0.75 |
+| BM25_k1.5_b0.50 | 1.5 | 0.50 |
+| BM25_k1.5_b0.90 | 1.5 | 0.90 |
+
+RRF k = 60 (standardní parametr)
 
 ### 1B.8 Ensemble A+B (BM25 + SequenceMatcher + RRF)
 
@@ -145,17 +145,29 @@ Pilotní demo (22 entries) ukázalo JSONL vítězství na všech metrikách. **P
 - Plný text fixu (bez umělého zkrácení na 200 znaků)
 - 78/108 entries mají plný root_cause (proti ~40/108 v první verzi extractoru)
 
-### 2.2 JSONL je o polovinu menší
+### 2.2 Retrieval pipeline: BM25+Seq RRF = vítěz
+
+| Varianta | MRR | Recall | Prec@3 | Hits | Stav |
+|----------|-----|--------|--------|------|------|
+| SequenceMatcher | 0.6613 | 0.6333 | 0.5800 | 38/50 | Baseline |
+| BM25 default | 0.6397 | 0.6617 | 0.5967 | 40/50 | ✅ |
+| BM25 ensemble | 0.6430 | 0.6617 | 0.5967 | 41/50 | ✅ |
+| Word2Vec z nuly | 0.3107 | 0.2900 | 0.2500 | 20/50 | ❌ Selhalo |
+| GloVe pre-trained | 0.2607 | 0.3200 | 0.2700 | 20/50 | ❌ Selhalo |
+| **BM25+Seq RRF** | **0.7067** | **0.6883** | **0.6733** | **43/50** | **🏆 Vítěz** |
+
+**Klíčové nálezy:**
+1. **BM25+Seq RRF = poprvé poráží SequenceMatcher na MRR i Recall** (+6.9% MRR, +8.7% Recall)
+2. **Pre-trained modely selhaly** — 44.9% OOV rate, naše termíny neznají
+3. **Ensemble BM25 přidává malé zlepšení** — 5 konfigurací + RRF
+4. **SequenceMatcher zůstává silný** — nejlepší pro MRR bez fusion
+
+### 2.3 JSONL komprese
 
 Při zachování kompletních dat (108 entries, 100% rule coverage):
 - **-49.7% bytes** (118KB → 59KB)
 - **-49.1% tokens** (28K → 14K)
 - Průměrná entry: 1,098 B / 263 T → 552 B / 134 T
-
-### 2.3 Rendered MD z JSONL je ještě menší
-
-47KB rendered markdown z JSONL — o 26% menší než JSONL, o 60% menší než v2.
-Ale ztrácí retrieval kvalitu (-6% MRR vs v2) — kvůli ztrátě strukturálního kontextu.
 
 ---
 
@@ -206,35 +218,53 @@ Autor píše/aktualizuje → JSONL záznam (ručně nebo přes LLM)
 
 ## 5. METRIKY ÚSPĚCHU
 
-| Metrika | Start (v2) | Cíl (JSONL) | Status |
-|---------|------------|-------------|--------|
-| Retrieval MRR | 0.627 | ≥0.65 | ✅ 0.661 |
-| Retrieval Precision@3 | 0.600 | ≥0.55 | ✅ 0.580 |
-| Retrieval Recall | 0.597 | ≥0.55 | ✅ 0.573 |
-| Token komprese | 28,422 | ≤15,000 | ✅ 14,463 |
-| Schema validation | ❌ | ✅ | ✅ |
-| Machine-readable metadata | ❌ | ✅ | ✅ |
-| Rule coverage | ~90% | 100% | ✅ 108/108 |
+| Metrika | Start (v2) | Cíl | Aktuálně | Status |
+|---------|------------|-----|----------|--------|
+| Retrieval MRR | 0.627 | ≥0.65 | **0.7067** | ✅ Překonáno |
+| Retrieval Precision@3 | 0.600 | ≥0.55 | **0.6733** | ✅ Překonáno |
+| Retrieval Recall | 0.597 | ≥0.55 | **0.6883** | ✅ Překonáno |
+| Token komprese | 28,422 | ≤15,000 | **14,463** | ✅ |
+| Schema validation | ❌ | ✅ | ✅ | ✅ |
+| Machine-readable metadata | ❌ | ✅ | ✅ | ✅ |
+| Rule coverage | ~90% | 100% | **108/108** | ✅ |
 
 ---
 
 ## 6. SOUBORY POC
 
 ```
-formalization_demo/
-├── gt_full.jsonl              # 108 entries, vylepšená extrakce (59,623 B)
-├── gt_schema.json             # JSON Schema pro validaci
-├── gt_rules.json              # 23 P-rules
-├── gt_meta.json               # Metadata
-├── gt_catalog_full_render.md  # Generovaný markdown z JSONL (47,003 B)
-├── extract_v2_improved.py     # Vylepšený extractor (108 entries)
-├── benchmark_full.py          # Plný benchmark skript
-├── test_queries.json          # 25 test queries (CZ+EN)
-├── test_all.py                # Test runner
-├── render_md.py               # JSONL → markdown renderer
-├── EVALUATION.md              # Tento soubor
-└── results/
-    └── full_benchmark.json    # Detailní výsledky (per-query)
+ML_Ops_edukace/
+├── data/
+│   ├── gt_full.jsonl              # 108 entries, vylepšená extrakce (59,623 B)
+│   ├── gt_schema.json             # JSON Schema pro validaci
+│   ├── gt_rules.json              # 23 P-rules
+│   ├── gt_meta.json               # Metadata
+│   ├── MCP_GROUND_TRUTH_postmortem_agregovany_v2.md  # Zdrojový markdown
+│   └── test_queries.json          # 25 test queries (CZ+EN)
+├── scripts/
+│   ├── extract_v2_improved.py     # Vylepšený extractor (108 entries)
+│   ├── hybrid_retrieval.py        # BM25 + TF-IDF + RRF (Cesta A)
+│   ├── d1_word2vec_retrieval.py   # Word2Vec z nuly (selhalo)
+│   ├── glove_retrieval.py         # GloVe pre-trained (selhalo)
+│   ├── ensemble_retrieval.py      # BM25+Seq RRF (VÍTĚZ)
+│   ├── enrichment_retrieval.py    # BM25 + metadata enrichment
+│   ├── benchmark_full.py          # Plný benchmark skript
+│   ├── test_all.py                # Test runner
+│   └── render_md.py               # JSONL → markdown renderer
+├── results/
+│   ├── hybrid_benchmark.json      # BM25 + TF-IDF + RRF
+│   ├── d1_word2vec_benchmark.json # Word2Vec (selhalo)
+│   ├── glove_benchmark.json       # GloVe (selhalo)
+│   ├── ensemble_benchmark.json    # BM25+Seq RRF (VÍTĚZ)
+│   ├── enrichment_benchmark.json  # Metadata enrichment
+│   ├── full_benchmark.json        # JSONL vs v2
+│   └── retrieval_comparison.json  # Porovnání formátů
+├── _stahovani/
+│   ├── models/glove-wiki-gigaword-100.model  # GloVe model (128 MB)
+│   ├── requirements.txt
+│   └── download_models.py
+├── EVALUATION.md                  # Tento soubor
+└── RETRIEVAL_RESEARCH.md          # Výzkumná zpráva
 ```
 
 ---
@@ -247,11 +277,15 @@ formalization_demo/
 | 2 | ~~Validace 108/108~~ | High | ✅ Hotovo |
 | 3 | ~~Plný benchmark~~ | High | ✅ Hotovo |
 | 4 | ~~Aktualizovat EVALUATION.md~~ | High | ✅ Hotovo |
-| 5 | Commit POC do repo | Medium | Čeká na autorizaci |
-| 6 | Opravit 30 entries s "see source" root_cause | Medium | Čeká na autorizaci |
-| 7 | Archivovat v1 markdown | Low | Čeká na autorizaci |
+| 5 | ~~Cesta A: BM25 + TF-IDF + RRF~~ | High | ✅ Hotovo |
+| 6 | ~~D1: Word2Vec POC~~ | Medium | ✅ Selhalo (0.31 MRR) |
+| 7 | ~~D2: GloVe pre-trained~~ | Medium | ✅ Selhalo (0.26 MRR) |
+| 8 | ~~A+B: Ensemble BM25+Seq RRF~~ | High | ✅ **VÍTĚZ** (0.71 MRR) |
+| 9 | Opravit 30 entries s "see source" root_cause | Medium | Čeká na autorizaci |
+| 10 | scikit-learn TF-IDF + SVD (latentní sémantika) | Medium | Plán |
+| 11 | Produkční implementace (API endpoint) | Low | Plán |
 
 ---
 
-*Výsledky: `results/full_benchmark.json` (50 per-query záznamů)*
-*Extraktor: `extract_v2_improved.py` (programmatická extrakce z v2 markdown)*
+*Výsledky: `results/ensemble_benchmark.json` (50 per-query záznamů)*
+*Vítěz: BM25+Seq RRF (MRR=0.7067, Recall=0.6883, Hits=43/50)*
