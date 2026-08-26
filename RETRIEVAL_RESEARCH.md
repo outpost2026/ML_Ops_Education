@@ -60,7 +60,7 @@ Autor řeší konkrétní problém (vylepšení retrieval metrik pro GT postmort
 | Term | Definice | Implementace | Náš případ |
 |------|----------|--------------|------------|
 | **RRF** (Reciprocal Rank Fusion) | Algoritmus pro sloučení dvou ranked listů. Skóre = Σ 1/(k + rank_i). K=60 = standard. Funguje na ranku, ne na skóre → scale-invariant. | 3 řádky kódu | BM25 rank + Dense rank → merged rank |
-| **MMR** (Maximal Marginal Relevance) | Re-ranking pro diverzitu. Upřednostňuje dokumenty, které jsou relevantní A odlišné od již vybraných. | `λ * sim(d,q) - (1-λ) * max(sim(d,d'))` | Můžeme přidat jako bonus |
+| **MMR** (Maximal Marginal Relevance) | Re-ranking pro diverzitu. Upřednostňuje dokumenty, které jsou relevantní A odlišné od již vybraných. | `λ * sim(d,q) - (1-λ) * max(sim(d,d'))` | Implementováno — zhoršuje MRR na malém korpusu (108 entries) |
 | **Weighted Score Fusion** | Lineární kombinace: `α * score_bm25 + (1-α) * score_dense`. α=0.5-0.7 = výchozí. | Jednoduché | Alternativa k RRF |
 
 **MCP-Jobs ekvivalent:** `RAG` (weight 0.50), `agentic_systems` (weight 0.60)
@@ -335,8 +335,10 @@ MCP-Jobs skills catalog (94 skills, 146 aliases) ukazuje, jak kategorizovat info
 | 6 | ~~GloVe pre-trained~~ | D | 128 MB | ✅ Selhalo (44.9% OOV) |
 | 7 | ~~TF-IDF+SVD~~ | - | 30 MB | ✅ Selhalo (0.54 MRR) |
 | 8 | ~~Query expansion~~ | - | 0 B | ✅ Exp+Seq RRF (nejlepší Prec@3) |
-| 9 | Opravit 30 entries s "see source" root_cause | - | 0 B | Čeká na autorizaci |
-| 10 | Produkční implementace (API endpoint) | - | 0 B | Plán |
+| 9 | ~~Opravit 30 entries s "see source" root_cause~~ | - | 0 B | ✅ Opraveno 19/30, zbývá 11 |
+| 10 | ~~MMR (diverzita)~~ | - | 0 B | ✅ Selhalo (zhoršuje MRR na malém korpusu) |
+| 11 | ~~CLI nástroj (retrieve.py)~~ | - | 0 B | ✅ Hotovo |
+| 12 | Produkční implementace (API endpoint) | - | 0 B | Plán |
 
 ---
 

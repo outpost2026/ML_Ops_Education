@@ -10,7 +10,7 @@
 Projekt vznikl z jednoduchého trimmingu dat z `GT postmortem` dokumentu a organicky se rozvinul do širšího projektu zaměřeného na:
 
 1. **Formalizaci GT postmortem** do JSONL formátu (108 entries, -50% tokenů)
-2. **Vylepšení retrieval pipeline** — od SequenceMatcher po BM25 + Dense + RRF
+2. **Vylepšení retrieval pipeline** — od SequenceMatcher po BM25 + RRF + CLI nástroj
 3. **Osvojení ML Ops ontologie** — terminologie z oblasti AI/ML, která se shoduje s IT skills z trhu práce (MCP-Jobs skills catalog)
 
 ---
@@ -32,14 +32,30 @@ ML_Ops_edukace/
 │   ├── benchmark_full.py       # Plný benchmark
 │   ├── test_all.py             # Test runner
 │   ├── render_md.py            # JSONL → markdown
+│   ├── ensemble_retrieval.py   # BM25+Seq RRF (VÍTĚZ)
+│   ├── svd_expansion_retrieval.py  # SVD + query expansion + weighted RRF
+│   ├── mmr_retrieval.py        # MMR (diverzita)
+│   ├── hybrid_retrieval.py     # BM25 + TF-IDF + RRF (Cesta A)
+│   ├── d1_word2vec_retrieval.py    # Word2Vec (selhalo)
+│   ├── glove_retrieval.py      # GloVe (selhalo)
+│   ├── enrichment_retrieval.py # BM25 + metadata enrichment
+│   ├── fix_root_cause.py       # Oprava root_cause z markdownu
 │   ├── extract_v2.py           # Původní extractor (historický)
 │   ├── fix_rules.py            # Oprava rules (historický)
 │   ├── fix_rules2.py           # Oprava rules (historický)
 │   └── check_missing.py        # Kontrola chybějících polí
 ├── results/                    # Výsledky benchmarků
+│   ├── ensemble_benchmark.json # BM25+Seq RRF (VÍTĚZ)
+│   ├── svd_expansion_benchmark.json  # SVD + expansion
+│   ├── mmr_benchmark.json      # MMR (diverzita)
 │   ├── full_benchmark.json     # Plný benchmark (108 entries)
+│   ├── hybrid_benchmark.json   # BM25 + TF-IDF + RRF
+│   ├── d1_word2vec_benchmark.json    # Word2Vec (selhalo)
+│   ├── glove_benchmark.json    # GloVe (selhalo)
+│   ├── enrichment_benchmark.json     # Metadata enrichment
 │   ├── retrieval_comparison.json
 │   └── compression_comparison.json
+├── retrieve.py                 # CLI retrieval nástroj
 ├── RETRIEVAL_RESEARCH.md       # Výzkumná zpráva + plán
 ├── EVALUATION.md               # Evaluace výsledků
 └── README.md                   # Tento soubor
@@ -63,7 +79,8 @@ ML_Ops_edukace/
 | JSONL MRR vs v2 (fuzzy) | +5.4% (0.661 vs 0.627) |
 | JSONL Precision@3 vs v2 | -3.3% (0.580 vs 0.600) |
 | Retrieval metrik: SequenceMatcher | Baseline (0.627 MRR) |
-| Cílová metrika: BM25+TF-IDF+RRF | ~0.75-0.80 MRR (odhad) |
+| Retrieval metrik: BM25+Seq RRF | **0.7067 MRR** (vítěz) |
+| CLI nástroj | `python -X utf8 retrieve.py "dotaz"` |
 
 ---
 
@@ -84,7 +101,13 @@ ML_Ops_edukace/
 ## Spuštění
 
 ```bash
-# Windows
+# CLI retrieval nástroj (rychlý dotaz)
+python -X utf8 retrieve.py "timeout v MCP serveru"
+
+# Interactive mode
+python -X utf8 retrieve.py --interactive
+
+# Benchmark
 $env:PYTHONIOENCODING='utf-8'
 python -X utf8 scripts/benchmark_full.py
 

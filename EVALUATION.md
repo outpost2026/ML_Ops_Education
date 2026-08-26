@@ -122,6 +122,17 @@ RRF k = 60 (standardní parametr)
 - **Exp+Seq RRF** = **nejlepší Prec@3** (+18.4%) — synonymní slovník + BM25 + SequenceMatcher
 - **Weighted RRF** — lepší než rovnocenný RRF (+3.8% vs +6.9%)
 
+### 1B.11 MMR (Maximal Marginal Relevance) — Diverzita
+
+| Metrika | BM25+Seq RRF | MMR λ=0.7 | MMR λ=0.5 | MMR λ=0.3 |
+|---------|--------------|-----------|-----------|-----------|
+| **Prec@3** | **0.6500** | 0.5467 | 0.5400 | 0.4933 |
+| **Recall** | **0.6783** | 0.6183 | 0.6167 | 0.5550 |
+| **MRR** | **0.6900** | 0.5987 | 0.5987 | 0.5680 |
+| **Hits** | **42/50** | 37/50 | 37/50 | 32/50 |
+
+**Klíčový nález:** MMR zhoršuje všechny metriky. Na malém corpusu (108 entries) diverzita není potřeba — prioritou je relevanci.
+
 ### 1B.8 Ensemble A+B (BM25 + SequenceMatcher + RRF)
 
 | Metrika | SeqMatcher | BM25 default | BM25+Seq RRF | Ensemble+Seq RRF |
@@ -173,6 +184,7 @@ Pilotní demo (22 entries) ukázalo JSONL vítězství na všech metrikách. **P
 | BM25+Expand | 0.6287 | 0.6667 | 0.6100 | 40/50 | ⚠️ Mixed |
 | **BM25+Seq RRF** | **0.7067** | **0.6883** | 0.6733 | **43/50** | **🏆 Vítěz (MRR)** |
 | **Exp+Seq RRF** | 0.7067 | **0.6933** | **0.6867** | **43/50** | **🏆 Vítěz (Prec@3)** |
+| MMR λ=0.7 | 0.5987 | 0.6183 | 0.5467 | 37/50 | ❌ Diverzita zhoršuje |
 
 **Klíčové nálezy:**
 1. **BM25+Seq RRF = nejlepší MRR** (+6.9%) — poprvé poráží SequenceMatcher na MRR i Recall
@@ -213,6 +225,8 @@ JSONL přináší:
 - **Machine-readable metadata** (tags, typ, complexity, sub_bugs)
 - **100% rule coverage** (108/108 entries mají `rule` pole)
 - **78/108 entries s plným root_cause** (zbytek = "see source" — opravit manuálně)
+
+**Update 2026-08-26:** Opraveno 19/30 entries přes `fix_root_cause.py`. Aktuálně 97/108 entries s plným root_cause, zbývá 11.
 
 ### 4.2 Derivát: Generovaný markdown
 
@@ -266,18 +280,24 @@ ML_Ops_edukace/
 │   ├── d1_word2vec_retrieval.py   # Word2Vec z nuly (selhalo)
 │   ├── glove_retrieval.py         # GloVe pre-trained (selhalo)
 │   ├── ensemble_retrieval.py      # BM25+Seq RRF (VÍTĚZ)
+│   ├── svd_expansion_retrieval.py # SVD + query expansion + weighted RRF
+│   ├── mmr_retrieval.py           # MMR (diverzita)
 │   ├── enrichment_retrieval.py    # BM25 + metadata enrichment
+│   ├── fix_root_cause.py          # Oprava root_cause z markdownu
 │   ├── benchmark_full.py          # Plný benchmark skript
 │   ├── test_all.py                # Test runner
 │   └── render_md.py               # JSONL → markdown renderer
 ├── results/
+│   ├── ensemble_benchmark.json    # BM25+Seq RRF (VÍTĚZ)
+│   ├── svd_expansion_benchmark.json  # SVD + expansion
+│   ├── mmr_benchmark.json         # MMR (diverzita)
 │   ├── hybrid_benchmark.json      # BM25 + TF-IDF + RRF
 │   ├── d1_word2vec_benchmark.json # Word2Vec (selhalo)
 │   ├── glove_benchmark.json       # GloVe (selhalo)
-│   ├── ensemble_benchmark.json    # BM25+Seq RRF (VÍTĚZ)
 │   ├── enrichment_benchmark.json  # Metadata enrichment
 │   ├── full_benchmark.json        # JSONL vs v2
 │   └── retrieval_comparison.json  # Porovnání formátů
+├── retrieve.py                    # CLI retrieval nástroj
 ├── _stahovani/
 │   ├── models/glove-wiki-gigaword-100.model  # GloVe model (128 MB)
 │   ├── requirements.txt
@@ -302,8 +322,10 @@ ML_Ops_edukace/
 | 8 | ~~A+B: Ensemble BM25+Seq RRF~~ | High | ✅ **VÍTĚZ** (0.71 MRR) |
 | 9 | ~~TF-IDF+SVD~~ | Medium | ✅ Selhalo (0.54 MRR) |
 | 10 | ~~Query expansion~~ | Medium | ✅ Exp+Seq RRF (0.71 MRR, nejlepší Prec@3) |
-| 11 | Opravit 30 entries s "see source" root_cause | Medium | Čeká na autorizaci |
-| 12 | Produkční implementace (API endpoint) | Low | Plán |
+| 11 | ~~Opravit 30 entries s "see source" root_cause~~ | Medium | ✅ Opraveno 19/30, zbývá 11 |
+| 12 | MMR (diverzita) | Low | ✅ Selhalo (zhoršuje MRR na malém korpusu) |
+| 13 | CLI nástroj (retrieve.py) | High | ✅ Hotovo |
+| 14 | Produkční implementace (API endpoint) | Low | Plán |
 
 ---
 
