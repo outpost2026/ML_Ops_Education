@@ -67,6 +67,22 @@
 2. **Word2Vec na 108 entries = špatný** — potřebuje >10K entries pro smysluplné embeddings
 3. **Hybrid RRF trpí když jedna složka je slabá** — Word2Vec tahá dolů
 4. **Tradeoff:** BM25 lepší Recall, SequenceMatcher lepší MRR
+5. **Metadata enrichment** — Prec@3 +4.6%, ale MRR -6.7% (noise v první pozici)
+
+### 1B.5 BM25 + Metadata Enrichment
+
+| Metrika | BM25 baseline | + enrichment v1 | Delta |
+|---------|---------------|-----------------|-------|
+| **Prec@3** | 0.5967 | **0.6067** | **+4.6%** |
+| **Recall** | **0.6617** | 0.6567 | +3.7% |
+| **MRR** | **0.6397** | 0.6173 | -6.7% |
+| **Hits** | 40/50 | 39/50 | -2.0% |
+
+**Enrichment v1:** duplikace tags/server/status pro vyšší váhu
+**Enrichment v2:** v1 + ID jako searchable term + aliases
+**Enrichment v3:** v2 + kontextová slova z fix
+
+**Závěr:** Enrichment pomáhá pro Precision@3 (relevantnější top-3), ale zhoršuje MRR (první výsledek méně relevantní).
 
 ### 1B.5 Konfigurace
 
