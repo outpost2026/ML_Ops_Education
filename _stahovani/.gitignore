@@ -1,0 +1,9 @@
+# Velke modely - nestahovat do Gitu
+*.vec
+*.bin
+*.pkl
+*.joblib
+
+# Python
+__pycache__/
+*.pyc

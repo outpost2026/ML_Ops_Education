@@ -1,0 +1,15 @@
+# ML Opces - Retrieval Pipeline Dependencies
+# Stahnout: pip install -r _stahovani/requirements.txt
+
+# --- Core ML ---
+scikit-learn>=1.3.0
+nltk>=3.8.0
+
+# --- Word Embeddings ---
+# fasttext se instaluje z GitHubu (oficialni balicek je deprecated)
+# pip install fasttext-wheel
+
+# --- Poznamky ---
+# gensim uz je nainstalovan (4.4.0)
+# numpy uz je nainstalovan (2.4.3)
+# torch/transformers NESTAHUJEME (>2GB, overkill)

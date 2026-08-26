@@ -33,3 +33,7 @@ desktop.ini
 # Temp
 *.tmp
 *.bak
+
+# Large models (download to _stahovani/)
+_stahovani/fasttext/
+_stahovani/models/
