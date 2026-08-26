@@ -107,6 +107,21 @@
 
 RRF k = 60 (standardní parametr)
 
+### 1B.10 SVD + Query Expansion + Weighted RRF
+
+| Metrika | SeqMatcher | BM25+Seq RRF | TF-IDF+SVD | Exp+Seq RRF | Weighted RRF |
+|---------|------------|--------------|------------|--------------|--------------|
+| **Prec@3** | 0.5800 | 0.6733 | 0.5267 | **0.6867** | 0.6633 |
+| **Recall** | 0.6333 | 0.6883 | 0.5867 | **0.6933** | 0.6617 |
+| **MRR** | 0.6613 | **0.7067** | 0.5413 | **0.7067** | 0.6867 |
+| **Hits** | 38/50 | 43/50 | 35/50 | **43/50** | 43/50 |
+
+**Klíčové nálezy:**
+- **TF-IDF+SVD selhalo** — -18.1% MRR, příliš agresivní pro malý korpus (56.4% explained variance)
+- **Query expansion** — mírné zhoršení samostatně (-4.9% MRR), ale v RRF kombinaci pomáhá
+- **Exp+Seq RRF** = **nejlepší Prec@3** (+18.4%) — synonymní slovník + BM25 + SequenceMatcher
+- **Weighted RRF** — lepší než rovnocenný RRF (+3.8% vs +6.9%)
+
 ### 1B.8 Ensemble A+B (BM25 + SequenceMatcher + RRF)
 
 | Metrika | SeqMatcher | BM25 default | BM25+Seq RRF | Ensemble+Seq RRF |
@@ -154,13 +169,17 @@ Pilotní demo (22 entries) ukázalo JSONL vítězství na všech metrikách. **P
 | BM25 ensemble | 0.6430 | 0.6617 | 0.5967 | 41/50 | ✅ |
 | Word2Vec z nuly | 0.3107 | 0.2900 | 0.2500 | 20/50 | ❌ Selhalo |
 | GloVe pre-trained | 0.2607 | 0.3200 | 0.2700 | 20/50 | ❌ Selhalo |
-| **BM25+Seq RRF** | **0.7067** | **0.6883** | **0.6733** | **43/50** | **🏆 Vítěz** |
+| TF-IDF+SVD | 0.5413 | 0.5867 | 0.5267 | 35/50 | ❌ Selhalo |
+| BM25+Expand | 0.6287 | 0.6667 | 0.6100 | 40/50 | ⚠️ Mixed |
+| **BM25+Seq RRF** | **0.7067** | **0.6883** | 0.6733 | **43/50** | **🏆 Vítěz (MRR)** |
+| **Exp+Seq RRF** | 0.7067 | **0.6933** | **0.6867** | **43/50** | **🏆 Vítěz (Prec@3)** |
 
 **Klíčové nálezy:**
-1. **BM25+Seq RRF = poprvé poráží SequenceMatcher na MRR i Recall** (+6.9% MRR, +8.7% Recall)
-2. **Pre-trained modely selhaly** — 44.9% OOV rate, naše termíny neznají
-3. **Ensemble BM25 přidává malé zlepšení** — 5 konfigurací + RRF
-4. **SequenceMatcher zůstává silný** — nejlepší pro MRR bez fusion
+1. **BM25+Seq RRF = nejlepší MRR** (+6.9%) — poprvé poráží SequenceMatcher na MRR i Recall
+2. **Exp+Seq RRF = nejlepší Prec@3** (+18.4%) — query expansion + fusion
+3. **Pre-trained modely selhaly** — 44.9% OOV rate, naše termíny neznají
+4. **TF-IDF+SVD selhalo** — příliš agresivní pro malý korpus
+5. **Query expansion** — samostatně mírné zhoršení, v RRF kombinaci pomáhá
 
 ### 2.3 JSONL komprese
 
@@ -281,11 +300,12 @@ ML_Ops_edukace/
 | 6 | ~~D1: Word2Vec POC~~ | Medium | ✅ Selhalo (0.31 MRR) |
 | 7 | ~~D2: GloVe pre-trained~~ | Medium | ✅ Selhalo (0.26 MRR) |
 | 8 | ~~A+B: Ensemble BM25+Seq RRF~~ | High | ✅ **VÍTĚZ** (0.71 MRR) |
-| 9 | Opravit 30 entries s "see source" root_cause | Medium | Čeká na autorizaci |
-| 10 | scikit-learn TF-IDF + SVD (latentní sémantika) | Medium | Plán |
-| 11 | Produkční implementace (API endpoint) | Low | Plán |
+| 9 | ~~TF-IDF+SVD~~ | Medium | ✅ Selhalo (0.54 MRR) |
+| 10 | ~~Query expansion~~ | Medium | ✅ Exp+Seq RRF (0.71 MRR, nejlepší Prec@3) |
+| 11 | Opravit 30 entries s "see source" root_cause | Medium | Čeká na autorizaci |
+| 12 | Produkční implementace (API endpoint) | Low | Plán |
 
 ---
 
-*Výsledky: `results/ensemble_benchmark.json` (50 per-query záznamů)*
-*Vítěz: BM25+Seq RRF (MRR=0.7067, Recall=0.6883, Hits=43/50)*
+*Výsledky: `results/ensemble_benchmark.json` + `results/svd_expansion_benchmark.json`*
+*Vítěz: BM25+Seq RRF (MRR=0.7067) | Exp+Seq RRF (Prec@3=0.6867)*
