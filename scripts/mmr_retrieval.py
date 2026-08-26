@@ -10,7 +10,6 @@ import math
 import os
 import re
 import sys
-import time
 from collections import Counter, defaultdict
 from difflib import SequenceMatcher
 
@@ -120,35 +119,6 @@ def search_fuzzy(query, texts, top_k=5):
 
 
 # ============================================================
-# QUERY EXPANSION
-# ============================================================
-
-SYNONYM_MAP = {
-    "timeout": ["deadlock", "zaseknuti", "time-out", "hang"],
-    "cache": ["invalidace", "vyprseni", "stale"],
-    "encoding": ["kodovani", "utf-8", "cp1250"],
-    "error": ["chyba", "exception", "selhani"],
-    "server": ["sluzba", "service", "daemon"],
-    "config": ["konfigurace", "nastaveni", "settings"],
-    "memory": ["pamet", "ram", "spotreba"],
-    "network": ["sit", "pripojeni", "connection"],
-    "browser": ["prohlizec", "chromium", "playwright"],
-    "git": ["verzovani", "repozitar", "repository"],
-    "docker": ["kontejner", "container", "image"],
-    "test": ["testovani", "testing", "overeni"],
-}
-
-
-def expand_query(query):
-    tokens = tokenize(query)
-    expanded = list(tokens)
-    for t in tokens:
-        if t in SYNONYM_MAP:
-            expanded.extend(SYNONYM_MAP[t][:2])
-    return expanded
-
-
-# ============================================================
 # RRF FUSION
 # ============================================================
 
@@ -193,13 +163,15 @@ def cosine_sim(v1, v2):
     return dot / (norm1 * norm2)
 
 
-def text_to_vec(text, vocab):
+def text_to_vec(text, vocab, idf_weights=None):
     """Převede text na TF-IDF vektor."""
     tokens = tokenize(text)
     vec = np.zeros(len(vocab))
-    for t in tokens:
+    tf = Counter(tokens)
+    for t, count in tf.items():
         if t in vocab:
-            vec[vocab[t]] += 1
+            weight = idf_weights.get(t, 1.0) if idf_weights else 1.0
+            vec[vocab[t]] = count * weight
     # L2 normalize
     norm = np.linalg.norm(vec)
     if norm > 0:
@@ -207,17 +179,28 @@ def text_to_vec(text, vocab):
     return vec
 
 
-def mmr_rerank(query, texts, candidate_indices, top_k=5, lambda_param=0.7):
+def build_idf_weights(texts, vocab):
+    """Vypočítá IDF váhy pro corpus."""
+    N = len(texts)
+    df = Counter()
+    for txt in texts:
+        tokens = set(tokenize(txt))
+        for t in tokens:
+            if t in vocab:
+                df[t] += 1
+    idf = {}
+    for t, df_val in df.items():
+        idf[t] = math.log((N - df_val + 0.5) / (df_val + 0.5) + 1)
+    return idf
+
+
+def mmr_rerank(
+    query, texts, candidate_indices, vocab, idf_weights, top_k=5, lambda_param=0.7
+):
     """
     MMR reranking — vybírá diversifikované výsledky.
     """
-    # Build vocab
-    all_tokens = []
-    for txt in texts:
-        all_tokens.extend(tokenize(txt))
-    vocab = {t: i for i, t in enumerate(set(all_tokens))}
-
-    query_vec = text_to_vec(query, vocab)
+    query_vec = text_to_vec(query, vocab, idf_weights)
 
     selected = []
     selected_vecs = []
@@ -228,7 +211,7 @@ def mmr_rerank(query, texts, candidate_indices, top_k=5, lambda_param=0.7):
         best_idx = -1
 
         for idx in candidates:
-            doc_vec = text_to_vec(texts[idx], vocab)
+            doc_vec = text_to_vec(texts[idx], vocab, idf_weights)
             score = mmr_score(query_vec, doc_vec, selected_vecs, lambda_param)
 
             if score > best_score:
@@ -237,7 +220,7 @@ def mmr_rerank(query, texts, candidate_indices, top_k=5, lambda_param=0.7):
 
         if best_idx >= 0:
             selected.append(best_idx)
-            selected_vecs.append(text_to_vec(texts[best_idx], vocab))
+            selected_vecs.append(text_to_vec(texts[best_idx], vocab, idf_weights))
             candidates.remove(best_idx)
 
     return selected
@@ -318,6 +301,13 @@ def main():
     texts = [build_searchable_text(e) for e in entries]
     id_to_idx = {e["id"]: i for i, e in enumerate(entries)}
 
+    # Build vocab and IDF weights once
+    all_tokens = []
+    for txt in texts:
+        all_tokens.extend(tokenize(txt))
+    vocab = {t: i for i, t in enumerate(set(all_tokens))}
+    idf_weights = build_idf_weights(texts, vocab)
+
     # Build indices
     print("\nBuilding indices...")
     bm25 = BM25(k1=1.5, b=0.75)
@@ -360,7 +350,13 @@ def main():
                 (0.3, "mmr_lambda0.3"),
             ]:
                 mmr_indices = mmr_rerank(
-                    query, texts, rrf_indices, top_k=5, lambda_param=lambda_param
+                    query,
+                    texts,
+                    rrf_indices,
+                    vocab,
+                    idf_weights,
+                    top_k=5,
+                    lambda_param=lambda_param,
                 )
                 mmr_results = [(idx, 0) for idx in mmr_indices]
                 methods[method_name].append(
