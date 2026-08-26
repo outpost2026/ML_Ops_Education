@@ -1,0 +1,4757 @@
+{
+  "summary": {
+    "sequence_matcher": {
+      "precision_at_3": 0.58,
+      "recall": 0.6333,
+      "mrr": 0.6613,
+      "queries_with_hit": 38,
+      "total_queries": 50
+    },
+    "bm25": {
+      "precision_at_3": 0.5967,
+      "recall": 0.6617,
+      "mrr": 0.6397,
+      "queries_with_hit": 40,
+      "total_queries": 50
+    },
+    "word2vec": {
+      "precision_at_3": 0.25,
+      "recall": 0.29,
+      "mrr": 0.3107,
+      "queries_with_hit": 20,
+      "total_queries": 50
+    },
+    "hybrid_rrf": {
+      "precision_at_3": 0.5633,
+      "recall": 0.645,
+      "mrr": 0.5624,
+      "queries_with_hit": 41,
+      "total_queries": 50
+    }
+  },
+  "per_query": {
+    "sequence_matcher": [
+      {
+        "qid": "Q1",
+        "lang": "cz",
+        "query": "timeout v MCP serveru",
+        "expected": [
+          0,
+          1,
+          4
+        ],
+        "precision_at_3": 0.3333333333333333,
+        "recall": 0.3333333333333333,
+        "mrr": 1.0,
+        "top3": [
+          0,
+          5,
+          9
+        ],
+        "top5": [
+          0,
+          5,
+          9,
+          10,
+          12
+        ]
+      },
+      {
+        "qid": "Q1",
+        "lang": "en",
+        "query": "timeout in MCP server",
+        "expected": [
+          0,
+          1,
+          4
+        ],
+        "precision_at_3": 0.3333333333333333,
+        "recall": 0.3333333333333333,
+        "mrr": 1.0,
+        "top3": [
+          0,
+          5,
+          10
+        ],
+        "top5": [
+          0,
+          5,
+          10,
+          12,
+          18
+        ]
+      },
+      {
+        "qid": "Q2",
+        "lang": "cz",
+        "query": "encoding problem na Windows",
+        "expected": [
+          92,
+          7,
+          30,
+          79
+        ],
+        "precision_at_3": 0.6666666666666666,
+        "recall": 0.75,
+        "mrr": 1.0,
+        "top3": [
+          30,
+          7,
+          8
+        ],
+        "top5": [
+          30,
+          7,
+          8,
+          11,
+          79
+        ]
+      },
+      {
+        "qid": "Q2",
+        "lang": "en",
+        "query": "encoding issue on Windows",
+        "expected": [
+          92,
+          7,
+          30,
+          79
+        ],
+        "precision_at_3": 0.6666666666666666,
+        "recall": 0.75,
+        "mrr": 1.0,
+        "top3": [
+          7,
+          30,
+          8
+        ],
+        "top5": [
+          7,
+          30,
+          8,
+          11,
+          79
+        ]
+      },
+      {
+        "qid": "Q3",
+        "lang": "cz",
+        "query": "cache invalidace po zmene kodu",
+        "expected": [
+          73,
+          49
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 0.3333333333333333,
+        "top3": [
+          48,
+          66,
+          73
+        ],
+        "top5": [
+          48,
+          66,
+          73,
+          82,
+          92
+        ]
+      },
+      {
+        "qid": "Q3",
+        "lang": "en",
+        "query": "cache invalidation after code change",
+        "expected": [
+          73,
+          49
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 0.5,
+        "top3": [
+          68,
+          73,
+          51
+        ],
+        "top5": [
+          68,
+          73,
+          51,
+          61,
+          74
+        ]
+      },
+      {
+        "qid": "Q4",
+        "lang": "cz",
+        "query": "Playwright cookie expirace",
+        "expected": [
+          25
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.3333333333333333,
+        "top3": [
+          14,
+          15,
+          25
+        ],
+        "top5": [
+          14,
+          15,
+          25,
+          26,
+          52
+        ]
+      },
+      {
+        "qid": "Q4",
+        "lang": "en",
+        "query": "Playwright cookie expiry",
+        "expected": [
+          25
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          25,
+          14,
+          15
+        ],
+        "top5": [
+          25,
+          14,
+          15,
+          26,
+          52
+        ]
+      },
+      {
+        "qid": "Q5",
+        "lang": "cz",
+        "query": "LLM provider cascade mlceni",
+        "expected": [
+          46
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          46,
+          53,
+          56
+        ],
+        "top5": [
+          46,
+          53,
+          56,
+          6,
+          33
+        ]
+      },
+      {
+        "qid": "Q5",
+        "lang": "en",
+        "query": "LLM provider cascade silence",
+        "expected": [
+          46
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          46,
+          53,
+          56
+        ],
+        "top5": [
+          46,
+          53,
+          56,
+          40,
+          6
+        ]
+      },
+      {
+        "qid": "Q6",
+        "lang": "cz",
+        "query": "subprocess timeout vs client timeout",
+        "expected": [
+          1,
+          2
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          1,
+          4,
+          10
+        ],
+        "top5": [
+          1,
+          4,
+          10,
+          0,
+          8
+        ]
+      },
+      {
+        "qid": "Q6",
+        "lang": "en",
+        "query": "subprocess timeout versus client timeout",
+        "expected": [
+          1,
+          2
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          1,
+          4,
+          10
+        ],
+        "top5": [
+          1,
+          4,
+          10,
+          0,
+          8
+        ]
+      },
+      {
+        "qid": "Q7",
+        "lang": "cz",
+        "query": "JSON defenzivni parsovani",
+        "expected": [
+          3,
+          30
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          3,
+          12,
+          20
+        ],
+        "top5": [
+          3,
+          12,
+          20,
+          26,
+          32
+        ]
+      },
+      {
+        "qid": "Q7",
+        "lang": "en",
+        "query": "JSON defensive parsing",
+        "expected": [
+          3,
+          30
+        ],
+        "precision_at_3": 0.5,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          3,
+          12,
+          20
+        ],
+        "top5": [
+          3,
+          12,
+          20,
+          26,
+          30
+        ]
+      },
+      {
+        "qid": "Q8",
+        "lang": "cz",
+        "query": "GCP 403 autentizace",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          103,
+          104,
+          105
+        ],
+        "top5": [
+          103,
+          104,
+          105,
+          106,
+          107
+        ]
+      },
+      {
+        "qid": "Q8",
+        "lang": "en",
+        "query": "GCP 403 authentication",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          103,
+          104,
+          105
+        ],
+        "top5": [
+          103,
+          104,
+          105,
+          106,
+          107
+        ]
+      },
+      {
+        "qid": "Q9",
+        "lang": "cz",
+        "query": "ruff fix smazal importy",
+        "expected": [
+          77
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          77,
+          38,
+          83
+        ],
+        "top5": [
+          77,
+          38,
+          83,
+          0,
+          1
+        ]
+      },
+      {
+        "qid": "Q9",
+        "lang": "en",
+        "query": "ruff fix deleted imports",
+        "expected": [
+          77
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          77,
+          83,
+          0
+        ],
+        "top5": [
+          77,
+          83,
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "qid": "Q10",
+        "lang": "cz",
+        "query": "data correctness LLM prompt",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.5,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          78,
+          50,
+          55
+        ],
+        "top5": [
+          78,
+          50,
+          55,
+          58,
+          53
+        ]
+      },
+      {
+        "qid": "Q10",
+        "lang": "en",
+        "query": "data correctness in LLM prompt",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          78,
+          50,
+          55
+        ],
+        "top5": [
+          78,
+          50,
+          55,
+          3,
+          6
+        ]
+      },
+      {
+        "qid": "Q11",
+        "lang": "cz",
+        "query": "paralelizace vicesmerove operace",
+        "expected": [
+          0
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          12,
+          30,
+          57
+        ],
+        "top5": [
+          12,
+          30,
+          57,
+          69,
+          40
+        ]
+      },
+      {
+        "qid": "Q11",
+        "lang": "en",
+        "query": "parallelization of multi-target operations",
+        "expected": [
+          0
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          69,
+          51,
+          77
+        ],
+        "top5": [
+          69,
+          51,
+          77,
+          83,
+          87
+        ]
+      },
+      {
+        "qid": "Q12",
+        "lang": "cz",
+        "query": "platba za scraping portaly",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          91,
+          0,
+          2
+        ],
+        "top5": [
+          91,
+          0,
+          2,
+          10,
+          12
+        ]
+      },
+      {
+        "qid": "Q12",
+        "lang": "en",
+        "query": "salary scraping from portals",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.5,
+        "mrr": 0.2,
+        "top3": [
+          0,
+          12,
+          17
+        ],
+        "top5": [
+          0,
+          12,
+          17,
+          25,
+          30
+        ]
+      },
+      {
+        "qid": "Q13",
+        "lang": "cz",
+        "query": "kognitivni preteceni pri debugovani",
+        "expected": [
+          107
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          44,
+          88,
+          89
+        ],
+        "top5": [
+          44,
+          88,
+          89,
+          63,
+          52
+        ]
+      },
+      {
+        "qid": "Q13",
+        "lang": "en",
+        "query": "cognitive overload during debugging",
+        "expected": [
+          107
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          74,
+          54,
+          27
+        ],
+        "top5": [
+          74,
+          54,
+          27,
+          51,
+          52
+        ]
+      },
+      {
+        "qid": "Q14",
+        "lang": "cz",
+        "query": "git lock contention",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          8,
+          0
+        ],
+        "top5": [
+          2,
+          8,
+          0,
+          1,
+          6
+        ]
+      },
+      {
+        "qid": "Q14",
+        "lang": "en",
+        "query": "git lock contention",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          8,
+          0
+        ],
+        "top5": [
+          2,
+          8,
+          0,
+          1,
+          6
+        ]
+      },
+      {
+        "qid": "Q15",
+        "lang": "cz",
+        "query": "LLM response nema content field",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          44,
+          52,
+          40
+        ],
+        "top5": [
+          44,
+          52,
+          40,
+          55,
+          57
+        ]
+      },
+      {
+        "qid": "Q15",
+        "lang": "en",
+        "query": "LLM response missing content field",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          44,
+          40,
+          52
+        ],
+        "top5": [
+          44,
+          40,
+          52,
+          55,
+          54
+        ]
+      },
+      {
+        "qid": "Q16",
+        "lang": "cz",
+        "query": "testy nepristupneho filesystemu",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          13,
+          17,
+          28
+        ],
+        "top5": [
+          13,
+          17,
+          28,
+          33,
+          59
+        ]
+      },
+      {
+        "qid": "Q16",
+        "lang": "en",
+        "query": "inaccessible filesystem test",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          11,
+          12,
+          13
+        ],
+        "top5": [
+          11,
+          12,
+          13,
+          17,
+          28
+        ]
+      },
+      {
+        "qid": "Q17",
+        "lang": "cz",
+        "query": "opakovana analyza Stockfish",
+        "expected": [
+          49
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          49,
+          72,
+          74
+        ],
+        "top5": [
+          49,
+          72,
+          74,
+          100,
+          53
+        ]
+      },
+      {
+        "qid": "Q17",
+        "lang": "en",
+        "query": "repeated Stockfish analysis",
+        "expected": [
+          49
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.5,
+        "top3": [
+          72,
+          49,
+          60
+        ],
+        "top5": [
+          72,
+          49,
+          60,
+          65,
+          66
+        ]
+      },
+      {
+        "qid": "Q18",
+        "lang": "cz",
+        "query": "browser automation chyba",
+        "expected": [
+          14
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          14,
+          15,
+          83
+        ],
+        "top5": [
+          14,
+          15,
+          83,
+          92,
+          96
+        ]
+      },
+      {
+        "qid": "Q18",
+        "lang": "en",
+        "query": "browser automation error",
+        "expected": [
+          14
+        ],
+        "precision_at_3": 0.0,
+        "recall": 1.0,
+        "mrr": 0.2,
+        "top3": [
+          0,
+          1,
+          5
+        ],
+        "top5": [
+          0,
+          1,
+          5,
+          7,
+          14
+        ]
+      },
+      {
+        "qid": "Q19",
+        "lang": "cz",
+        "query": "vykon opakovane operace",
+        "expected": [
+          0,
+          49
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          12,
+          30,
+          41
+        ],
+        "top5": [
+          12,
+          30,
+          41,
+          51,
+          52
+        ]
+      },
+      {
+        "qid": "Q19",
+        "lang": "en",
+        "query": "performance of repeated operations",
+        "expected": [
+          0,
+          49
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          41,
+          69,
+          53
+        ],
+        "top5": [
+          41,
+          69,
+          53,
+          40,
+          52
+        ]
+      },
+      {
+        "qid": "Q20",
+        "lang": "cz",
+        "query": "formatovani cisla platy",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          53,
+          69,
+          57
+        ],
+        "top5": [
+          53,
+          69,
+          57,
+          80,
+          51
+        ]
+      },
+      {
+        "qid": "Q20",
+        "lang": "en",
+        "query": "salary number formatting",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          30,
+          88,
+          92
+        ],
+        "top5": [
+          30,
+          88,
+          92,
+          51,
+          80
+        ]
+      },
+      {
+        "qid": "Q21",
+        "lang": "cz",
+        "query": "subprocess pipe data ztrata",
+        "expected": [
+          10
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.5,
+        "top3": [
+          8,
+          10,
+          78
+        ],
+        "top5": [
+          8,
+          10,
+          78,
+          85,
+          88
+        ]
+      },
+      {
+        "qid": "Q21",
+        "lang": "en",
+        "query": "subprocess pipe data loss",
+        "expected": [
+          10
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.5,
+        "top3": [
+          8,
+          10,
+          78
+        ],
+        "top5": [
+          8,
+          10,
+          78,
+          85,
+          88
+        ]
+      },
+      {
+        "qid": "Q22",
+        "lang": "cz",
+        "query": "attr default skryva chyby",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          78,
+          3,
+          20
+        ],
+        "top5": [
+          78,
+          3,
+          20,
+          45,
+          89
+        ]
+      },
+      {
+        "qid": "Q22",
+        "lang": "en",
+        "query": "attr default hides errors",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          78,
+          3,
+          7
+        ],
+        "top5": [
+          78,
+          3,
+          7,
+          20,
+          37
+        ]
+      },
+      {
+        "qid": "Q23",
+        "lang": "cz",
+        "query": "token vyrezavani zpravy LLM",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          45,
+          46,
+          54
+        ],
+        "top5": [
+          45,
+          46,
+          54,
+          6,
+          33
+        ]
+      },
+      {
+        "qid": "Q23",
+        "lang": "en",
+        "query": "token clipping LLM message",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          45,
+          46,
+          54
+        ],
+        "top5": [
+          45,
+          46,
+          54,
+          6,
+          33
+        ]
+      },
+      {
+        "qid": "Q24",
+        "lang": "cz",
+        "query": "git read only operace pomala",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          0,
+          106
+        ],
+        "top5": [
+          2,
+          0,
+          106,
+          61,
+          58
+        ]
+      },
+      {
+        "qid": "Q24",
+        "lang": "en",
+        "query": "git read-only operation slow",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          0,
+          1
+        ],
+        "top5": [
+          2,
+          0,
+          1,
+          6,
+          8
+        ]
+      },
+      {
+        "qid": "Q25",
+        "lang": "cz",
+        "query": "AI state soubor poskozeny",
+        "expected": [
+          3
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          3,
+          13,
+          96
+        ],
+        "top5": [
+          3,
+          13,
+          96,
+          105,
+          51
+        ]
+      },
+      {
+        "qid": "Q25",
+        "lang": "en",
+        "query": "AI state file corrupted",
+        "expected": [
+          3
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          3,
+          13,
+          96
+        ],
+        "top5": [
+          3,
+          13,
+          96,
+          101,
+          1
+        ]
+      }
+    ],
+    "bm25": [
+      {
+        "qid": "Q1",
+        "lang": "cz",
+        "query": "timeout v MCP serveru",
+        "expected": [
+          0,
+          1,
+          4
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.3333333333333333,
+        "mrr": 0.25,
+        "top3": [
+          84,
+          9,
+          12
+        ],
+        "top5": [
+          84,
+          9,
+          12,
+          0,
+          10
+        ]
+      },
+      {
+        "qid": "Q1",
+        "lang": "en",
+        "query": "timeout in MCP server",
+        "expected": [
+          0,
+          1,
+          4
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          84,
+          5,
+          9
+        ],
+        "top5": [
+          84,
+          5,
+          9,
+          12,
+          43
+        ]
+      },
+      {
+        "qid": "Q2",
+        "lang": "cz",
+        "query": "encoding problem na Windows",
+        "expected": [
+          92,
+          7,
+          30,
+          79
+        ],
+        "precision_at_3": 0.6666666666666666,
+        "recall": 0.75,
+        "mrr": 1.0,
+        "top3": [
+          7,
+          30,
+          40
+        ],
+        "top5": [
+          7,
+          30,
+          40,
+          8,
+          79
+        ]
+      },
+      {
+        "qid": "Q2",
+        "lang": "en",
+        "query": "encoding issue on Windows",
+        "expected": [
+          92,
+          7,
+          30,
+          79
+        ],
+        "precision_at_3": 0.6666666666666666,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          7,
+          30,
+          40
+        ],
+        "top5": [
+          7,
+          30,
+          40,
+          8,
+          87
+        ]
+      },
+      {
+        "qid": "Q3",
+        "lang": "cz",
+        "query": "cache invalidace po zmene kodu",
+        "expected": [
+          73,
+          49
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          73,
+          57,
+          48
+        ],
+        "top5": [
+          73,
+          57,
+          48,
+          55,
+          82
+        ]
+      },
+      {
+        "qid": "Q3",
+        "lang": "en",
+        "query": "cache invalidation after code change",
+        "expected": [
+          73,
+          49
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.5,
+        "mrr": 0.25,
+        "top3": [
+          91,
+          41,
+          57
+        ],
+        "top5": [
+          91,
+          41,
+          57,
+          73,
+          48
+        ]
+      },
+      {
+        "qid": "Q4",
+        "lang": "cz",
+        "query": "Playwright cookie expirace",
+        "expected": [
+          25
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          25,
+          14,
+          26
+        ],
+        "top5": [
+          25,
+          14,
+          26,
+          0,
+          1
+        ]
+      },
+      {
+        "qid": "Q4",
+        "lang": "en",
+        "query": "Playwright cookie expiry",
+        "expected": [
+          25
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          25,
+          14,
+          26
+        ],
+        "top5": [
+          25,
+          14,
+          26,
+          0,
+          1
+        ]
+      },
+      {
+        "qid": "Q5",
+        "lang": "cz",
+        "query": "LLM provider cascade mlceni",
+        "expected": [
+          46
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          46,
+          33,
+          61
+        ],
+        "top5": [
+          46,
+          33,
+          61,
+          6,
+          56
+        ]
+      },
+      {
+        "qid": "Q5",
+        "lang": "en",
+        "query": "LLM provider cascade silence",
+        "expected": [
+          46
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          46,
+          33,
+          61
+        ],
+        "top5": [
+          46,
+          33,
+          61,
+          6,
+          56
+        ]
+      },
+      {
+        "qid": "Q6",
+        "lang": "cz",
+        "query": "subprocess timeout vs client timeout",
+        "expected": [
+          1,
+          2
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          1,
+          10,
+          4
+        ],
+        "top5": [
+          1,
+          10,
+          4,
+          12,
+          56
+        ]
+      },
+      {
+        "qid": "Q6",
+        "lang": "en",
+        "query": "subprocess timeout versus client timeout",
+        "expected": [
+          1,
+          2
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          1,
+          10,
+          4
+        ],
+        "top5": [
+          1,
+          10,
+          4,
+          12,
+          56
+        ]
+      },
+      {
+        "qid": "Q7",
+        "lang": "cz",
+        "query": "JSON defenzivni parsovani",
+        "expected": [
+          3,
+          30
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 0.3333333333333333,
+        "top3": [
+          26,
+          59,
+          3
+        ],
+        "top5": [
+          26,
+          59,
+          3,
+          20,
+          99
+        ]
+      },
+      {
+        "qid": "Q7",
+        "lang": "en",
+        "query": "JSON defensive parsing",
+        "expected": [
+          3,
+          30
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.5,
+        "mrr": 0.2,
+        "top3": [
+          31,
+          26,
+          59
+        ],
+        "top5": [
+          31,
+          26,
+          59,
+          34,
+          3
+        ]
+      },
+      {
+        "qid": "Q8",
+        "lang": "cz",
+        "query": "GCP 403 autentizace",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          103,
+          104,
+          107
+        ],
+        "top5": [
+          103,
+          104,
+          107,
+          106,
+          105
+        ]
+      },
+      {
+        "qid": "Q8",
+        "lang": "en",
+        "query": "GCP 403 authentication",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          103,
+          104,
+          107
+        ],
+        "top5": [
+          103,
+          104,
+          107,
+          106,
+          105
+        ]
+      },
+      {
+        "qid": "Q9",
+        "lang": "cz",
+        "query": "ruff fix smazal importy",
+        "expected": [
+          77
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          77,
+          83,
+          38
+        ],
+        "top5": [
+          77,
+          83,
+          38,
+          79,
+          0
+        ]
+      },
+      {
+        "qid": "Q9",
+        "lang": "en",
+        "query": "ruff fix deleted imports",
+        "expected": [
+          77
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          77,
+          83,
+          79
+        ],
+        "top5": [
+          77,
+          83,
+          79,
+          0,
+          1
+        ]
+      },
+      {
+        "qid": "Q10",
+        "lang": "cz",
+        "query": "data correctness LLM prompt",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          78,
+          55,
+          33
+        ],
+        "top5": [
+          78,
+          55,
+          33,
+          61,
+          6
+        ]
+      },
+      {
+        "qid": "Q10",
+        "lang": "en",
+        "query": "data correctness in LLM prompt",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          78,
+          55,
+          60
+        ],
+        "top5": [
+          78,
+          55,
+          60,
+          33,
+          61
+        ]
+      },
+      {
+        "qid": "Q11",
+        "lang": "cz",
+        "query": "paralelizace vicesmerove operace",
+        "expected": [
+          0
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.3333333333333333,
+        "top3": [
+          12,
+          30,
+          0
+        ],
+        "top5": [
+          12,
+          30,
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "qid": "Q11",
+        "lang": "en",
+        "query": "parallelization of multi-target operations",
+        "expected": [
+          0
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.5,
+        "top3": [
+          91,
+          0,
+          1
+        ],
+        "top5": [
+          91,
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "qid": "Q12",
+        "lang": "cz",
+        "query": "platba za scraping portaly",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          91,
+          17,
+          0
+        ],
+        "top5": [
+          91,
+          17,
+          0,
+          67,
+          105
+        ]
+      },
+      {
+        "qid": "Q12",
+        "lang": "en",
+        "query": "salary scraping from portals",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          92,
+          17,
+          0
+        ],
+        "top5": [
+          92,
+          17,
+          0,
+          67,
+          94
+        ]
+      },
+      {
+        "qid": "Q13",
+        "lang": "cz",
+        "query": "kognitivni preteceni pri debugovani",
+        "expected": [
+          107
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          0,
+          1,
+          2
+        ],
+        "top5": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "qid": "Q13",
+        "lang": "en",
+        "query": "cognitive overload during debugging",
+        "expected": [
+          107
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          0,
+          1,
+          2
+        ],
+        "top5": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "qid": "Q14",
+        "lang": "cz",
+        "query": "git lock contention",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          27,
+          19
+        ],
+        "top5": [
+          2,
+          27,
+          19,
+          75,
+          8
+        ]
+      },
+      {
+        "qid": "Q14",
+        "lang": "en",
+        "query": "git lock contention",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          27,
+          19
+        ],
+        "top5": [
+          2,
+          27,
+          19,
+          75,
+          8
+        ]
+      },
+      {
+        "qid": "Q15",
+        "lang": "cz",
+        "query": "LLM response nema content field",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          44,
+          33,
+          61
+        ],
+        "top5": [
+          44,
+          33,
+          61,
+          6,
+          55
+        ]
+      },
+      {
+        "qid": "Q15",
+        "lang": "en",
+        "query": "LLM response missing content field",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          44,
+          15,
+          33
+        ],
+        "top5": [
+          44,
+          15,
+          33,
+          61,
+          6
+        ]
+      },
+      {
+        "qid": "Q16",
+        "lang": "cz",
+        "query": "testy nepristupneho filesystemu",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          59,
+          17,
+          28
+        ],
+        "top5": [
+          59,
+          17,
+          28,
+          33,
+          90
+        ]
+      },
+      {
+        "qid": "Q16",
+        "lang": "en",
+        "query": "inaccessible filesystem test",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          76,
+          28,
+          90
+        ],
+        "top5": [
+          76,
+          28,
+          90,
+          11,
+          79
+        ]
+      },
+      {
+        "qid": "Q17",
+        "lang": "cz",
+        "query": "opakovana analyza Stockfish",
+        "expected": [
+          49
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.5,
+        "top3": [
+          74,
+          49,
+          72
+        ],
+        "top5": [
+          74,
+          49,
+          72,
+          100,
+          0
+        ]
+      },
+      {
+        "qid": "Q17",
+        "lang": "en",
+        "query": "repeated Stockfish analysis",
+        "expected": [
+          49
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.3333333333333333,
+        "top3": [
+          72,
+          74,
+          49
+        ],
+        "top5": [
+          72,
+          74,
+          49,
+          0,
+          1
+        ]
+      },
+      {
+        "qid": "Q18",
+        "lang": "cz",
+        "query": "browser automation chyba",
+        "expected": [
+          14
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          14,
+          92,
+          96
+        ],
+        "top5": [
+          14,
+          92,
+          96,
+          0,
+          1
+        ]
+      },
+      {
+        "qid": "Q18",
+        "lang": "en",
+        "query": "browser automation error",
+        "expected": [
+          14
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          14,
+          37,
+          38
+        ],
+        "top5": [
+          14,
+          37,
+          38,
+          0,
+          1
+        ]
+      },
+      {
+        "qid": "Q19",
+        "lang": "cz",
+        "query": "vykon opakovane operace",
+        "expected": [
+          0,
+          49
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 0.3333333333333333,
+        "top3": [
+          12,
+          30,
+          0
+        ],
+        "top5": [
+          12,
+          30,
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "qid": "Q19",
+        "lang": "en",
+        "query": "performance of repeated operations",
+        "expected": [
+          0,
+          49
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 0.5,
+        "top3": [
+          91,
+          0,
+          1
+        ],
+        "top5": [
+          91,
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "qid": "Q20",
+        "lang": "cz",
+        "query": "formatovani cisla platy",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          0,
+          1,
+          2
+        ],
+        "top5": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "qid": "Q20",
+        "lang": "en",
+        "query": "salary number formatting",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          92,
+          30,
+          88
+        ],
+        "top5": [
+          92,
+          30,
+          88,
+          0,
+          1
+        ]
+      },
+      {
+        "qid": "Q21",
+        "lang": "cz",
+        "query": "subprocess pipe data ztrata",
+        "expected": [
+          10
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          10,
+          8,
+          1
+        ],
+        "top5": [
+          10,
+          8,
+          1,
+          9,
+          2
+        ]
+      },
+      {
+        "qid": "Q21",
+        "lang": "en",
+        "query": "subprocess pipe data loss",
+        "expected": [
+          10
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          10,
+          8,
+          1
+        ],
+        "top5": [
+          10,
+          8,
+          1,
+          60,
+          9
+        ]
+      },
+      {
+        "qid": "Q22",
+        "lang": "cz",
+        "query": "attr default skryva chyby",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          104,
+          45,
+          107
+        ],
+        "top5": [
+          104,
+          45,
+          107,
+          89,
+          99
+        ]
+      },
+      {
+        "qid": "Q22",
+        "lang": "en",
+        "query": "attr default hides errors",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          37,
+          104,
+          45
+        ],
+        "top5": [
+          37,
+          104,
+          45,
+          7,
+          89
+        ]
+      },
+      {
+        "qid": "Q23",
+        "lang": "cz",
+        "query": "token vyrezavani zpravy LLM",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          33,
+          61,
+          6
+        ],
+        "top5": [
+          33,
+          61,
+          6,
+          55,
+          45
+        ]
+      },
+      {
+        "qid": "Q23",
+        "lang": "en",
+        "query": "token clipping LLM message",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          44,
+          33,
+          61
+        ],
+        "top5": [
+          44,
+          33,
+          61,
+          6,
+          55
+        ]
+      },
+      {
+        "qid": "Q24",
+        "lang": "cz",
+        "query": "git read only operace pomala",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          27,
+          19
+        ],
+        "top5": [
+          2,
+          27,
+          19,
+          8,
+          12
+        ]
+      },
+      {
+        "qid": "Q24",
+        "lang": "en",
+        "query": "git read-only operation slow",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          106,
+          27
+        ],
+        "top5": [
+          2,
+          106,
+          27,
+          19,
+          8
+        ]
+      },
+      {
+        "qid": "Q25",
+        "lang": "cz",
+        "query": "AI state soubor poskozeny",
+        "expected": [
+          3
+        ],
+        "precision_at_3": 0.0,
+        "recall": 1.0,
+        "mrr": 0.25,
+        "top3": [
+          0,
+          1,
+          2
+        ],
+        "top5": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "qid": "Q25",
+        "lang": "en",
+        "query": "AI state file corrupted",
+        "expected": [
+          3
+        ],
+        "precision_at_3": 0.0,
+        "recall": 1.0,
+        "mrr": 0.2,
+        "top3": [
+          106,
+          0,
+          1
+        ],
+        "top5": [
+          106,
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    ],
+    "word2vec": [
+      {
+        "qid": "Q1",
+        "lang": "cz",
+        "query": "timeout v MCP serveru",
+        "expected": [
+          0,
+          1,
+          4
+        ],
+        "precision_at_3": 0.3333333333333333,
+        "recall": 0.3333333333333333,
+        "mrr": 1.0,
+        "top3": [
+          1,
+          5,
+          56
+        ],
+        "top5": [
+          1,
+          5,
+          56,
+          10,
+          12
+        ]
+      },
+      {
+        "qid": "Q1",
+        "lang": "en",
+        "query": "timeout in MCP server",
+        "expected": [
+          0,
+          1,
+          4
+        ],
+        "precision_at_3": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "mrr": 0.5,
+        "top3": [
+          9,
+          0,
+          4
+        ],
+        "top5": [
+          9,
+          0,
+          4,
+          5,
+          8
+        ]
+      },
+      {
+        "qid": "Q2",
+        "lang": "cz",
+        "query": "encoding problem na Windows",
+        "expected": [
+          92,
+          7,
+          30,
+          79
+        ],
+        "precision_at_3": 0.6666666666666666,
+        "recall": 0.75,
+        "mrr": 1.0,
+        "top3": [
+          7,
+          79,
+          2
+        ],
+        "top5": [
+          7,
+          79,
+          2,
+          30,
+          13
+        ]
+      },
+      {
+        "qid": "Q2",
+        "lang": "en",
+        "query": "encoding issue on Windows",
+        "expected": [
+          92,
+          7,
+          30,
+          79
+        ],
+        "precision_at_3": 0.3333333333333333,
+        "recall": 0.25,
+        "mrr": 1.0,
+        "top3": [
+          7,
+          11,
+          2
+        ],
+        "top5": [
+          7,
+          11,
+          2,
+          31,
+          35
+        ]
+      },
+      {
+        "qid": "Q3",
+        "lang": "cz",
+        "query": "cache invalidace po zmene kodu",
+        "expected": [
+          73,
+          49
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.5,
+        "mrr": 0.25,
+        "top3": [
+          65,
+          66,
+          75
+        ],
+        "top5": [
+          65,
+          66,
+          75,
+          73,
+          48
+        ]
+      },
+      {
+        "qid": "Q3",
+        "lang": "en",
+        "query": "cache invalidation after code change",
+        "expected": [
+          73,
+          49
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          73,
+          76,
+          82
+        ],
+        "top5": [
+          73,
+          76,
+          82,
+          66,
+          55
+        ]
+      },
+      {
+        "qid": "Q4",
+        "lang": "cz",
+        "query": "Playwright cookie expirace",
+        "expected": [
+          25
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          25,
+          17,
+          14
+        ],
+        "top5": [
+          25,
+          17,
+          14,
+          3,
+          44
+        ]
+      },
+      {
+        "qid": "Q4",
+        "lang": "en",
+        "query": "Playwright cookie expiry",
+        "expected": [
+          25
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          25,
+          44,
+          3
+        ],
+        "top5": [
+          25,
+          44,
+          3,
+          17,
+          14
+        ]
+      },
+      {
+        "qid": "Q5",
+        "lang": "cz",
+        "query": "LLM provider cascade mlceni",
+        "expected": [
+          46
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          33,
+          45,
+          48
+        ],
+        "top5": [
+          33,
+          45,
+          48,
+          83,
+          54
+        ]
+      },
+      {
+        "qid": "Q5",
+        "lang": "en",
+        "query": "LLM provider cascade silence",
+        "expected": [
+          46
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          33,
+          45,
+          48
+        ],
+        "top5": [
+          33,
+          45,
+          48,
+          83,
+          54
+        ]
+      },
+      {
+        "qid": "Q6",
+        "lang": "cz",
+        "query": "subprocess timeout vs client timeout",
+        "expected": [
+          1,
+          2
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          1,
+          10,
+          5
+        ],
+        "top5": [
+          1,
+          10,
+          5,
+          56,
+          0
+        ]
+      },
+      {
+        "qid": "Q6",
+        "lang": "en",
+        "query": "subprocess timeout versus client timeout",
+        "expected": [
+          1,
+          2
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          1,
+          10,
+          5
+        ],
+        "top5": [
+          1,
+          10,
+          5,
+          0,
+          56
+        ]
+      },
+      {
+        "qid": "Q7",
+        "lang": "cz",
+        "query": "JSON defenzivni parsovani",
+        "expected": [
+          3,
+          30
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 0.3333333333333333,
+        "top3": [
+          26,
+          78,
+          3
+        ],
+        "top5": [
+          26,
+          78,
+          3,
+          25,
+          14
+        ]
+      },
+      {
+        "qid": "Q7",
+        "lang": "en",
+        "query": "JSON defensive parsing",
+        "expected": [
+          3,
+          30
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          26,
+          34,
+          39
+        ],
+        "top5": [
+          26,
+          34,
+          39,
+          27,
+          28
+        ]
+      },
+      {
+        "qid": "Q8",
+        "lang": "cz",
+        "query": "GCP 403 autentizace",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          29,
+          6,
+          45
+        ],
+        "top5": [
+          29,
+          6,
+          45,
+          107,
+          25
+        ]
+      },
+      {
+        "qid": "Q8",
+        "lang": "en",
+        "query": "GCP 403 authentication",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          54,
+          27,
+          45
+        ],
+        "top5": [
+          54,
+          27,
+          45,
+          29,
+          64
+        ]
+      },
+      {
+        "qid": "Q9",
+        "lang": "cz",
+        "query": "ruff fix smazal importy",
+        "expected": [
+          77
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          89,
+          85,
+          46
+        ],
+        "top5": [
+          89,
+          85,
+          46,
+          60,
+          95
+        ]
+      },
+      {
+        "qid": "Q9",
+        "lang": "en",
+        "query": "ruff fix deleted imports",
+        "expected": [
+          77
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          95,
+          85,
+          68
+        ],
+        "top5": [
+          95,
+          85,
+          68,
+          89,
+          107
+        ]
+      },
+      {
+        "qid": "Q10",
+        "lang": "cz",
+        "query": "data correctness LLM prompt",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.5,
+        "mrr": 0.2,
+        "top3": [
+          33,
+          48,
+          45
+        ],
+        "top5": [
+          33,
+          48,
+          45,
+          83,
+          78
+        ]
+      },
+      {
+        "qid": "Q10",
+        "lang": "en",
+        "query": "data correctness in LLM prompt",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 0.5,
+        "top3": [
+          33,
+          78,
+          46
+        ],
+        "top5": [
+          33,
+          78,
+          46,
+          60,
+          95
+        ]
+      },
+      {
+        "qid": "Q11",
+        "lang": "cz",
+        "query": "paralelizace vicesmerove operace",
+        "expected": [
+          0
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          101,
+          91,
+          96
+        ],
+        "top5": [
+          101,
+          91,
+          96,
+          30,
+          97
+        ]
+      },
+      {
+        "qid": "Q11",
+        "lang": "en",
+        "query": "parallelization of multi-target operations",
+        "expected": [
+          0
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          91,
+          101,
+          96
+        ],
+        "top5": [
+          91,
+          101,
+          96,
+          106,
+          105
+        ]
+      },
+      {
+        "qid": "Q12",
+        "lang": "cz",
+        "query": "platba za scraping portaly",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          28,
+          11,
+          34
+        ],
+        "top5": [
+          28,
+          11,
+          34,
+          38,
+          35
+        ]
+      },
+      {
+        "qid": "Q12",
+        "lang": "en",
+        "query": "salary scraping from portals",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          18,
+          100,
+          13
+        ],
+        "top5": [
+          18,
+          100,
+          13,
+          43,
+          44
+        ]
+      },
+      {
+        "qid": "Q13",
+        "lang": "cz",
+        "query": "kognitivni preteceni pri debugovani",
+        "expected": [
+          107
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          0,
+          1,
+          2
+        ],
+        "top5": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "qid": "Q13",
+        "lang": "en",
+        "query": "cognitive overload during debugging",
+        "expected": [
+          107
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          0,
+          1,
+          2
+        ],
+        "top5": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "qid": "Q14",
+        "lang": "cz",
+        "query": "git lock contention",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          8,
+          9
+        ],
+        "top5": [
+          2,
+          8,
+          9,
+          4,
+          12
+        ]
+      },
+      {
+        "qid": "Q14",
+        "lang": "en",
+        "query": "git lock contention",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          8,
+          9
+        ],
+        "top5": [
+          2,
+          8,
+          9,
+          4,
+          12
+        ]
+      },
+      {
+        "qid": "Q15",
+        "lang": "cz",
+        "query": "LLM response nema content field",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          33,
+          45,
+          48
+        ],
+        "top5": [
+          33,
+          45,
+          48,
+          54,
+          78
+        ]
+      },
+      {
+        "qid": "Q15",
+        "lang": "en",
+        "query": "LLM response missing content field",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          33,
+          78,
+          45
+        ],
+        "top5": [
+          33,
+          78,
+          45,
+          48,
+          83
+        ]
+      },
+      {
+        "qid": "Q16",
+        "lang": "cz",
+        "query": "testy nepristupneho filesystemu",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          101,
+          96,
+          97
+        ],
+        "top5": [
+          101,
+          96,
+          97,
+          91,
+          94
+        ]
+      },
+      {
+        "qid": "Q16",
+        "lang": "en",
+        "query": "inaccessible filesystem test",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          90,
+          67,
+          49
+        ],
+        "top5": [
+          90,
+          67,
+          49,
+          54,
+          59
+        ]
+      },
+      {
+        "qid": "Q17",
+        "lang": "cz",
+        "query": "opakovana analyza Stockfish",
+        "expected": [
+          49
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          89,
+          32,
+          99
+        ],
+        "top5": [
+          89,
+          32,
+          99,
+          98,
+          46
+        ]
+      },
+      {
+        "qid": "Q17",
+        "lang": "en",
+        "query": "repeated Stockfish analysis",
+        "expected": [
+          49
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          75,
+          107,
+          83
+        ],
+        "top5": [
+          75,
+          107,
+          83,
+          95,
+          71
+        ]
+      },
+      {
+        "qid": "Q18",
+        "lang": "cz",
+        "query": "browser automation chyba",
+        "expected": [
+          14
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          96,
+          101,
+          92
+        ],
+        "top5": [
+          96,
+          101,
+          92,
+          91,
+          105
+        ]
+      },
+      {
+        "qid": "Q18",
+        "lang": "en",
+        "query": "browser automation error",
+        "expected": [
+          14
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          91,
+          101,
+          30
+        ],
+        "top5": [
+          91,
+          101,
+          30,
+          96,
+          100
+        ]
+      },
+      {
+        "qid": "Q19",
+        "lang": "cz",
+        "query": "vykon opakovane operace",
+        "expected": [
+          0,
+          49
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          101,
+          91,
+          96
+        ],
+        "top5": [
+          101,
+          91,
+          96,
+          30,
+          97
+        ]
+      },
+      {
+        "qid": "Q19",
+        "lang": "en",
+        "query": "performance of repeated operations",
+        "expected": [
+          0,
+          49
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          91,
+          101,
+          96
+        ],
+        "top5": [
+          91,
+          101,
+          96,
+          106,
+          105
+        ]
+      },
+      {
+        "qid": "Q20",
+        "lang": "cz",
+        "query": "formatovani cisla platy",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          0,
+          1,
+          2
+        ],
+        "top5": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "qid": "Q20",
+        "lang": "en",
+        "query": "salary number formatting",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          101,
+          96,
+          91
+        ],
+        "top5": [
+          101,
+          96,
+          91,
+          97,
+          93
+        ]
+      },
+      {
+        "qid": "Q21",
+        "lang": "cz",
+        "query": "subprocess pipe data ztrata",
+        "expected": [
+          10
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          10,
+          8,
+          1
+        ],
+        "top5": [
+          10,
+          8,
+          1,
+          0,
+          4
+        ]
+      },
+      {
+        "qid": "Q21",
+        "lang": "en",
+        "query": "subprocess pipe data loss",
+        "expected": [
+          10
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.5,
+        "top3": [
+          8,
+          10,
+          0
+        ],
+        "top5": [
+          8,
+          10,
+          0,
+          4,
+          9
+        ]
+      },
+      {
+        "qid": "Q22",
+        "lang": "cz",
+        "query": "attr default skryva chyby",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          32,
+          105,
+          99
+        ],
+        "top5": [
+          32,
+          105,
+          99,
+          98,
+          89
+        ]
+      },
+      {
+        "qid": "Q22",
+        "lang": "en",
+        "query": "attr default hides errors",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          98,
+          105,
+          103
+        ],
+        "top5": [
+          98,
+          105,
+          103,
+          79,
+          32
+        ]
+      },
+      {
+        "qid": "Q23",
+        "lang": "cz",
+        "query": "token vyrezavani zpravy LLM",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          61,
+          58,
+          52
+        ],
+        "top5": [
+          61,
+          58,
+          52,
+          74,
+          53
+        ]
+      },
+      {
+        "qid": "Q23",
+        "lang": "en",
+        "query": "token clipping LLM message",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          61,
+          58,
+          55
+        ],
+        "top5": [
+          61,
+          58,
+          55,
+          52,
+          59
+        ]
+      },
+      {
+        "qid": "Q24",
+        "lang": "cz",
+        "query": "git read only operace pomala",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          8,
+          9
+        ],
+        "top5": [
+          2,
+          8,
+          9,
+          4,
+          0
+        ]
+      },
+      {
+        "qid": "Q24",
+        "lang": "en",
+        "query": "git read-only operation slow",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          8,
+          9
+        ],
+        "top5": [
+          2,
+          8,
+          9,
+          4,
+          0
+        ]
+      },
+      {
+        "qid": "Q25",
+        "lang": "cz",
+        "query": "AI state soubor poskozeny",
+        "expected": [
+          3
+        ],
+        "precision_at_3": 0.0,
+        "recall": 1.0,
+        "mrr": 0.25,
+        "top3": [
+          0,
+          1,
+          2
+        ],
+        "top5": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "qid": "Q25",
+        "lang": "en",
+        "query": "AI state file corrupted",
+        "expected": [
+          3
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          101,
+          106,
+          97
+        ],
+        "top5": [
+          101,
+          106,
+          97,
+          91,
+          96
+        ]
+      }
+    ],
+    "hybrid_rrf": [
+      {
+        "qid": "Q1",
+        "lang": "cz",
+        "query": "timeout v MCP serveru",
+        "expected": [
+          0,
+          1,
+          4
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.3333333333333333,
+        "mrr": 0.25,
+        "top3": [
+          12,
+          10,
+          84
+        ],
+        "top5": [
+          12,
+          10,
+          84,
+          1,
+          9
+        ]
+      },
+      {
+        "qid": "Q1",
+        "lang": "en",
+        "query": "timeout in MCP server",
+        "expected": [
+          0,
+          1,
+          4
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.6666666666666666,
+        "mrr": 0.25,
+        "top3": [
+          9,
+          5,
+          84
+        ],
+        "top5": [
+          9,
+          5,
+          84,
+          0,
+          4
+        ]
+      },
+      {
+        "qid": "Q2",
+        "lang": "cz",
+        "query": "encoding problem na Windows",
+        "expected": [
+          92,
+          7,
+          30,
+          79
+        ],
+        "precision_at_3": 1.0,
+        "recall": 0.75,
+        "mrr": 1.0,
+        "top3": [
+          7,
+          30,
+          79
+        ],
+        "top5": [
+          7,
+          30,
+          79,
+          40,
+          2
+        ]
+      },
+      {
+        "qid": "Q2",
+        "lang": "en",
+        "query": "encoding issue on Windows",
+        "expected": [
+          92,
+          7,
+          30,
+          79
+        ],
+        "precision_at_3": 0.6666666666666666,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          7,
+          30,
+          11
+        ],
+        "top5": [
+          7,
+          30,
+          11,
+          40,
+          2
+        ]
+      },
+      {
+        "qid": "Q3",
+        "lang": "cz",
+        "query": "cache invalidace po zmene kodu",
+        "expected": [
+          73,
+          49
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          73,
+          48,
+          65
+        ],
+        "top5": [
+          73,
+          48,
+          65,
+          57,
+          66
+        ]
+      },
+      {
+        "qid": "Q3",
+        "lang": "en",
+        "query": "cache invalidation after code change",
+        "expected": [
+          73,
+          49
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          73,
+          91,
+          41
+        ],
+        "top5": [
+          73,
+          91,
+          41,
+          76,
+          57
+        ]
+      },
+      {
+        "qid": "Q4",
+        "lang": "cz",
+        "query": "Playwright cookie expirace",
+        "expected": [
+          25
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          25,
+          14,
+          17
+        ],
+        "top5": [
+          25,
+          14,
+          17,
+          26,
+          0
+        ]
+      },
+      {
+        "qid": "Q4",
+        "lang": "en",
+        "query": "Playwright cookie expiry",
+        "expected": [
+          25
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          25,
+          14,
+          44
+        ],
+        "top5": [
+          25,
+          14,
+          44,
+          26,
+          3
+        ]
+      },
+      {
+        "qid": "Q5",
+        "lang": "cz",
+        "query": "LLM provider cascade mlceni",
+        "expected": [
+          46
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.5,
+        "top3": [
+          33,
+          46,
+          45
+        ],
+        "top5": [
+          33,
+          46,
+          45,
+          61,
+          48
+        ]
+      },
+      {
+        "qid": "Q5",
+        "lang": "en",
+        "query": "LLM provider cascade silence",
+        "expected": [
+          46
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.5,
+        "top3": [
+          33,
+          46,
+          45
+        ],
+        "top5": [
+          33,
+          46,
+          45,
+          61,
+          48
+        ]
+      },
+      {
+        "qid": "Q6",
+        "lang": "cz",
+        "query": "subprocess timeout vs client timeout",
+        "expected": [
+          1,
+          2
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          1,
+          10,
+          56
+        ],
+        "top5": [
+          1,
+          10,
+          56,
+          4,
+          5
+        ]
+      },
+      {
+        "qid": "Q6",
+        "lang": "en",
+        "query": "subprocess timeout versus client timeout",
+        "expected": [
+          1,
+          2
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          1,
+          10,
+          56
+        ],
+        "top5": [
+          1,
+          10,
+          56,
+          4,
+          5
+        ]
+      },
+      {
+        "qid": "Q7",
+        "lang": "cz",
+        "query": "JSON defenzivni parsovani",
+        "expected": [
+          3,
+          30
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 0.5,
+        "top3": [
+          26,
+          3,
+          59
+        ],
+        "top5": [
+          26,
+          3,
+          59,
+          78,
+          20
+        ]
+      },
+      {
+        "qid": "Q7",
+        "lang": "en",
+        "query": "JSON defensive parsing",
+        "expected": [
+          3,
+          30
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0.14285714285714285,
+        "top3": [
+          26,
+          34,
+          31
+        ],
+        "top5": [
+          26,
+          34,
+          31,
+          59,
+          39
+        ]
+      },
+      {
+        "qid": "Q8",
+        "lang": "cz",
+        "query": "GCP 403 autentizace",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.5,
+        "top3": [
+          107,
+          103,
+          29
+        ],
+        "top5": [
+          107,
+          103,
+          29,
+          104,
+          6
+        ]
+      },
+      {
+        "qid": "Q8",
+        "lang": "en",
+        "query": "GCP 403 authentication",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          103,
+          54,
+          104
+        ],
+        "top5": [
+          103,
+          54,
+          104,
+          27,
+          107
+        ]
+      },
+      {
+        "qid": "Q9",
+        "lang": "cz",
+        "query": "ruff fix smazal importy",
+        "expected": [
+          77
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          77,
+          89,
+          83
+        ],
+        "top5": [
+          77,
+          89,
+          83,
+          85,
+          38
+        ]
+      },
+      {
+        "qid": "Q9",
+        "lang": "en",
+        "query": "ruff fix deleted imports",
+        "expected": [
+          77
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          77,
+          95,
+          83
+        ],
+        "top5": [
+          77,
+          95,
+          83,
+          85,
+          79
+        ]
+      },
+      {
+        "qid": "Q10",
+        "lang": "cz",
+        "query": "data correctness LLM prompt",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 0.5,
+        "top3": [
+          33,
+          78,
+          55
+        ],
+        "top5": [
+          33,
+          78,
+          55,
+          48,
+          45
+        ]
+      },
+      {
+        "qid": "Q10",
+        "lang": "en",
+        "query": "data correctness in LLM prompt",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          78,
+          33,
+          60
+        ],
+        "top5": [
+          78,
+          33,
+          60,
+          55,
+          46
+        ]
+      },
+      {
+        "qid": "Q11",
+        "lang": "cz",
+        "query": "paralelizace vicesmerove operace",
+        "expected": [
+          0
+        ],
+        "precision_at_3": 0.0,
+        "recall": 1.0,
+        "mrr": 0.2,
+        "top3": [
+          30,
+          12,
+          101
+        ],
+        "top5": [
+          30,
+          12,
+          101,
+          91,
+          0
+        ]
+      },
+      {
+        "qid": "Q11",
+        "lang": "en",
+        "query": "parallelization of multi-target operations",
+        "expected": [
+          0
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.5,
+        "top3": [
+          91,
+          0,
+          101
+        ],
+        "top5": [
+          91,
+          0,
+          101,
+          1,
+          96
+        ]
+      },
+      {
+        "qid": "Q12",
+        "lang": "cz",
+        "query": "platba za scraping portaly",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          91,
+          28,
+          17
+        ],
+        "top5": [
+          91,
+          28,
+          17,
+          11,
+          0
+        ]
+      },
+      {
+        "qid": "Q12",
+        "lang": "en",
+        "query": "salary scraping from portals",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 1.0,
+        "top3": [
+          92,
+          18,
+          17
+        ],
+        "top5": [
+          92,
+          18,
+          17,
+          100,
+          0
+        ]
+      },
+      {
+        "qid": "Q13",
+        "lang": "cz",
+        "query": "kognitivni preteceni pri debugovani",
+        "expected": [
+          107
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          0,
+          1,
+          2
+        ],
+        "top5": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "qid": "Q13",
+        "lang": "en",
+        "query": "cognitive overload during debugging",
+        "expected": [
+          107
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          0,
+          1,
+          2
+        ],
+        "top5": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "qid": "Q14",
+        "lang": "cz",
+        "query": "git lock contention",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          8,
+          27
+        ],
+        "top5": [
+          2,
+          8,
+          27,
+          19,
+          9
+        ]
+      },
+      {
+        "qid": "Q14",
+        "lang": "en",
+        "query": "git lock contention",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          8,
+          27
+        ],
+        "top5": [
+          2,
+          8,
+          27,
+          19,
+          9
+        ]
+      },
+      {
+        "qid": "Q15",
+        "lang": "cz",
+        "query": "LLM response nema content field",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.5,
+        "top3": [
+          33,
+          44,
+          45
+        ],
+        "top5": [
+          33,
+          44,
+          45,
+          61,
+          48
+        ]
+      },
+      {
+        "qid": "Q15",
+        "lang": "en",
+        "query": "LLM response missing content field",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.5,
+        "top3": [
+          33,
+          44,
+          15
+        ],
+        "top5": [
+          33,
+          44,
+          15,
+          78,
+          45
+        ]
+      },
+      {
+        "qid": "Q16",
+        "lang": "cz",
+        "query": "testy nepristupneho filesystemu",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          59,
+          101,
+          17
+        ],
+        "top5": [
+          59,
+          101,
+          17,
+          96,
+          28
+        ]
+      },
+      {
+        "qid": "Q16",
+        "lang": "en",
+        "query": "inaccessible filesystem test",
+        "expected": [
+          103
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          90,
+          76,
+          28
+        ],
+        "top5": [
+          90,
+          76,
+          28,
+          67,
+          49
+        ]
+      },
+      {
+        "qid": "Q17",
+        "lang": "cz",
+        "query": "opakovana analyza Stockfish",
+        "expected": [
+          49
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.3333333333333333,
+        "top3": [
+          74,
+          89,
+          49
+        ],
+        "top5": [
+          74,
+          89,
+          49,
+          32,
+          72
+        ]
+      },
+      {
+        "qid": "Q17",
+        "lang": "en",
+        "query": "repeated Stockfish analysis",
+        "expected": [
+          49
+        ],
+        "precision_at_3": 0.0,
+        "recall": 1.0,
+        "mrr": 0.2,
+        "top3": [
+          72,
+          75,
+          74
+        ],
+        "top5": [
+          72,
+          75,
+          74,
+          107,
+          49
+        ]
+      },
+      {
+        "qid": "Q18",
+        "lang": "cz",
+        "query": "browser automation chyba",
+        "expected": [
+          14
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.3333333333333333,
+        "top3": [
+          96,
+          92,
+          14
+        ],
+        "top5": [
+          96,
+          92,
+          14,
+          101,
+          0
+        ]
+      },
+      {
+        "qid": "Q18",
+        "lang": "en",
+        "query": "browser automation error",
+        "expected": [
+          14
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          14,
+          91,
+          37
+        ],
+        "top5": [
+          14,
+          91,
+          37,
+          101,
+          38
+        ]
+      },
+      {
+        "qid": "Q19",
+        "lang": "cz",
+        "query": "vykon opakovane operace",
+        "expected": [
+          0,
+          49
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.5,
+        "mrr": 0.2,
+        "top3": [
+          30,
+          12,
+          101
+        ],
+        "top5": [
+          30,
+          12,
+          101,
+          91,
+          0
+        ]
+      },
+      {
+        "qid": "Q19",
+        "lang": "en",
+        "query": "performance of repeated operations",
+        "expected": [
+          0,
+          49
+        ],
+        "precision_at_3": 0.5,
+        "recall": 0.5,
+        "mrr": 0.5,
+        "top3": [
+          91,
+          0,
+          101
+        ],
+        "top5": [
+          91,
+          0,
+          101,
+          1,
+          96
+        ]
+      },
+      {
+        "qid": "Q20",
+        "lang": "cz",
+        "query": "formatovani cisla platy",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          0,
+          1,
+          2
+        ],
+        "top5": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "qid": "Q20",
+        "lang": "en",
+        "query": "salary number formatting",
+        "expected": [
+          92,
+          30
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          92,
+          101,
+          30
+        ],
+        "top5": [
+          92,
+          101,
+          30,
+          96,
+          88
+        ]
+      },
+      {
+        "qid": "Q21",
+        "lang": "cz",
+        "query": "subprocess pipe data ztrata",
+        "expected": [
+          10
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          10,
+          8,
+          1
+        ],
+        "top5": [
+          10,
+          8,
+          1,
+          9,
+          0
+        ]
+      },
+      {
+        "qid": "Q21",
+        "lang": "en",
+        "query": "subprocess pipe data loss",
+        "expected": [
+          10
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          10,
+          8,
+          9
+        ],
+        "top5": [
+          10,
+          8,
+          9,
+          1,
+          0
+        ]
+      },
+      {
+        "qid": "Q22",
+        "lang": "cz",
+        "query": "attr default skryva chyby",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          99,
+          89,
+          104
+        ],
+        "top5": [
+          99,
+          89,
+          104,
+          32,
+          45
+        ]
+      },
+      {
+        "qid": "Q22",
+        "lang": "en",
+        "query": "attr default hides errors",
+        "expected": [
+          58,
+          78
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          37,
+          98,
+          104
+        ],
+        "top5": [
+          37,
+          98,
+          104,
+          105,
+          45
+        ]
+      },
+      {
+        "qid": "Q23",
+        "lang": "cz",
+        "query": "token vyrezavani zpravy LLM",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0,
+        "top3": [
+          61,
+          33,
+          58
+        ],
+        "top5": [
+          61,
+          33,
+          58,
+          6,
+          52
+        ]
+      },
+      {
+        "qid": "Q23",
+        "lang": "en",
+        "query": "token clipping LLM message",
+        "expected": [
+          44
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 0.3333333333333333,
+        "top3": [
+          61,
+          55,
+          44
+        ],
+        "top5": [
+          61,
+          55,
+          44,
+          33,
+          58
+        ]
+      },
+      {
+        "qid": "Q24",
+        "lang": "cz",
+        "query": "git read only operace pomala",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          8,
+          27
+        ],
+        "top5": [
+          2,
+          8,
+          27,
+          19,
+          9
+        ]
+      },
+      {
+        "qid": "Q24",
+        "lang": "en",
+        "query": "git read-only operation slow",
+        "expected": [
+          2
+        ],
+        "precision_at_3": 1.0,
+        "recall": 1.0,
+        "mrr": 1.0,
+        "top3": [
+          2,
+          8,
+          106
+        ],
+        "top5": [
+          2,
+          8,
+          106,
+          27,
+          9
+        ]
+      },
+      {
+        "qid": "Q25",
+        "lang": "cz",
+        "query": "AI state soubor poskozeny",
+        "expected": [
+          3
+        ],
+        "precision_at_3": 0.0,
+        "recall": 1.0,
+        "mrr": 0.25,
+        "top3": [
+          0,
+          1,
+          2
+        ],
+        "top5": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "qid": "Q25",
+        "lang": "en",
+        "query": "AI state file corrupted",
+        "expected": [
+          3
+        ],
+        "precision_at_3": 0.0,
+        "recall": 0.0,
+        "mrr": 0.125,
+        "top3": [
+          106,
+          101,
+          0
+        ],
+        "top5": [
+          106,
+          101,
+          0,
+          1,
+          97
+        ]
+      }
+    ]
+  },
+  "config": {
+    "bm25_k1": 1.5,
+    "bm25_b": 0.75,
+    "rrf_k": 60,
+    "w2v_vector_size": 100,
+    "w2v_window": 5,
+    "w2v_epochs": 100,
+    "entries": 108,
+    "queries": 25,
+    "variant": "D1_Gensim_Word2Vec"
+  }
+}
