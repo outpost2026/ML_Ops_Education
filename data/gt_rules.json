@@ -1,0 +1,170 @@
+[
+  {
+    "id": "P1",
+    "title": "Paralelizace",
+    "text": "Jakmile tool iteruje N>1 nezavislych zdroju (repozitare, soubory, API), pouzij ThreadPoolExecutor. Pocet workeru: min(4, N). I/O-bound operace skaluiji lineerne do ~8 vlaken.",
+    "weight": "high",
+    "tags": ["parallelism", "performance", "io-bound"]
+  },
+  {
+    "id": "P2",
+    "title": "Casove konstanty",
+    "text": "Subprocess timeout v MCP toolu musi byt max 25% MCP client timeoutu. Client timeout 60s = subprocess timeout 15s. Fail fast, fail loud.",
+    "weight": "high",
+    "tags": ["timeout", "reliability"]
+  },
+  {
+    "id": "P3",
+    "title": "Read-only locky",
+    "text": "Kazdy read-only subprocess call (git, grep, diff) pouzivej ['git', '--no-optional-locks']. Eliminuje filesystem lock contention.",
+    "weight": "medium",
+    "tags": ["git", "filesystem", "locking"]
+  },
+  {
+    "id": "P4",
+    "title": "JSON defenziva",
+    "text": "Kazdy JSON state deserializer: try/except + isinstance(v, dict) guard + auto-repair. Pocitej s corrupt daty.",
+    "weight": "high",
+    "tags": ["json", "defensive-programming", "data-integrity"]
+  },
+  {
+    "id": "P5",
+    "title": "Diagnostika",
+    "text": "@auditable na kazdem toolu. Povinne: ts, tool, duration_s, ok. Bez metriky neni diagnostika.",
+    "weight": "high",
+    "tags": ["observability", "metrics", "auditing"]
+  },
+  {
+    "id": "P6",
+    "title": "Timeout guard",
+    "text": "I/O tool s potencialem >10s = wrapper s concurrent.futures.TimeoutError.",
+    "weight": "medium",
+    "tags": ["timeout", "reliability"]
+  },
+  {
+    "id": "P9",
+    "title": "Zadne CSS tridy v selektorech",
+    "text": "Pouzivej semanticke HTML atributy (href, aria-label, role). CSS tridy jsou ephemeral — A/B testy je meni bez varovani.",
+    "weight": "high",
+    "tags": ["scraping", "css-selectors", "robustness"]
+  },
+  {
+    "id": "P11",
+    "title": "Console script distribution",
+    "text": "Po uv sync vzdy overuj, ze konzolovy script je dostupny. Pokud where selze pridej .venv/Scripts do PATH nebo vytvor .bat wrapper.",
+    "weight": "medium",
+    "tags": ["packaging", "distribution", "python"]
+  },
+  {
+    "id": "P13",
+    "title": "Long-running batch operations",
+    "text": "MCP neni bezny REST API — je to vnorovana i/o smycka s presne jednim klientem. Synchronni batch = blokujici STDIO = timeout klienta = ztrata prace.",
+    "weight": "high",
+    "tags": ["mcp", "async", "batch", "timeout"]
+  },
+  {
+    "id": "P14",
+    "title": "Windows path quoting",
+    "text": "Na Windows: vzdy quotuj cesty s mezerami v subprocess volani. PowerShell: & 'path with spaces.exe'. Bash (Git Bash): 'C:/path with spaces/file'. Spravna citace muze zmenit exit code z 1 na 0.",
+    "weight": "high",
+    "tags": ["windows", "path", "quoting", "cross-platform"]
+  },
+  {
+    "id": "P17",
+    "title": "Workspace context export",
+    "text": "tool_workspace_info() pri startu serveru + workspace root do stderr. LLM nema mechanismus jak zjistit ALLOWED_ROOTS.",
+    "weight": "medium",
+    "tags": ["mcp", "context", "llm"]
+  },
+  {
+    "id": "P18",
+    "title": "Console encoding na Windows",
+    "text": "Na Windows: PYTHONIOENCODING='utf-8' + chcp 65001 pred spustenim Python skriptu. Bez toho: UnicodeEncodeError na diakritice a specialnich znacich.",
+    "weight": "high",
+    "tags": ["windows", "encoding", "unicode"]
+  },
+  {
+    "id": "P23",
+    "title": "Windows encoding: PYTHONIOENCODING + PYTHONUTF8 + -X utf8",
+    "text": "Tri vrstvy UTF-8: (1) $env:PYTHONIOENCODING='utf-8', (2) $env:PYTHONUTF8=1, (3) python -X utf8. Kazda kryje jine scenario.",
+    "weight": "high",
+    "tags": ["windows", "encoding", "python"]
+  },
+  {
+    "id": "P30",
+    "title": "LLM response format fallback",
+    "text": "msg.get('content') or msg.get('reasoning') pro kazdeho providera. Ruzni LLM poskytovatele maji rozdilne response struktury.",
+    "weight": "high",
+    "tags": ["llm", "api", "fallback"]
+  },
+  {
+    "id": "P35",
+    "title": "Deterministicke kroky cacheovat",
+    "text": "Pokud krok neni nahodny (napr. Stockfish analyza), cacheuj vysledek. Re-run 5 her z cache = 0.1s misto 24 minut.",
+    "weight": "high",
+    "tags": ["caching", "deterministic", "performance"]
+  },
+  {
+    "id": "P41",
+    "title": "Dvourovnova LLM cache",
+    "text": "Level 1: full LLM response (hodnota). Level 2: structured parse (hra+barva+profil). Klic: {game_id}_{color}_llm.json.",
+    "weight": "high",
+    "tags": ["caching", "llm", "architecture"]
+  },
+  {
+    "id": "P47",
+    "title": "Cross-LLM audit gate",
+    "text": "Pred major release: v1 twin scan + v2 code review. Cross-LLM audit = povinna brana.",
+    "weight": "medium",
+    "tags": ["audit", "quality", "release"]
+  },
+  {
+    "id": "P55",
+    "title": "Silent except je bug",
+    "text": "except Exception: pass neni ochrana — je to maskovani problemu. Kazdy except musi logovat nebo propoustet.",
+    "weight": "high",
+    "tags": ["error-handling", "logging", "defensive"]
+  },
+  {
+    "id": "P63",
+    "title": "getattr s defaultem maskuje neexistujici atributy",
+    "text": "getattr(obj, 'field', default) na LLM response = ticha data degradace. Default = warning, ne ticha nahrada.",
+    "weight": "high",
+    "tags": ["llm", "data-integrity", "defensive"]
+  },
+  {
+    "id": "P69",
+    "title": "Nazvy souboru/adresaru jen ASCII",
+    "text": "Vsechny nazvy souboru/adresaru ASCII [A-Za-z0-9._-]. Overeni .scripts/ascii_filenames_check.ps1 (exit 0).",
+    "weight": "high",
+    "tags": ["filenames", "ascii", "encoding"]
+  },
+  {
+    "id": "P70",
+    "title": "Scraping pipeline s detail fetch = 3 faze",
+    "text": "Collect URLs -> Parallel fetch details -> Filter/merge. Kazda faze ma vlastni error handling.",
+    "weight": "high",
+    "tags": ["scraping", "pipeline", "architecture"]
+  },
+  {
+    "id": "P77",
+    "title": "0 karet na strance N>1 = end-of-list, ne layout change",
+    "text": "Pokud search vrati 0 vysledku na strance N>1, je to normalni end-of-list, ne chyba layoutu.",
+    "weight": "medium",
+    "tags": ["scraping", "pagination", "error-handling"]
+  },
+  {
+    "id": "P-GCP-01",
+    "title": "Pri 403 v GCP overit vsech 5 autentizacnich vrstev",
+    "text": "IAM role -> Access Scope -> Metadata Server identity -> Workspace vs Cloud scope mismatch -> Service Account quota.",
+    "weight": "high",
+    "tags": ["gcp", "auth", "403"]
+  },
+  {
+    "id": "P-GCP-05",
+    "title": "Hard Reset protokol",
+    "text": "Pri zacykleni v chybach >30 minut: smazat poskozeny soubor -> vlozit overeny blok kodu -> smazat data -> zacit z nuly.",
+    "weight": "medium",
+    "tags": ["gcp", "recovery", "cognitive"]
+  }
+]

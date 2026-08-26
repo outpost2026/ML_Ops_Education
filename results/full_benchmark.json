@@ -1,0 +1,1254 @@
+{
+  "compression": {
+    "v2_full_bytes": 118592,
+    "v2_full_tokens": 28422,
+    "jsonl_full_bytes": 59623,
+    "jsonl_full_tokens": 14463,
+    "render_bytes": 47003,
+    "render_tokens": 11382,
+    "delta_bytes_pct": -49.7,
+    "delta_tokens_pct": -49.1
+  },
+  "retrieval": {
+    "total_queries": 50,
+    "v2_precision@3": 0.6,
+    "jsonl_precision@3": 0.58,
+    "v2_recall": 0.5967,
+    "jsonl_recall": 0.5733,
+    "v2_mrr": 0.6273,
+    "jsonl_mrr": 0.6613,
+    "wins": {
+      "v2": 5,
+      "jsonl": 5,
+      "tie": 40
+    }
+  },
+  "per_query": [
+    {
+      "qid": "Q1",
+      "lang": "CZ",
+      "expected": [
+        "GT-002",
+        "GT-005",
+        "GT-001"
+      ],
+      "v2_top3": [
+        "GT-001",
+        "GT-006",
+        "GT-010"
+      ],
+      "jsonl_top3": [
+        "GT-001",
+        "GT-006",
+        "GT-010"
+      ],
+      "v2_p3": 0.3333333333333333,
+      "jsonl_p3": 0.3333333333333333,
+      "v2_recall": 0.3333333333333333,
+      "jsonl_recall": 0.3333333333333333,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q1",
+      "lang": "EN",
+      "expected": [
+        "GT-002",
+        "GT-005",
+        "GT-001"
+      ],
+      "v2_top3": [
+        "GT-087",
+        "GT-006",
+        "GT-011"
+      ],
+      "jsonl_top3": [
+        "GT-001",
+        "GT-006",
+        "GT-011"
+      ],
+      "v2_p3": 0.0,
+      "jsonl_p3": 0.3333333333333333,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.3333333333333333,
+      "v2_mrr": 0,
+      "jsonl_mrr": 1.0,
+      "winner": "jsonl"
+    },
+    {
+      "qid": "Q2",
+      "lang": "CZ",
+      "expected": [
+        "GT-095",
+        "GT-080",
+        "GT-031",
+        "GT-008"
+      ],
+      "v2_top3": [
+        "GT-041",
+        "GT-008",
+        "GT-009"
+      ],
+      "jsonl_top3": [
+        "GT-031",
+        "GT-008",
+        "GT-009"
+      ],
+      "v2_p3": 0.3333333333333333,
+      "jsonl_p3": 0.6666666666666666,
+      "v2_recall": 0.25,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 0.5,
+      "jsonl_mrr": 1.0,
+      "winner": "jsonl"
+    },
+    {
+      "qid": "Q2",
+      "lang": "EN",
+      "expected": [
+        "GT-095",
+        "GT-080",
+        "GT-031",
+        "GT-008"
+      ],
+      "v2_top3": [
+        "GT-008",
+        "GT-041",
+        "GT-009"
+      ],
+      "jsonl_top3": [
+        "GT-008",
+        "GT-031",
+        "GT-009"
+      ],
+      "v2_p3": 0.3333333333333333,
+      "jsonl_p3": 0.6666666666666666,
+      "v2_recall": 0.25,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q3",
+      "lang": "CZ",
+      "expected": [
+        "GT-074",
+        "GT-050"
+      ],
+      "v2_top3": [
+        "GT-049",
+        "GT-067",
+        "GT-074"
+      ],
+      "jsonl_top3": [
+        "GT-049",
+        "GT-067",
+        "GT-074"
+      ],
+      "v2_p3": 0.5,
+      "jsonl_p3": 0.5,
+      "v2_recall": 0.5,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 0.3333333333333333,
+      "jsonl_mrr": 0.3333333333333333,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q3",
+      "lang": "EN",
+      "expected": [
+        "GT-074",
+        "GT-050"
+      ],
+      "v2_top3": [
+        "GT-074",
+        "GT-069",
+        "GT-042"
+      ],
+      "jsonl_top3": [
+        "GT-069",
+        "GT-074",
+        "GT-052"
+      ],
+      "v2_p3": 0.5,
+      "jsonl_p3": 0.5,
+      "v2_recall": 0.5,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 0.5,
+      "winner": "v2"
+    },
+    {
+      "qid": "Q4",
+      "lang": "CZ",
+      "expected": [
+        "GT-026"
+      ],
+      "v2_top3": [
+        "GT-016",
+        "GT-026",
+        "GT-027"
+      ],
+      "jsonl_top3": [
+        "GT-015",
+        "GT-016",
+        "GT-026"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 0.5,
+      "jsonl_mrr": 0.3333333333333333,
+      "winner": "v2"
+    },
+    {
+      "qid": "Q4",
+      "lang": "EN",
+      "expected": [
+        "GT-026"
+      ],
+      "v2_top3": [
+        "GT-026",
+        "GT-016",
+        "GT-027"
+      ],
+      "jsonl_top3": [
+        "GT-026",
+        "GT-015",
+        "GT-016"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q5",
+      "lang": "CZ",
+      "expected": [
+        "GT-047"
+      ],
+      "v2_top3": [
+        "GT-060",
+        "GT-047",
+        "GT-052"
+      ],
+      "jsonl_top3": [
+        "GT-047",
+        "GT-054",
+        "GT-057"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 0.5,
+      "jsonl_mrr": 1.0,
+      "winner": "jsonl"
+    },
+    {
+      "qid": "Q5",
+      "lang": "EN",
+      "expected": [
+        "GT-047"
+      ],
+      "v2_top3": [
+        "GT-047",
+        "GT-060",
+        "GT-052"
+      ],
+      "jsonl_top3": [
+        "GT-047",
+        "GT-054",
+        "GT-057"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q6",
+      "lang": "CZ",
+      "expected": [
+        "GT-002",
+        "GT-003"
+      ],
+      "v2_top3": [
+        "GT-002",
+        "GT-005",
+        "GT-011"
+      ],
+      "jsonl_top3": [
+        "GT-002",
+        "GT-005",
+        "GT-011"
+      ],
+      "v2_p3": 0.5,
+      "jsonl_p3": 0.5,
+      "v2_recall": 0.5,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q6",
+      "lang": "EN",
+      "expected": [
+        "GT-002",
+        "GT-003"
+      ],
+      "v2_top3": [
+        "GT-002",
+        "GT-005",
+        "GT-011"
+      ],
+      "jsonl_top3": [
+        "GT-002",
+        "GT-005",
+        "GT-011"
+      ],
+      "v2_p3": 0.5,
+      "jsonl_p3": 0.5,
+      "v2_recall": 0.5,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q7",
+      "lang": "CZ",
+      "expected": [
+        "GT-004",
+        "GT-031"
+      ],
+      "v2_top3": [
+        "GT-004",
+        "GT-013",
+        "GT-021"
+      ],
+      "jsonl_top3": [
+        "GT-004",
+        "GT-013",
+        "GT-021"
+      ],
+      "v2_p3": 0.5,
+      "jsonl_p3": 0.5,
+      "v2_recall": 0.5,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q7",
+      "lang": "EN",
+      "expected": [
+        "GT-004",
+        "GT-031"
+      ],
+      "v2_top3": [
+        "GT-004",
+        "GT-013",
+        "GT-021"
+      ],
+      "jsonl_top3": [
+        "GT-004",
+        "GT-013",
+        "GT-021"
+      ],
+      "v2_p3": 0.5,
+      "jsonl_p3": 0.5,
+      "v2_recall": 0.5,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q8",
+      "lang": "CZ",
+      "expected": [
+        "GT-GCP-001"
+      ],
+      "v2_top3": [
+        "GT-GCP-001",
+        "GT-GCP-002",
+        "GT-042"
+      ],
+      "jsonl_top3": [
+        "GT-GCP-001",
+        "GT-GCP-002",
+        "GT-GCP-003"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q8",
+      "lang": "EN",
+      "expected": [
+        "GT-GCP-001"
+      ],
+      "v2_top3": [
+        "GT-GCP-001",
+        "GT-GCP-002",
+        "GT-058"
+      ],
+      "jsonl_top3": [
+        "GT-GCP-001",
+        "GT-GCP-002",
+        "GT-GCP-003"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q9",
+      "lang": "CZ",
+      "expected": [
+        "GT-078"
+      ],
+      "v2_top3": [
+        "GT-078",
+        "GT-039",
+        "GT-086"
+      ],
+      "jsonl_top3": [
+        "GT-078",
+        "GT-039",
+        "GT-086"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q9",
+      "lang": "EN",
+      "expected": [
+        "GT-078"
+      ],
+      "v2_top3": [
+        "GT-078",
+        "GT-086",
+        "GT-001"
+      ],
+      "jsonl_top3": [
+        "GT-078",
+        "GT-086",
+        "GT-001"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q10",
+      "lang": "CZ",
+      "expected": [
+        "GT-059",
+        "GT-079"
+      ],
+      "v2_top3": [
+        "GT-079",
+        "GT-056",
+        "GT-059"
+      ],
+      "jsonl_top3": [
+        "GT-079",
+        "GT-051",
+        "GT-056"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 0.5,
+      "v2_recall": 1.0,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q10",
+      "lang": "EN",
+      "expected": [
+        "GT-059",
+        "GT-079"
+      ],
+      "v2_top3": [
+        "GT-079",
+        "GT-056",
+        "GT-059"
+      ],
+      "jsonl_top3": [
+        "GT-079",
+        "GT-051",
+        "GT-056"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 0.5,
+      "v2_recall": 1.0,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q11",
+      "lang": "CZ",
+      "expected": [
+        "GT-001"
+      ],
+      "v2_top3": [
+        "GT-001",
+        "GT-013",
+        "GT-031"
+      ],
+      "jsonl_top3": [
+        "GT-013",
+        "GT-031",
+        "GT-058"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 0.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 0,
+      "winner": "v2"
+    },
+    {
+      "qid": "Q11",
+      "lang": "EN",
+      "expected": [
+        "GT-001"
+      ],
+      "v2_top3": [
+        "GT-042",
+        "GT-041",
+        "GT-078"
+      ],
+      "jsonl_top3": [
+        "GT-070",
+        "GT-052",
+        "GT-042"
+      ],
+      "v2_p3": 0.0,
+      "jsonl_p3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q12",
+      "lang": "CZ",
+      "expected": [
+        "GT-095",
+        "GT-031"
+      ],
+      "v2_top3": [
+        "GT-094",
+        "GT-001",
+        "GT-002"
+      ],
+      "jsonl_top3": [
+        "GT-094",
+        "GT-001",
+        "GT-003"
+      ],
+      "v2_p3": 0.0,
+      "jsonl_p3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q12",
+      "lang": "EN",
+      "expected": [
+        "GT-095",
+        "GT-031"
+      ],
+      "v2_top3": [
+        "GT-013",
+        "GT-026",
+        "GT-031"
+      ],
+      "jsonl_top3": [
+        "GT-001",
+        "GT-013",
+        "GT-018"
+      ],
+      "v2_p3": 0.5,
+      "jsonl_p3": 0.0,
+      "v2_recall": 0.5,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0.3333333333333333,
+      "jsonl_mrr": 0.2,
+      "winner": "v2"
+    },
+    {
+      "qid": "Q13",
+      "lang": "CZ",
+      "expected": [
+        "GT-GCP-005"
+      ],
+      "v2_top3": [
+        "GT-045",
+        "GT-091",
+        "GT-092"
+      ],
+      "jsonl_top3": [
+        "GT-045",
+        "GT-091",
+        "GT-092"
+      ],
+      "v2_p3": 0.0,
+      "jsonl_p3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q13",
+      "lang": "EN",
+      "expected": [
+        "GT-GCP-005"
+      ],
+      "v2_top3": [
+        "GT-042",
+        "GT-GCP-005",
+        "GT-053"
+      ],
+      "jsonl_top3": [
+        "GT-075",
+        "GT-055",
+        "GT-028"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 0.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0.5,
+      "jsonl_mrr": 0,
+      "winner": "v2"
+    },
+    {
+      "qid": "Q14",
+      "lang": "CZ",
+      "expected": [
+        "GT-003"
+      ],
+      "v2_top3": [
+        "GT-003",
+        "GT-009",
+        "GT-001"
+      ],
+      "jsonl_top3": [
+        "GT-003",
+        "GT-009",
+        "GT-001"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q14",
+      "lang": "EN",
+      "expected": [
+        "GT-003"
+      ],
+      "v2_top3": [
+        "GT-003",
+        "GT-009",
+        "GT-001"
+      ],
+      "jsonl_top3": [
+        "GT-003",
+        "GT-009",
+        "GT-001"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q15",
+      "lang": "CZ",
+      "expected": [
+        "GT-045"
+      ],
+      "v2_top3": [
+        "GT-045",
+        "GT-053",
+        "GT-058"
+      ],
+      "jsonl_top3": [
+        "GT-045",
+        "GT-053",
+        "GT-041"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q15",
+      "lang": "EN",
+      "expected": [
+        "GT-045"
+      ],
+      "v2_top3": [
+        "GT-045",
+        "GT-053",
+        "GT-042"
+      ],
+      "jsonl_top3": [
+        "GT-045",
+        "GT-041",
+        "GT-053"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q16",
+      "lang": "CZ",
+      "expected": [
+        "GT-GCP-001"
+      ],
+      "v2_top3": [
+        "GT-014",
+        "GT-018",
+        "GT-029"
+      ],
+      "jsonl_top3": [
+        "GT-014",
+        "GT-018",
+        "GT-029"
+      ],
+      "v2_p3": 0.0,
+      "jsonl_p3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q16",
+      "lang": "EN",
+      "expected": [
+        "GT-GCP-001"
+      ],
+      "v2_top3": [
+        "GT-012",
+        "GT-013",
+        "GT-014"
+      ],
+      "jsonl_top3": [
+        "GT-012",
+        "GT-013",
+        "GT-014"
+      ],
+      "v2_p3": 0.0,
+      "jsonl_p3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q17",
+      "lang": "CZ",
+      "expected": [
+        "GT-050"
+      ],
+      "v2_top3": [
+        "GT-050",
+        "GT-060",
+        "GT-073"
+      ],
+      "jsonl_top3": [
+        "GT-050",
+        "GT-073",
+        "GT-075"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q17",
+      "lang": "EN",
+      "expected": [
+        "GT-050"
+      ],
+      "v2_top3": [
+        "GT-073",
+        "GT-050",
+        "GT-060"
+      ],
+      "jsonl_top3": [
+        "GT-073",
+        "GT-050",
+        "GT-061"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 0.5,
+      "jsonl_mrr": 0.5,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q18",
+      "lang": "CZ",
+      "expected": [
+        "GT-015"
+      ],
+      "v2_top3": [
+        "GT-015",
+        "GT-016",
+        "GT-086"
+      ],
+      "jsonl_top3": [
+        "GT-015",
+        "GT-016",
+        "GT-086"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q18",
+      "lang": "EN",
+      "expected": [
+        "GT-015"
+      ],
+      "v2_top3": [
+        "GT-001",
+        "GT-002",
+        "GT-006"
+      ],
+      "jsonl_top3": [
+        "GT-001",
+        "GT-002",
+        "GT-006"
+      ],
+      "v2_p3": 0.0,
+      "jsonl_p3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0.2,
+      "jsonl_mrr": 0.2,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q19",
+      "lang": "CZ",
+      "expected": [
+        "GT-050",
+        "GT-001"
+      ],
+      "v2_top3": [
+        "GT-013",
+        "GT-031",
+        "GT-042"
+      ],
+      "jsonl_top3": [
+        "GT-013",
+        "GT-031",
+        "GT-042"
+      ],
+      "v2_p3": 0.0,
+      "jsonl_p3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q19",
+      "lang": "EN",
+      "expected": [
+        "GT-050",
+        "GT-001"
+      ],
+      "v2_top3": [
+        "GT-042",
+        "GT-058",
+        "GT-041"
+      ],
+      "jsonl_top3": [
+        "GT-042",
+        "GT-041",
+        "GT-070"
+      ],
+      "v2_p3": 0.0,
+      "jsonl_p3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q20",
+      "lang": "CZ",
+      "expected": [
+        "GT-095",
+        "GT-031"
+      ],
+      "v2_top3": [
+        "GT-053",
+        "GT-037",
+        "GT-039"
+      ],
+      "jsonl_top3": [
+        "GT-054",
+        "GT-070",
+        "GT-058"
+      ],
+      "v2_p3": 0.0,
+      "jsonl_p3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q20",
+      "lang": "EN",
+      "expected": [
+        "GT-095",
+        "GT-031"
+      ],
+      "v2_top3": [
+        "GT-031",
+        "GT-059",
+        "GT-091"
+      ],
+      "jsonl_top3": [
+        "GT-031",
+        "GT-091",
+        "GT-095"
+      ],
+      "v2_p3": 0.5,
+      "jsonl_p3": 1.0,
+      "v2_recall": 0.5,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q21",
+      "lang": "CZ",
+      "expected": [
+        "GT-011"
+      ],
+      "v2_top3": [
+        "GT-009",
+        "GT-011",
+        "GT-050"
+      ],
+      "jsonl_top3": [
+        "GT-009",
+        "GT-011",
+        "GT-079"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 0.5,
+      "jsonl_mrr": 0.5,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q21",
+      "lang": "EN",
+      "expected": [
+        "GT-011"
+      ],
+      "v2_top3": [
+        "GT-009",
+        "GT-011",
+        "GT-050"
+      ],
+      "jsonl_top3": [
+        "GT-009",
+        "GT-011",
+        "GT-079"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 0.5,
+      "jsonl_mrr": 0.5,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q22",
+      "lang": "CZ",
+      "expected": [
+        "GT-059",
+        "GT-079"
+      ],
+      "v2_top3": [
+        "GT-004",
+        "GT-021",
+        "GT-046"
+      ],
+      "jsonl_top3": [
+        "GT-079",
+        "GT-004",
+        "GT-021"
+      ],
+      "v2_p3": 0.0,
+      "jsonl_p3": 0.5,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 0,
+      "jsonl_mrr": 1.0,
+      "winner": "jsonl"
+    },
+    {
+      "qid": "Q22",
+      "lang": "EN",
+      "expected": [
+        "GT-059",
+        "GT-079"
+      ],
+      "v2_top3": [
+        "GT-004",
+        "GT-008",
+        "GT-021"
+      ],
+      "jsonl_top3": [
+        "GT-079",
+        "GT-004",
+        "GT-008"
+      ],
+      "v2_p3": 0.0,
+      "jsonl_p3": 0.5,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 0,
+      "jsonl_mrr": 1.0,
+      "winner": "jsonl"
+    },
+    {
+      "qid": "Q23",
+      "lang": "CZ",
+      "expected": [
+        "GT-045"
+      ],
+      "v2_top3": [
+        "GT-046",
+        "GT-055",
+        "GT-060"
+      ],
+      "jsonl_top3": [
+        "GT-046",
+        "GT-047",
+        "GT-055"
+      ],
+      "v2_p3": 0.0,
+      "jsonl_p3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q23",
+      "lang": "EN",
+      "expected": [
+        "GT-045"
+      ],
+      "v2_top3": [
+        "GT-046",
+        "GT-055",
+        "GT-060"
+      ],
+      "jsonl_top3": [
+        "GT-046",
+        "GT-047",
+        "GT-055"
+      ],
+      "v2_p3": 0.0,
+      "jsonl_p3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q24",
+      "lang": "CZ",
+      "expected": [
+        "GT-003"
+      ],
+      "v2_top3": [
+        "GT-003",
+        "GT-001",
+        "GT-GCP-004"
+      ],
+      "jsonl_top3": [
+        "GT-003",
+        "GT-001",
+        "GT-GCP-004"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q24",
+      "lang": "EN",
+      "expected": [
+        "GT-003"
+      ],
+      "v2_top3": [
+        "GT-003",
+        "GT-058",
+        "GT-001"
+      ],
+      "jsonl_top3": [
+        "GT-003",
+        "GT-001",
+        "GT-002"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q25",
+      "lang": "CZ",
+      "expected": [
+        "GT-004"
+      ],
+      "v2_top3": [
+        "GT-004",
+        "GT-014",
+        "GT-085"
+      ],
+      "jsonl_top3": [
+        "GT-004",
+        "GT-014",
+        "GT-099"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    },
+    {
+      "qid": "Q25",
+      "lang": "EN",
+      "expected": [
+        "GT-004"
+      ],
+      "v2_top3": [
+        "GT-004",
+        "GT-014",
+        "GT-041"
+      ],
+      "jsonl_top3": [
+        "GT-004",
+        "GT-014",
+        "GT-099"
+      ],
+      "v2_p3": 1.0,
+      "jsonl_p3": 1.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "winner": "tie"
+    }
+  ]
+}

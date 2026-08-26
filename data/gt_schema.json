@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gt-postmortem-entry-v1",
+  "title": "GT Postmortem Entry",
+  "description": "Atom-based structured record for MCP engineering postmortem knowledge",
+  "type": "object",
+  "required": ["id", "server", "status", "symptom", "root_cause", "fix", "rule"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^GT-(GCP-)?\\d{3}$",
+      "description": "Unique identifier (GT-NNN or GT-GCP-NNN)"
+    },
+    "aliases": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Original IDs from source artifacts"
+    },
+    "server": {
+      "type": "string",
+      "enum": ["cnc-tools", "linkedin-mcp-custom", "mcp-jobs", "lichess-analyzer", "workspace", "gcp"],
+      "description": "MCP server or scope"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["fixed", "mitigated", "documented", "workaround", "pending", "implemented"]
+    },
+    "typ": {
+      "type": "string",
+      "description": "Category tag (e.g. timeout, encoding, data-integrity)"
+    },
+    "symptom": {
+      "type": "string",
+      "description": "Observable failure behavior"
+    },
+    "root_cause": {
+      "type": "string",
+      "description": "Underlying systemic cause"
+    },
+    "fix": {
+      "type": "string",
+      "description": "Resolution or mitigation applied"
+    },
+    "rule": {
+      "type": "string",
+      "description": "Primary P-rule reference"
+    },
+    "rules_secondary": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Additional P-rule references"
+    },
+    "provenance": {
+      "type": "string",
+      "description": "Source artifact and location"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Searchable classification tags"
+    },
+    "complexity": {
+      "type": "string",
+      "enum": ["simple", "moderate", "complex"]
+    },
+    "sub_bugs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "description"],
+        "properties": {
+          "id": { "type": "string" },
+          "description": { "type": "string" },
+          "rule": { "type": "string" }
+        }
+      },
+      "description": "Sub-bugs for multi-bug entries"
+    }
+  },
+  "additionalProperties": false
+}

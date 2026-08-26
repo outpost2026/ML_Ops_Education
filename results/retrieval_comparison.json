@@ -1,0 +1,1396 @@
+{
+  "aggregate": {
+    "total_queries": 50,
+    "v2_precision@3": 0.3267,
+    "jsonl_precision@3": 0.3867,
+    "v2_recall": 0.7167,
+    "jsonl_recall": 0.8083,
+    "v2_mrr": 0.7633,
+    "jsonl_mrr": 0.84,
+    "v2_avg_latency_ms": 1.28,
+    "jsonl_avg_latency_ms": 1.92,
+    "wins": {
+      "v2": 2,
+      "jsonl": 12,
+      "tie": 36
+    }
+  },
+  "per_query": [
+    {
+      "query_id": "Q1",
+      "lang": "CZ",
+      "query": "timeout v MCP serveru",
+      "expected": [
+        "GT-001",
+        "GT-002",
+        "GT-005"
+      ],
+      "v2_top3": [
+        "GT-001",
+        "GT-011",
+        "GT-002"
+      ],
+      "jsonl_top3": [
+        "GT-001",
+        "GT-002",
+        "GT-005"
+      ],
+      "v2_precision@3": 0.6666666666666666,
+      "jsonl_precision@3": 1.0,
+      "v2_recall": 0.6666666666666666,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "jsonl"
+    },
+    {
+      "query_id": "Q1",
+      "lang": "EN",
+      "query": "timeout in MCP server",
+      "expected": [
+        "GT-001",
+        "GT-002",
+        "GT-005"
+      ],
+      "v2_top3": [
+        "GT-011",
+        "GT-001",
+        "GT-005"
+      ],
+      "jsonl_top3": [
+        "GT-001",
+        "GT-005",
+        "GT-015"
+      ],
+      "v2_precision@3": 0.6666666666666666,
+      "jsonl_precision@3": 0.6666666666666666,
+      "v2_recall": 0.6666666666666666,
+      "jsonl_recall": 0.6666666666666666,
+      "v2_mrr": 0.5,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "jsonl"
+    },
+    {
+      "query_id": "Q2",
+      "lang": "CZ",
+      "query": "encoding problem na Windows",
+      "expected": [
+        "GT-008",
+        "GT-080",
+        "GT-031",
+        "GT-095"
+      ],
+      "v2_top3": [
+        "GT-041",
+        "GT-008",
+        "GT-031"
+      ],
+      "jsonl_top3": [
+        "GT-008",
+        "GT-011",
+        "GT-041"
+      ],
+      "v2_precision@3": 0.6666666666666666,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 0.5,
+      "jsonl_recall": 0.25,
+      "v2_mrr": 0.5,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 8.32,
+      "jsonl_latency_ms": 1.55,
+      "winner": "jsonl"
+    },
+    {
+      "query_id": "Q2",
+      "lang": "EN",
+      "query": "encoding issue on Windows",
+      "expected": [
+        "GT-008",
+        "GT-080",
+        "GT-031",
+        "GT-095"
+      ],
+      "v2_top3": [
+        "GT-008",
+        "GT-041",
+        "GT-031"
+      ],
+      "jsonl_top3": [
+        "GT-008",
+        "GT-041",
+        "GT-080"
+      ],
+      "v2_precision@3": 0.6666666666666666,
+      "jsonl_precision@3": 0.6666666666666666,
+      "v2_recall": 0.5,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q3",
+      "lang": "CZ",
+      "query": "cache invalidace po zmene kodu",
+      "expected": [
+        "GT-050",
+        "GT-074"
+      ],
+      "v2_top3": [
+        "GT-074",
+        "GT-095",
+        "GT-001"
+      ],
+      "jsonl_top3": [
+        "GT-074",
+        "GT-001",
+        "GT-002"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 0.5,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q3",
+      "lang": "EN",
+      "query": "cache invalidation after code change",
+      "expected": [
+        "GT-050",
+        "GT-074"
+      ],
+      "v2_top3": [
+        "GT-074",
+        "GT-008",
+        "GT-050"
+      ],
+      "jsonl_top3": [
+        "GT-074",
+        "GT-008",
+        "GT-050"
+      ],
+      "v2_precision@3": 0.6666666666666666,
+      "jsonl_precision@3": 0.6666666666666666,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 10.14,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q4",
+      "lang": "CZ",
+      "query": "Playwright cookie expirace",
+      "expected": [
+        "GT-026"
+      ],
+      "v2_top3": [
+        "GT-026",
+        "GT-015",
+        "GT-004"
+      ],
+      "jsonl_top3": [
+        "GT-026",
+        "GT-015",
+        "GT-008"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 3.18,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q4",
+      "lang": "EN",
+      "query": "Playwright cookie expiry",
+      "expected": [
+        "GT-026"
+      ],
+      "v2_top3": [
+        "GT-026",
+        "GT-015",
+        "GT-004"
+      ],
+      "jsonl_top3": [
+        "GT-026",
+        "GT-015",
+        "GT-008"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 2.45,
+      "jsonl_latency_ms": 1.55,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q5",
+      "lang": "CZ",
+      "query": "LLM provider cascade mlceni",
+      "expected": [
+        "GT-047"
+      ],
+      "v2_top3": [
+        "GT-047",
+        "GT-059",
+        "GT-079"
+      ],
+      "jsonl_top3": [
+        "GT-045",
+        "GT-047",
+        "GT-041"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 0.5,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 3.11,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q5",
+      "lang": "EN",
+      "query": "LLM provider cascade silence",
+      "expected": [
+        "GT-047"
+      ],
+      "v2_top3": [
+        "GT-047",
+        "GT-059",
+        "GT-079"
+      ],
+      "jsonl_top3": [
+        "GT-045",
+        "GT-047",
+        "GT-041"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 0.5,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q6",
+      "lang": "CZ",
+      "query": "subprocess timeout vs client timeout",
+      "expected": [
+        "GT-003",
+        "GT-002"
+      ],
+      "v2_top3": [
+        "GT-002",
+        "GT-005",
+        "GT-011"
+      ],
+      "jsonl_top3": [
+        "GT-005",
+        "GT-002",
+        "GT-001"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 0.5,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 0.5,
+      "v2_latency_ms": 4.53,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q6",
+      "lang": "EN",
+      "query": "subprocess timeout versus client timeout",
+      "expected": [
+        "GT-003",
+        "GT-002"
+      ],
+      "v2_top3": [
+        "GT-002",
+        "GT-005",
+        "GT-011"
+      ],
+      "jsonl_top3": [
+        "GT-002",
+        "GT-005",
+        "GT-001"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 0.5,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 5.18,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q7",
+      "lang": "CZ",
+      "query": "JSON defenzivni parsovani",
+      "expected": [
+        "GT-004",
+        "GT-031"
+      ],
+      "v2_top3": [
+        "GT-004",
+        "GT-041",
+        "GT-045"
+      ],
+      "jsonl_top3": [
+        "GT-004",
+        "GT-045",
+        "GT-050"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 0.5,
+      "jsonl_recall": 0.5,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 2.2,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q7",
+      "lang": "EN",
+      "query": "JSON defensive parsing",
+      "expected": [
+        "GT-004",
+        "GT-031"
+      ],
+      "v2_top3": [
+        "GT-004",
+        "GT-041",
+        "GT-045"
+      ],
+      "jsonl_top3": [
+        "GT-004",
+        "GT-031",
+        "GT-045"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.6666666666666666,
+      "v2_recall": 0.5,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "jsonl"
+    },
+    {
+      "query_id": "Q8",
+      "lang": "CZ",
+      "query": "GCP 403 autentizace",
+      "expected": [
+        "GT-GCP-001"
+      ],
+      "v2_top3": [
+        "GT-GCP-001",
+        "GT-002",
+        "GT-015"
+      ],
+      "jsonl_top3": [
+        "GT-GCP-001",
+        "GT-GCP-005",
+        "GT-001"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 7.44,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q8",
+      "lang": "EN",
+      "query": "GCP 403 authentication",
+      "expected": [
+        "GT-GCP-001"
+      ],
+      "v2_top3": [
+        "GT-GCP-001",
+        "GT-041",
+        "GT-078"
+      ],
+      "jsonl_top3": [
+        "GT-GCP-001",
+        "GT-026",
+        "GT-GCP-005"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q9",
+      "lang": "CZ",
+      "query": "ruff fix smazal importy",
+      "expected": [
+        "GT-078"
+      ],
+      "v2_top3": [
+        "GT-078",
+        "GT-001",
+        "GT-002"
+      ],
+      "jsonl_top3": [
+        "GT-078",
+        "GT-001",
+        "GT-002"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q9",
+      "lang": "EN",
+      "query": "ruff fix deleted imports",
+      "expected": [
+        "GT-078"
+      ],
+      "v2_top3": [
+        "GT-078",
+        "GT-001",
+        "GT-002"
+      ],
+      "jsonl_top3": [
+        "GT-078",
+        "GT-001",
+        "GT-002"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 8.71,
+      "jsonl_latency_ms": 1.36,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q10",
+      "lang": "CZ",
+      "query": "data correctness LLM prompt",
+      "expected": [
+        "GT-079",
+        "GT-059"
+      ],
+      "v2_top3": [
+        "GT-079",
+        "GT-059",
+        "GT-095"
+      ],
+      "jsonl_top3": [
+        "GT-059",
+        "GT-079",
+        "GT-041"
+      ],
+      "v2_precision@3": 0.6666666666666666,
+      "jsonl_precision@3": 0.6666666666666666,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q10",
+      "lang": "EN",
+      "query": "data correctness in LLM prompt",
+      "expected": [
+        "GT-079",
+        "GT-059"
+      ],
+      "v2_top3": [
+        "GT-079",
+        "GT-059",
+        "GT-095"
+      ],
+      "jsonl_top3": [
+        "GT-059",
+        "GT-079",
+        "GT-041"
+      ],
+      "v2_precision@3": 0.6666666666666666,
+      "jsonl_precision@3": 0.6666666666666666,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q11",
+      "lang": "CZ",
+      "query": "paralelizace vicesmerove operace",
+      "expected": [
+        "GT-001"
+      ],
+      "v2_top3": [
+        "GT-001",
+        "GT-031",
+        "GT-002"
+      ],
+      "jsonl_top3": [
+        "GT-031",
+        "GT-078",
+        "GT-004"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 10.18,
+      "winner": "v2"
+    },
+    {
+      "query_id": "Q11",
+      "lang": "EN",
+      "query": "parallelization of multi-target operations",
+      "expected": [
+        "GT-001"
+      ],
+      "v2_top3": [
+        "GT-041",
+        "GT-078",
+        "GT-001"
+      ],
+      "jsonl_top3": [
+        "GT-031",
+        "GT-050",
+        "GT-008"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.0,
+      "v2_recall": 1.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0.3333333333333333,
+      "jsonl_mrr": 0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 4.08,
+      "winner": "v2"
+    },
+    {
+      "query_id": "Q12",
+      "lang": "CZ",
+      "query": "platba za scraping portaly",
+      "expected": [
+        "GT-095",
+        "GT-031"
+      ],
+      "v2_top3": [
+        "GT-001",
+        "GT-002",
+        "GT-003"
+      ],
+      "jsonl_top3": [
+        "GT-003",
+        "GT-005",
+        "GT-015"
+      ],
+      "v2_precision@3": 0.0,
+      "jsonl_precision@3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 0,
+      "v2_latency_ms": 1.38,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q12",
+      "lang": "EN",
+      "query": "salary scraping from portals",
+      "expected": [
+        "GT-095",
+        "GT-031"
+      ],
+      "v2_top3": [
+        "GT-026",
+        "GT-031",
+        "GT-078"
+      ],
+      "jsonl_top3": [
+        "GT-031",
+        "GT-041",
+        "GT-095"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.6666666666666666,
+      "v2_recall": 0.5,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 0.5,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 4.62,
+      "winner": "jsonl"
+    },
+    {
+      "query_id": "Q13",
+      "lang": "CZ",
+      "query": "kognitivni preteceni pri debugovani",
+      "expected": [
+        "GT-GCP-005"
+      ],
+      "v2_top3": [
+        "GT-045",
+        "GT-GCP-005",
+        "GT-005"
+      ],
+      "jsonl_top3": [
+        "GT-GCP-005",
+        "GT-001",
+        "GT-002"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 0.5,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "jsonl"
+    },
+    {
+      "query_id": "Q13",
+      "lang": "EN",
+      "query": "cognitive overload during debugging",
+      "expected": [
+        "GT-GCP-005"
+      ],
+      "v2_top3": [
+        "GT-GCP-005",
+        "GT-004",
+        "GT-026"
+      ],
+      "jsonl_top3": [
+        "GT-GCP-005",
+        "GT-041",
+        "GT-003"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q14",
+      "lang": "CZ",
+      "query": "git lock contention",
+      "expected": [
+        "GT-003"
+      ],
+      "v2_top3": [
+        "GT-003",
+        "GT-001",
+        "GT-002"
+      ],
+      "jsonl_top3": [
+        "GT-003",
+        "GT-001",
+        "GT-002"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 10.68,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q14",
+      "lang": "EN",
+      "query": "git lock contention",
+      "expected": [
+        "GT-003"
+      ],
+      "v2_top3": [
+        "GT-003",
+        "GT-001",
+        "GT-002"
+      ],
+      "jsonl_top3": [
+        "GT-003",
+        "GT-001",
+        "GT-002"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 1.72,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q15",
+      "lang": "CZ",
+      "query": "LLM response nema content field",
+      "expected": [
+        "GT-045"
+      ],
+      "v2_top3": [
+        "GT-045",
+        "GT-059",
+        "GT-079"
+      ],
+      "jsonl_top3": [
+        "GT-045",
+        "GT-079",
+        "GT-041"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q15",
+      "lang": "EN",
+      "query": "LLM response missing content field",
+      "expected": [
+        "GT-045"
+      ],
+      "v2_top3": [
+        "GT-045",
+        "GT-059",
+        "GT-079"
+      ],
+      "jsonl_top3": [
+        "GT-045",
+        "GT-079",
+        "GT-041"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 7.52,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q16",
+      "lang": "CZ",
+      "query": "testy nepristupneho filesystemu",
+      "expected": [
+        "GT-GCP-001"
+      ],
+      "v2_top3": [
+        "GT-078",
+        "GT-005",
+        "GT-047"
+      ],
+      "jsonl_top3": [
+        "GT-031",
+        "GT-078",
+        "GT-003"
+      ],
+      "v2_precision@3": 0.0,
+      "jsonl_precision@3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q16",
+      "lang": "EN",
+      "query": "inaccessible filesystem test",
+      "expected": [
+        "GT-GCP-001"
+      ],
+      "v2_top3": [
+        "GT-078",
+        "GT-080",
+        "GT-008"
+      ],
+      "jsonl_top3": [
+        "GT-003",
+        "GT-031",
+        "GT-041"
+      ],
+      "v2_precision@3": 0.0,
+      "jsonl_precision@3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q17",
+      "lang": "CZ",
+      "query": "opakovana analyza Stockfish",
+      "expected": [
+        "GT-050"
+      ],
+      "v2_top3": [
+        "GT-050",
+        "GT-008",
+        "GT-001"
+      ],
+      "jsonl_top3": [
+        "GT-050",
+        "GT-GCP-005",
+        "GT-031"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 8.85,
+      "jsonl_latency_ms": 1.02,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q17",
+      "lang": "EN",
+      "query": "repeated Stockfish analysis",
+      "expected": [
+        "GT-050"
+      ],
+      "v2_top3": [
+        "GT-050",
+        "GT-004",
+        "GT-078"
+      ],
+      "jsonl_top3": [
+        "GT-050",
+        "GT-003",
+        "GT-004"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q18",
+      "lang": "CZ",
+      "query": "browser automation chyba",
+      "expected": [
+        "GT-015"
+      ],
+      "v2_top3": [
+        "GT-015",
+        "GT-095",
+        "GT-008"
+      ],
+      "jsonl_top3": [
+        "GT-015",
+        "GT-003",
+        "GT-026"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q18",
+      "lang": "EN",
+      "query": "browser automation error",
+      "expected": [
+        "GT-015"
+      ],
+      "v2_top3": [
+        "GT-001",
+        "GT-002",
+        "GT-008"
+      ],
+      "jsonl_top3": [
+        "GT-015",
+        "GT-001",
+        "GT-002"
+      ],
+      "v2_precision@3": 0.0,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 0.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 0.25,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 10.25,
+      "winner": "jsonl"
+    },
+    {
+      "query_id": "Q19",
+      "lang": "CZ",
+      "query": "vykon opakovane operace",
+      "expected": [
+        "GT-001",
+        "GT-050"
+      ],
+      "v2_top3": [
+        "GT-031",
+        "GT-002",
+        "GT-015"
+      ],
+      "jsonl_top3": [
+        "GT-GCP-005",
+        "GT-008",
+        "GT-005"
+      ],
+      "v2_precision@3": 0.0,
+      "jsonl_precision@3": 0.0,
+      "v2_recall": 0.0,
+      "jsonl_recall": 0.0,
+      "v2_mrr": 0.25,
+      "jsonl_mrr": 0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q19",
+      "lang": "EN",
+      "query": "performance of repeated operations",
+      "expected": [
+        "GT-001",
+        "GT-050"
+      ],
+      "v2_top3": [
+        "GT-041",
+        "GT-078",
+        "GT-031"
+      ],
+      "jsonl_top3": [
+        "GT-001",
+        "GT-050",
+        "GT-031"
+      ],
+      "v2_precision@3": 0.0,
+      "jsonl_precision@3": 0.6666666666666666,
+      "v2_recall": 0.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 5.6,
+      "jsonl_latency_ms": 1.54,
+      "winner": "jsonl"
+    },
+    {
+      "query_id": "Q20",
+      "lang": "CZ",
+      "query": "formatovani cisla platy",
+      "expected": [
+        "GT-095",
+        "GT-031"
+      ],
+      "v2_top3": [
+        "GT-GCP-001",
+        "GT-008",
+        "GT-026"
+      ],
+      "jsonl_top3": [
+        "GT-031",
+        "GT-050",
+        "GT-095"
+      ],
+      "v2_precision@3": 0.0,
+      "jsonl_precision@3": 0.6666666666666666,
+      "v2_recall": 0.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 2.56,
+      "winner": "jsonl"
+    },
+    {
+      "query_id": "Q20",
+      "lang": "EN",
+      "query": "salary number formatting",
+      "expected": [
+        "GT-095",
+        "GT-031"
+      ],
+      "v2_top3": [
+        "GT-031",
+        "GT-059",
+        "GT-095"
+      ],
+      "jsonl_top3": [
+        "GT-031",
+        "GT-095",
+        "GT-045"
+      ],
+      "v2_precision@3": 0.6666666666666666,
+      "jsonl_precision@3": 0.6666666666666666,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q21",
+      "lang": "CZ",
+      "query": "subprocess pipe data ztrata",
+      "expected": [
+        "GT-011"
+      ],
+      "v2_top3": [
+        "GT-011",
+        "GT-050",
+        "GT-079"
+      ],
+      "jsonl_top3": [
+        "GT-011",
+        "GT-002",
+        "GT-003"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q21",
+      "lang": "EN",
+      "query": "subprocess pipe data loss",
+      "expected": [
+        "GT-011"
+      ],
+      "v2_top3": [
+        "GT-011",
+        "GT-050",
+        "GT-079"
+      ],
+      "jsonl_top3": [
+        "GT-011",
+        "GT-002",
+        "GT-003"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q22",
+      "lang": "CZ",
+      "query": "attr default skryva chyby",
+      "expected": [
+        "GT-079",
+        "GT-059"
+      ],
+      "v2_top3": [
+        "GT-004",
+        "GT-GCP-005",
+        "GT-005"
+      ],
+      "jsonl_top3": [
+        "GT-059",
+        "GT-079",
+        "GT-004"
+      ],
+      "v2_precision@3": 0.0,
+      "jsonl_precision@3": 0.6666666666666666,
+      "v2_recall": 0.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 11.34,
+      "jsonl_latency_ms": 1.58,
+      "winner": "jsonl"
+    },
+    {
+      "query_id": "Q22",
+      "lang": "EN",
+      "query": "attr default hides errors",
+      "expected": [
+        "GT-079",
+        "GT-059"
+      ],
+      "v2_top3": [
+        "GT-004",
+        "GT-008",
+        "GT-079"
+      ],
+      "jsonl_top3": [
+        "GT-079",
+        "GT-059",
+        "GT-004"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.6666666666666666,
+      "v2_recall": 0.5,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 0.3333333333333333,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "jsonl"
+    },
+    {
+      "query_id": "Q23",
+      "lang": "CZ",
+      "query": "token vyrezavani zpravy LLM",
+      "expected": [
+        "GT-045"
+      ],
+      "v2_top3": [
+        "GT-047",
+        "GT-059",
+        "GT-079"
+      ],
+      "jsonl_top3": [
+        "GT-041",
+        "GT-045",
+        "GT-047"
+      ],
+      "v2_precision@3": 0.0,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 0.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 0,
+      "jsonl_mrr": 0.5,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "jsonl"
+    },
+    {
+      "query_id": "Q23",
+      "lang": "EN",
+      "query": "token clipping LLM message",
+      "expected": [
+        "GT-045"
+      ],
+      "v2_top3": [
+        "GT-045",
+        "GT-047",
+        "GT-059"
+      ],
+      "jsonl_top3": [
+        "GT-045",
+        "GT-041",
+        "GT-047"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 7.13,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q24",
+      "lang": "CZ",
+      "query": "git read only operace pomala",
+      "expected": [
+        "GT-003"
+      ],
+      "v2_top3": [
+        "GT-003",
+        "GT-001",
+        "GT-002"
+      ],
+      "jsonl_top3": [
+        "GT-003",
+        "GT-001",
+        "GT-002"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q24",
+      "lang": "EN",
+      "query": "git read-only operation slow",
+      "expected": [
+        "GT-003"
+      ],
+      "v2_top3": [
+        "GT-003",
+        "GT-001",
+        "GT-002"
+      ],
+      "jsonl_top3": [
+        "GT-003",
+        "GT-001",
+        "GT-002"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 8.55,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q25",
+      "lang": "CZ",
+      "query": "AI state soubor poskozeny",
+      "expected": [
+        "GT-004"
+      ],
+      "v2_top3": [
+        "GT-004",
+        "GT-002",
+        "GT-031"
+      ],
+      "jsonl_top3": [
+        "GT-004",
+        "GT-GCP-005",
+        "GT-002"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 1.78,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    },
+    {
+      "query_id": "Q25",
+      "lang": "EN",
+      "query": "AI state file corrupted",
+      "expected": [
+        "GT-004"
+      ],
+      "v2_top3": [
+        "GT-004",
+        "GT-041",
+        "GT-002"
+      ],
+      "jsonl_top3": [
+        "GT-004",
+        "GT-002",
+        "GT-003"
+      ],
+      "v2_precision@3": 0.3333333333333333,
+      "jsonl_precision@3": 0.3333333333333333,
+      "v2_recall": 1.0,
+      "jsonl_recall": 1.0,
+      "v2_mrr": 1.0,
+      "jsonl_mrr": 1.0,
+      "v2_latency_ms": 0.0,
+      "jsonl_latency_ms": 0.0,
+      "winner": "tie"
+    }
+  ]
+}

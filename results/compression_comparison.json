@@ -1,0 +1,35 @@
+{
+  "v2_filtered": {
+    "format": "v2 Markdown (filtered)",
+    "entries": 22,
+    "total_bytes": 10522,
+    "total_tokens": 2519,
+    "avg_bytes_per_entry": 478.27272727272725,
+    "avg_tokens_per_entry": 114.5,
+    "avg_chars_per_entry": 459.5
+  },
+  "jsonl_text": {
+    "format": "JSONL",
+    "entries": 22,
+    "total_bytes": 6396,
+    "total_tokens": 1584,
+    "avg_bytes_per_entry": 290.72727272727275,
+    "avg_tokens_per_entry": 72.0,
+    "avg_chars_per_entry": 289.27272727272725
+  },
+  "jsonl_raw": {
+    "format": "JSONL (raw records)",
+    "entries": 22,
+    "total_bytes": 12171,
+    "total_tokens": 3024,
+    "avg_bytes_per_entry": 553.2272727272727,
+    "avg_tokens_per_entry": 137.45454545454547,
+    "avg_chars_per_entry": 551.2272727272727
+  },
+  "extrapolation": {
+    "v2_full_bytes": 118592,
+    "v2_full_tokens": 28422,
+    "jsonl_extrapolated_bytes": 59749,
+    "jsonl_extrapolated_tokens": 14845
+  }
+}
