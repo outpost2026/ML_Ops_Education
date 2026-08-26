@@ -34,6 +34,56 @@
 
 ---
 
+## 1B. RETRIEVAL PIPELINE (Cesta A + D1)
+
+### 1B.1 Porovnání metod (50 queries, 108 entries)
+
+| Metrika | SequenceMatcher | BM25 | Word2Vec | Hybrid RRF |
+|---------|-----------------|------|----------|------------|
+| **Prec@3** | 0.5800 | **0.5967** | 0.2500 | 0.5633 |
+| **Recall** | 0.6333 | **0.6617** | 0.2900 | 0.6450 |
+| **MRR** | **0.6613** | 0.6397 | 0.3107 | 0.5624 |
+| **Hits** | 38/50 | 40/50 | 20/50 | **41/50** |
+
+### 1B.2 Delta vs SequenceMatcher baseline
+
+| Metrika | BM25 | Word2Vec | Hybrid RRF |
+|---------|------|----------|------------|
+| **Prec@3** | +2.9% | -56.9% | -2.9% |
+| **Recall** | **+4.5%** | -54.2% | +1.8% |
+| **MRR** | -3.3% | -53.0% | -15.0% |
+
+### 1B.3 Head-to-Head (MRR wins vs SequenceMatcher)
+
+| Metrika | BM25 | Word2Vec | Hybrid RRF |
+|---------|------|----------|------------|
+| **Wins** | 11 | 3 | 12 |
+| **Losses** | 11 | 24 | 17 |
+| **Ties** | 28 | 23 | 21 |
+
+### 1B.4 Klíčové nálezy
+
+1. **BM25 = nejlepší pro malý doménový korpus** — Recall +4.5%, Hits +7.9%
+2. **Word2Vec na 108 entries = špatný** — potřebuje >10K entries pro smysluplné embeddings
+3. **Hybrid RRF trpí když jedna složka je slabá** — Word2Vec tahá dolů
+4. **Tradeoff:** BM25 lepší Recall, SequenceMatcher lepší MRR
+
+### 1B.5 Konfigurace
+
+| Parametr | Hodnota |
+|----------|---------|
+| BM25 k1 | 1.5 |
+| BM25 b | 0.75 |
+| RRF k | 60 |
+| Word2Vec vector_size | 100 |
+| Word2Vec window | 5 |
+| Word2Vec epochs | 100 |
+| TF-IDF vocab size | 2,071 |
+| Build time (BM25) | 0.012 s |
+| Build time (Word2Vec) | 0.838 s |
+
+---
+
 ## 2. KLÍČOVÉ NÁLEZY
 
 ### 2.1 Extrakce rozhoduje, ne formát
