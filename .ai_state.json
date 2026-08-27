@@ -1,0 +1,213 @@
+{
+  "session": {
+    "id": "2026-08-27_ML_Ops_edukace_P0_RAG_QER",
+    "started": "2026-08-27T14:00:00+02:00",
+    "updated": "2026-08-27T21:25:40+00:00",
+    "mode": "build",
+    "agent": "muse-spark-1.2",
+    "branch": "main",
+    "head": "371a132",
+    "head_message": "[ML_OPS] update: semanticka kontrola kontextove dokumentace"
+  },
+  "repo": {
+    "name": "ML_Ops_edukace",
+    "path": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\_github\\ML_Ops_edukace",
+    "character": "experimental, vyukove & adopcni — agregace poznatku z ziveho studia a tvorby POC RAG/QER/RTF",
+    "korpus": {
+      "gt_entries": 108,
+      "kb_docs": 121,
+      "total_docs_with_MLOps": 135,
+      "avg_tokens_gt": 134,
+      "avg_tokens_kb_4000w": 415,
+      "avg_tokens_kb_full": 2329
+    }
+  },
+  "git_status": {
+    "modified": [
+      "RETRIEVAL_RESEARCH.md",
+      "results/mmr_benchmark.json"
+    ],
+    "untracked": [
+      "MCP_ECOSYSTEM_ADAPTATION_v1.md",
+      "RETRIEVAL_BOTTLENECK_ANALYSIS_v1.md",
+      "P0_IMPROVEMENT_PROPOSAL_v1.md",
+      "CANDIDATE_TOOLS_ANALYSIS_v1.md",
+      "GLOSSARY_ML_RAG_QER_via_BASE_v1.md",
+      "GLOSSARY_ML_RAG_QER_via_P0_v1.md",
+      "ONTOLOGY_GLOSSARY_DIFF_ANALYSIS_v1.md"
+    ],
+    "ignored_lock": ".~lock.CANDIDATE_TOOLS_ANALYSIS_v1.md# — ignore, LibreOffice lock",
+    "branch": "main",
+    "clean_required_before_commit": true
+  },
+  "benchmarks": {
+    "GT_108x50": {
+      "baseline": "SequenceMatcher MRR 0.6613 Prec 0.5800 Recall 0.6333 Hits 38/50",
+      "P0_BM25_Seq_RRF": "MRR 0.7067 (+6.9%) Prec 0.6733 (+16.1%) Recall 0.6883 (+8.7%) Hits 43/50 — vitez",
+      "Exp_Seq_RRF": "Prec 0.6867 (+18.4%) — nejlepsi Prec@3",
+      "failures": "Word2Vec 0.31, GloVe 0.26 (44.9% OOV), SVD 0.54, MMR 0.598"
+    },
+    "P0_DRY_RUN_KB_10Q": {
+      "corpus": "121 docs (106 MD+15 JSON, 4000w, avg 415)",
+      "baseline": "MRR 0.4333 Prec 0.2667 Recall 0.6000 Hits 8/10",
+      "P0_window4000": "MRR 0.4917 (+13.5%) Prec 0.2667 Recall 0.5000 Hits 7/10 — win YOLO/timeout, loss ACI/VCF",
+      "P0_full": "MRR 0.4250 (-1.9%) Recall 0.5000 — window 4000 lepsi nez full (b=0.75 penalizace 64KB)",
+      "build_ms": "452.5 window4000 vs 20088 full"
+    },
+    "SQL_7Q_127docs": {
+      "baseline": "MRR 0.6905 Prec 0.4762 Recall 0.4643 Hits 6/7",
+      "P0": "MRR 0.7786 (+12.8%) Prec 0.5238 (+10%) Recall 0.7262 (+56%) Hits 7/7 — win SQL/FTS5 df2 IDF vysoke"
+    },
+    "ONTOLOGY_7Q_135docs": {
+      "baseline": "MRR 0.2905 Prec 0.1429 Recall 0.3333 Hits 6/7",
+      "P0": "MRR 0.5238 (+80.3%) Prec 0.3810 (+166%) Recall 0.5714 (+71%) Hits 6/7 — win QER df3 RTF df2 vzacne"
+    },
+    "VIBECODING_7Q": {
+      "baseline": "MRR 0.7857 Prec 0.5714 Recall 0.7143 Hits 6/7 — single rare vibecoding df4 score=sum staci",
+      "P0": "MRR 0.4286 (-45%) Prec 0.3333 Recall 0.3333 Hits 3/7 — Seq sum rank1 AGENTS miss",
+      "delta_time": "-151ms (-89.7%) 17ms vs 168ms, tokens 161 vs 176"
+    }
+  },
+  "artifacts_this_session": [
+    {
+      "file": "RETRIEVAL_RESEARCH.md",
+      "change": "rozsireno o 11. QER/RTF CLI playground (257 radku, 11.0-11.12) + 12. Teze minimodel BM25 (verifikace co je ML model, proc bez neuronu, proc ladime k1/b/k + cause/effect D vs Phi/f)",
+      "status": "modified, git M",
+      "eroi": "9/10"
+    },
+    {
+      "file": "MCP_ECOSYSTEM_ADAPTATION_v1.md",
+      "change": "novy synteticky artefakt 465 radku/35392B — 5 MCP serveru 42 tools, 4 varianty P0/P1/P2/C, 4-stupnova pipeline +Cache",
+      "status": "untracked",
+      "eroi": "9/10"
+    },
+    {
+      "file": "RETRIEVAL_BOTTLENECK_ANALYSIS_v1.md",
+      "change": "novy 13.4KB — 5 bottlenecku B1-B5 (kuratorstvi, window/delka, CZ morfologie, IDF maly korpus, RRF k/synonym), ablace b 0-1 + win 2000-full",
+      "status": "untracked",
+      "eroi": "9/10"
+    },
+    {
+      "file": "P0_IMPROVEMENT_PROPOSAL_v1.md",
+      "change": "novy 8237B — P0 v1 -> v2: k1 1.5->1.2, b 0.75->0.25, k 60->20, window 4000->8000+chunk512, czech stemmer, synonym podminkove; ocekavany efekt MRR +22% KB, +9% SQL, +24% ontology",
+      "status": "untracked",
+      "eroi": "9/10"
+    },
+    {
+      "file": "CANDIDATE_TOOLS_ANALYSIS_v1.md",
+      "change": "novy 8946B — inventura _stahovani (wiki.en.vec 1218.9MB + glove 163MB + scikit-learn/nltk/gensim), top 3 kandidati: nltk cs, sklearn SVD 30, fasttext frozen",
+      "status": "untracked",
+      "eroi": "8/10"
+    },
+    {
+      "file": "GLOSSARY_ML_RAG_QER_via_BASE_v1.md",
+      "change": "novy 5.2KB — 25 termu via BASE 18 docs (score=sum, sirsi, melci — SQL sum)",
+      "status": "untracked",
+      "eroi": "7/10"
+    },
+    {
+      "file": "GLOSSARY_ML_RAG_QER_via_P0_v1.md",
+      "change": "novy 10KB — 65 termu via P0 17 docs (BM25 IDF, uzsi, hlubsi — QER/RTF/HNSW vzacne)",
+      "status": "untracked",
+      "eroi": "8/10"
+    },
+    {
+      "file": "ONTOLOGY_GLOSSARY_DIFF_ANALYSIS_v1.md",
+      "change": "novy 6587B — semanticka dif BASE vs P0: 8 spolecnych (BM25, RAG...), 17 jen BASE, 57 jen P0 (QER/RTF/HNSW)",
+      "status": "untracked",
+      "eroi": "8/10"
+    }
+  ],
+  "temp_dry_runs": [
+    {
+      "path": "TEMP_workflow_sim/P0_DRY_RUN",
+      "korpus": "121 docs KB, 10 dotazu (ACI, YOLO...)",
+      "files": "baseline_kb_search.py, p0_kb_search.py, benchmark.py, kb_test_queries.json, results/benchmark_results.json, results/DRY_RUN_REPORT.md, results/BOTTLENECK_ANALYSIS_v1.md",
+      "metrics": "MRR 0.4333->0.4917 +13.5% window4000, -1.9% full",
+      "status": "done, nezasahuje do mcp-local-server"
+    },
+    {
+      "path": "TEMP_workflow_sim/SQL_RETRIEVAL_DRY_RUN",
+      "korpus": "127 docs (KB 121 + MCP-Jobs 6), 7 SQL dotazu (1 original +2 agent +4 QER)",
+      "metrics": "MRR 0.6905->0.7786 +12.8% Prec +10% Recall +56% Hits 7/7",
+      "status": "done"
+    },
+    {
+      "path": "TEMP_workflow_sim/VIBECODING_DRY_RUN",
+      "korpus": "121 docs, 7 vibecoding dotazu (df4 rare)",
+      "metrics": "MRR 0.7857->0.4286 -45% — baseline win single rare, P0 87% rychlejsi 17ms vs 168ms",
+      "status": "done"
+    },
+    {
+      "path": "TEMP_workflow_sim/ONTOLOGY_GLOSSARY_DRY_RUN",
+      "korpus": "135 docs (KB+ML_Ops 8+mcp-retrieval 6), 7 ontology dotazu, 2 glosare via base/P0",
+      "metrics": "MRR 0.2905->0.5238 +80% Prec +166% Recall +71% — P0 win vzacne QER/RTF",
+      "status": "done"
+    }
+  ],
+  "pending": [
+    {
+      "id": "P0_I1",
+      "task": "Re-kuratorstvi 25 dotazu graded 0-2 + difficulty + nDCG@10 (BEIR, mini-rag 12/32 vzor)",
+      "priority": "high",
+      "est": "1h",
+      "depends": "P0_IMPROVEMENT_PROPOSAL_v1.md I1"
+    },
+    {
+      "id": "P0_I2",
+      "task": "Grid k1/b/k: k1∈{1.2,1.5,2.0} × b∈{0.25,0.5,0.75} × k∈{20,60} na 25 dotazech, b=0.25 pro KB heterogenni",
+      "priority": "high",
+      "est": "2h",
+      "source": "Arpit BM25, Elastic b 0.3-0.5, Azure k 10/60/100"
+    },
+    {
+      "id": "P0_I3",
+      "task": "CZ tokenizace: PyStemmer czech light + stopwords cs + CI/CD→ci_cd preserve",
+      "priority": "high",
+      "est": "2h",
+      "source": "Libra UNINE light vs aggressive, VandlJ, bm25s Stemmer(czech)"
+    },
+    {
+      "id": "P0_I4",
+      "task": "Chunk 512 + BM25F title boost 2.0 (window 4000→8000+chunk)",
+      "priority": "medium",
+      "est": "3h",
+      "source": "BM25F 0911.5046 +5-8% MAP, BM25S eager"
+    },
+    {
+      "id": "GIT_COMMIT",
+      "task": "git add RETRIEVAL_RESEARCH.md + 6 novych artefaktu (MCP_ECOSYSTEM, BOTTLENECK, P0_PROPOSAL, CANDIDATE, 2 GLOSSARY, DIFF) + results/mmr_benchmark.json; git commit -m '[ML_OPS] feat: QER/RAG glosare + P0 v2 proposal + bottleneck + candidate tools'; git push (po schvaleni)",
+      "priority": "high",
+      "blocked_by": "user approval"
+    },
+    {
+      "id": "NESTAZENO_wiki.cs.vec",
+      "task": "Stahnout _stahovani/fasttext/wiki.cs.vec 700MB (dl.fbaipublicfiles.com) pro CZ subword FastText — az po 4G limitu, alternativa k czech stemmer",
+      "priority": "low",
+      "est": "700MB disk + 1.2GB RAM",
+      "blocked_by": "bandwidth"
+    },
+    {
+      "id": "CLEANUP_LOCK",
+      "task": "Smazat .~lock.CANDIDATE_TOOLS_ANALYSIS_v1.md# (LibreOffice lock, 0B, git untracked)",
+      "priority": "low",
+      "est": "1 min"
+    }
+  ],
+  "semantic_progress": {
+    "adopce_MLOps": "PBL 60% — autor resil vlastni retrieval na 108 GT (K0-K3 CPM) a objevil ontologii shodnou s MCP-Jobs skills (94 skills, RAG 0.50, MLOps 0.50) — ne abstraktne",
+    "retrieval_pipeline": "4+1 stages (BM25 sparse + Seq fuzzy + RRF fusion + Rerank + Cache) — 8 kroku Cesta A 0B win MRR 0.7067 (EVALUATION), 4 dry-runy prokazaly QER/RTF na _github",
+    "BM25_minimodel": "BM25 je statisticky ML minimodel (0 neuronu, theta={df,avg_dl,inv}, lambda={k1/b/k + SYNONYM 12}) — fit odvozuje theta z D, ladime lambda gridem na MRR (jako Word2Vec selhal 0.31, GloVe 0.26 OOV, SVD 0.54)",
+    "data_vs_model": "D (raw 207 md/json) zustava orakulum K0 — nemenit pro MRR; Phi(D) (tokenize, window, chunk, stem) + f/lambda (k1/b/k) kalibrovat na MRR; D cistit jen see source 19/30",
+    "tokenizace_KB": "à-ž + lower + len>=2 + 4000w + 452ms fit + 17ms/query vs 168ms baseline — CZ morfologie kalibrace/kalibraci → light stemmer, CI/CD → ci_cd, a/je stopwords",
+    "korpus_maly": "108 GT + 121 KB = maly heterogenni CZ korpus — BM25+Seq RRF win +6.9% na GT, +80% na ontology QER (df 2-4 vzacne), loss -45% na single rare vibecoding (df4 Seq sum)",
+    "db_ontologie": "SQL FTS5 MATCH, BM25 je stejny BM25 jako retrieval — SQL_ADOPCE_PLAN S2 FTS5 + BM25 3-4h, postgresql_zakladni_prikazy ILIKE = TF-IDF na DB, QER = Query-Encode-Retrieve pres _github",
+    "candidate_tools": "nltk cs (stopwords/stemmer) + sklearn SVD 30 + fasttext wiki.en.vec 1.2GB subword — junior nevedel, ze 1.2GB je stazen, wiki.cs.vec 700MB ceka"
+  },
+  "next_session_hint": "Spustit I1 (25Q graded) → I2 grid k1/b/k (b=0.25 pro KB) → overit MRR>=0.60 na KB 25Q, pak P0 v2 do mcp-local-server/tools/kb_search.py s @cached + file_mtime (P0_IMPROVEMENT_PROPOSAL I1-I4)",
+  "guardrails": {
+    "ascii_nom": "GT-080 — vsechny nove soubory OK (MCP_ECOSYSTEM_... .md, GLOSSARY_... .md)",
+    "build_mode": "Ano, file changes v ML_Ops_edukace + TEMP_workflow_sim, mcp-local-server zustal clean (dry-run v TEMP)",
+    "token_limit": "4G/500MB — wiki.cs.vec 700MB ceka, torch/transformers >2GB zamerne nestazeno"
+  }
+}
