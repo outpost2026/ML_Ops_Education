@@ -340,7 +340,9 @@ MCP-Jobs skills catalog (94 skills, 146 aliases) ukazuje, jak kategorizovat info
 | 11 | ~~CLI nástroj (retrieve.py)~~ | - | 0 B | ✅ Hotovo |
 | 12 | Produkční implementace (API endpoint) | - | 0 B | Plán |
 
----
+> **hSNR note — LLM edge-case ↔ retrieval (2026-09-01):** 4 deterministické korelace (OOV 44.9% `MRR 0.2607`→`tool calling` `IR-001`, `window 4000` `kalibrace`→`b=0.25` `IR-002`, `Weighted 0.6532`→`RRF 0.7067` +8.2% `IR-003`, `K3`→`NC` `1-abs/mx` `IR-004`) + `NC≥0.99`.
+> Plné znění `docs/LLM_EDGE_CASE_RETRIEVAL_ANALOGIES_v1.md` | Provenance `live_session 2026-08-31` RF kolaps | Validace `NC` na GT numerických dotazech.
+> `MRR` sémantický `0.7067` zůstává, `NC` numerický `1.0` — `MLOps` gate `MRR+NC`.
 
 ---
 

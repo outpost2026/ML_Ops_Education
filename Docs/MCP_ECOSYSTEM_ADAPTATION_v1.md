@@ -144,7 +144,7 @@ Non-MCP, ale souvisí: dxf_integrace (semantic embedding POC), rag_indexer (lega
 
 | Dotaz autora (reálný z `opencode` historie) | Starý `kb_search` | Nový `GTRetriever` |
 |-------------------------------------------|-------------------|---------------------|
-| `timeout v MCP serveru` | `score 1` pro `MCP_GROUND_TRUTH...md` (obsahuje `timeout`), `score 1` pro `SQL_ADOPCE_PLAN.md` (obsahuje `timeout` v jiném kontextu) — nerozliší | `BM25 IDF(timeout)=log((108-5+0.5)/(5+0.5))` vysoké, `SYNONYM_MAP[timeout]=deadlock` → `BM25(exp)` najde `GT-010 P25`, `RRF` fúze → `GT-010` top1 |
+| `timeout v MCP serveru` | `score 1` pro `MCP_GROUND_TRUTH_postmortem_agregovany_v2.md` (obsahuje `timeout`), `score 1` pro `SQL_ADOPCE_PLAN.md` (obsahuje `timeout` v jiném kontextu) — nerozliší | `BM25 IDF(timeout)=log((108-5+0.5)/(5+0.5))` vysoké, `SYNONYM_MAP[timeout]=deadlock` → `BM25(exp)` najde `GT-010 P25`, `RRF` fúze → `GT-010` top1 |
 | `encoding problem Windows` | `score 2` pro `přehrada.md` (obsahuje `problem`), miss `cp1250` | `SYNONYM_MAP[encoding]=cp1250/utf-8` → `BM25(exp)` najde `GT-019`, `SeqMatcher` zachytí `Windows` |
 | `MLOps pipeline` (CZ/EN) | `score 1` pro `MLOps` jen v `skills_config.json`, 0 pro `ML Ops` s mezerou | `tokenize` `à-ž` + `SYNONYM_MAP` + `build_searchable_text` s `tags` → `MLOps` i `ML operations` |
 

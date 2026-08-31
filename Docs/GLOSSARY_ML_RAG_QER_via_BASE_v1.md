@@ -29,9 +29,9 @@
 
 | Term | Definice (zkráceně) | Zdroj |
 |------|---------------------|-------|
-| **100% determinismus** |   100% determinismus   LLM se muze rozhodnout tool nepouzít   Skript/Makefile   | `MCP_GROUND_TRUTH_pos` |
+| **100% determinismus** |   100% determinismus   LLM se muze rozhodnout tool nepouzít   Skript/Makefile   | `MCP_GROUND_TRUTH_postmortem_agregovany_v2.md` |
 | **Archivace 9 souborů** |   Archivace 9 souborů   Žádné mazání, ale 4 pitevní knihy má nahrazovat 1 GT — 5 | `TRIMMING_PLAN_04_KNO` |
-| **Credentials / secrets** |   Credentials / secrets   Riziko úniku do LLM kontextu   OS env var + gh CLI   | `MCP_GROUND_TRUTH_pos` |
+| **Credentials / secrets** |   Credentials / secrets   Riziko úniku do LLM kontextu   OS env var + gh CLI   | `MCP_GROUND_TRUTH_postmortem_agregovany_v2.md` |
 | **Data Pipeline (ETL)** |   **Data Pipeline (ETL)**   Produkční   Meteo miner, RAG, scraping   ✅ Přímý — z | `CV_YOLO11_ADOPTION_A` |
 | **Datum: 2026-07-28** | **Datum:** 2026-07-28   **Autor:** outpost2026 + LLM (falsifikační test) | `Kompresni_modelovani` |
 | **Datum: 2026-08-02** | **Datum:** 2026-08-02   **Autor:** outpost2026 + LLM (falsifikační test) | `Falsifikacni_test_si` |
@@ -44,14 +44,14 @@
 | **S2 KROK 0** |   **S2** KROK 0   **Master dir index SQLite+FTS5** — 1 schema + 1 crawler + 5 an | `SQL_ADOPCE_PLAN_2026` |
 | **SQLite + FTS5 (MATCH, BM25)** |   **SQLite + FTS5** (MATCH, BM25)   **NEOVČIČENO**   KROK 0 (V3 revize)   | `SQL_ADOPCE_PLAN_2026` |
 | **SRS opuštěno po 2 týdnech** |   SRS opuštěno po 2 týdnech   Vysoká   Střední   10 min/den fixní, LLM generuje  | `SQL_ADOPCE_PLAN_2026` |
-| **Server: lichess-analyzer** | **Server:** lichess-analyzer   **Status:** Fixed   **Typ:** Data integrity — LLM | `MCP_GROUND_TRUTH_pos` |
+| **Server: lichess-analyzer** | **Server:** lichess-analyzer   **Status:** Fixed   **Typ:** Data integrity — LLM | `MCP_GROUND_TRUTH_postmortem_agregovany_v2.md` |
 | **Stack** |   **Stack**   Markdown, JSON, Git, RAG-ready struktura, agentní přístup přes ope | `README.md` |
 | **Verze: 1.0** | **Verze:** 1.0   **Datum:** 2026-07-18   **Účel:** Jediný zdroj pravidel pro LLM | `AGENTS.md` |
 | **Verze: 1.0-compact** | **Verze:** 1.0-compact   **Datum:** 2026-06-22   **Účel:** Sémantická komprese K | `HANDOFF_COMPACT.md` |
 | **Vlastnost** |   Vlastnost   Křemík (LLM)   Uhlík (mozek)   | `HANDOFF_COMPACT.md` |
 | **`CNC_2_LLM`** |   `CNC_2_LLM`   DXF geometrický indexer + sémantický embedding pro ERP   PRIVATE | `HANDOFF_COMPACT.md` |
 | **`Free_LLM_openrouter.txt`** |   `Free_LLM_openrouter.txt`   01_METODIKY/00_agentni_prace   05_EPISTEMIKA/01_ka | `DE_NOVO_SEMANTICKY_A` |
-| **`mcp_jobs_pitevni_kniha_v1.md`** |   `mcp_jobs_pitevni_kniha_v1.md`   Entry 022-035 (plné znění)   Cross-LLM audit  | `MCP_GROUND_TRUTH_pos` |
+| **`mcp_jobs_pitevni_kniha_v1.md`** |   `mcp_jobs_pitevni_kniha_v1.md`   Entry 022-035 (plné znění)   Cross-LLM audit  | `MCP_GROUND_TRUTH_postmortem_agregovany_v2.md` |
 | **docx → archive** |   docx → archive   Binární duplikát bez RAG hodnoty, 546 KB   100% binární úspor | `TRIMMING_PLAN_04_KNO` |
 | **ffts-grep (mneves75)** |   **ffts-grep** (mneves75)   Rust, single binary   SQLite FTS5 + BM25, ~10 ms na | `SQL_KANDIDATI_IMERZE` |
 

@@ -90,7 +90,7 @@
 | **`MMR λ=0.7`** |   `MMR λ=0.7`   0.5987   0.6183   0.5467   37/50   Zhoršuje   Diverzita až pro > | `MCP_ECOSYSTEM_ADAPTA` |
 | **`encoding problem Windows`** |   `encoding problem Windows`   `score 2` pro `přehrada.md` (obsahuje `problem`), | `MCP_ECOSYSTEM_ADAPTA` |
 | **`mcp-retrieval/retrieval.py`** |   `mcp-retrieval/retrieval.py`   `GTRetriever`, `BM25(k1=1.5,b=0.75)`, `SYNONYM_ | `MCP_ECOSYSTEM_ADAPTA` |
-| **`timeout v MCP serveru`** |   `timeout v MCP serveru`   `score 1` pro `MCP_GROUND_TRUTH...md` (obsahuje `tim | `MCP_ECOSYSTEM_ADAPTA` |
+| **`timeout v MCP serveru`** |   `timeout v MCP serveru`   `score 1` pro `MCP_GROUND_TRUTH_postmortem_agregovany_v2.md` (obsahuje `tim | `MCP_ECOSYSTEM_ADAPTA` |
 | **`tool_kb_search`** |   `tool_kb_search`   `kb_search.py:38,60` `score=sum(1 for w in words if w in co | `MCP_ECOSYSTEM_ADAPTA` |
 | **scikit-learn** |   scikit-learn   ML_FRAMEWORK   0.40   (volitelné pro TF-IDF)   | `README.md` |
 

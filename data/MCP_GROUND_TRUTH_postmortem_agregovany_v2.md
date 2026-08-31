@@ -1,10 +1,11 @@
 # MCP GROUND TRUTH — Agregovaná pitevní kniha
 
-**Datum:** 2026-08-26 | **Verze:** 20 (souborová generace v2; interní řada pokračuje z v1/v19)
+**Datum:** 2026-08-31 | **Verze:** 21 (souborová generace v2; interní řada pokračuje z v1/v19)
 **Účel:** Jediný zdroj pravdivých ponaučení z vývoje všech MCP serverů v portfoliu. Nahrazuje: linkedin_mcp_pitevni_kniha_v1.md, mcp_jobs_pitevni_kniha_v1.md, sdilena_pitevni_kniha_mcp.md, MCP_komplexni_analyza_a_strategie_v1.md (pouze postmortem části), pitevni_kniha_mcp_v1.md (cnc-tools).
 **Rozsah:** linkedin-mcp-custom, MCP-Jobs, mcp-local-server (cnc-tools), lichess-analyzer-mcp, GCP infrastructure (pitevni_kniha_v8)
 **Určení:** Výukový materiál pro deva, instrukce pro LLM, ground truth pro rozhodování
 **Provenance trimu:** v2 = trim iterace A nad v1/v19 (sémantická analýza 2026-08-26): dedup `Pravidlo:` textů entrií → ukazatele (kanonický text v §4), kanonizace P80–P83 a P90–P96 do §4, odstranění duplicitního changelogu a statistického narrativu, komprese sekundárních pasáží. Zachováno: všech 108 GT záznamů, 48 Provenance polí, file:line reference. Historie verzí = git log repa.
+**Update v21:** Přidán GT-106 (lichess-033) + P97 adaptivní Hash — batch 20 měření hashfull/time (2026-08-31).
 **Skill:** Před editací loadni `skill({name: "kb-workflow"})` → sekce Postmortem Workflow obsahuje pravidla pro konzistentní zápis GT/P a prevenci konfabulace.
 
 ---
@@ -31,9 +32,9 @@ Vyřešené rozpory statusů při agregaci: Entry 016 (Fixed), Entry 020 (Fixed)
 
 ## 3. Katalog chyb
 
-108 záznamů: GT-001..GT-105 + GT-GCP-001..005. V závorce původní ID ze zdrojového artefaktu.
+109 záznamů: GT-001..GT-106 + GT-GCP-001..005. V závorce původní ID ze zdrojového artefaktu.
 
-**Číslování a rezervace:** GT-082 a GT-084 nebyly přiděleny (mezera vznikla ve v10); P78/P79 neexistují; P84–P89 jsou rezervovány epistemické řadě (Gate protokol destruktivních operací). Sekce katalogu čísluje 3.1–3.3 a 3.5–3.7 (mezera 3.4 historická, zachována kvůli externím referencím).
+**Číslování a rezervace:** GT-082 a GT-084 nebyly přiděleny (mezera vznikla ve v10); P78/P79 neexistují; P84–P89 jsou rezervovány epistemické řadě (Gate protokol destruktivních operací). Sekce katalogu čísluje 3.1–3.3 a 3.5–3.8 (mezera 3.4 historická, zachována kvůli externím referencím).
 
 **Formát záznamu:** Symptom → Root cause → Fix → Pravidlo (ukazatel; kanonický text pravidla viz §4) → Provenance.
 
@@ -887,6 +888,15 @@ Fix:  board.copy() -> push postupne -> OK
 **Pravidlo:** P96
 **Provenance:** source-read — tests/test_server.py submit test, server.py _submit_job/_run_pipeline; reprodukce flake (2026-08-26 session).
 
+#### GT-106 (lichess-033): Deterministický engine Hash bez Clear — degradace po sérii her
+**Server:** lichess-analyzer-mcp | **Status:** Fixed | **Typ:** Engine — adaptive cache
+
+**Symptom:** Batch 20 her depth 12: 4/5 nejnovějších `0.0 ACPL, errors==moves (28-71)`, single `uqDyoNED` depth 12 `0 ACPL` po `lN4K3mtt` (90 ply, 18min). Předtím 5 her `0 errors` (6ERH4PMw 34, PIuXqVx4 86). `hashfull` pipeline `85%` → timeout.
+**Root cause:** `engine_client.py:55` `Hash 512 Threads 6` fix, sdílený `SimpleEngine` bez `Clear Hash` mezi nekorelovanými hrami. Hash = transposition table s konečnou kapacitou; po 5 hrách `lN4K3mtt` 90 ply `hashfull 29.2%` na 64 (1×/tah) → pipeline `3×` = 85% → `engine call timed out after 15s` (`engine_client.py:121`) → `game_analyzer.py:336` `cp_loss 0` → `0 ACPL`. Měření `KZX6vZ66` 29 ply `64→4.1% 2.3s` vs `lN4K3mtt` 90 ply `64→29.2% 6.2s` vs `128→7.0% 4.6s`.
+**Fix:** `engine_client.py:48` `get_engine(hash_mb)` + `clear_hash()` (`Hash 512→64-256`, `Threads 6→4`) + `game_analyzer.py:35` `choose_adaptive_hash(ply,depth)` deterministická tabulka `d12→64, d14 64(<40)/128(<80)/256(80+)` + `hash_tools.py` (0 heuristik) + batch 20 `C:\Users\PC\AppData\Local\Temp\opencode\systeq_batch_20260831\batch_adaptive_summary.json` + `feedback_calibration.json`. Výsledek: `lN4K3mtt` 6.2→4.6s (-26%), `uqDyoNED` 0→4.3 ACPL, batch 20 20/20 valid (dříve 4/5 corrupted).
+**Pravidlo:** P97
+**Provenance:** source-read — `engine_client.py:55,121`, `game_analyzer.py:316,329,35`, `hash_tools.py`, `data/game_cache/*_d12.json:evaluation_errors`, `C:\Users\PC\AppData\Local\Temp\opencode\systeq_batch_20260831\batch_adaptive_summary.json` (20 her, depth 12/14, hash 64/128/512, hashfull/time), `mcp-retrieval` GT-074 P58 / GT-050 P35 (related, not duplicate, 2026-08-31).
+
 ### 3.7 GCP Infrastructure & Serverless (z pitevní knihy v8)
 
 Samostatná řada GT-GCP-001..005 (nepřekrývá se s GT-001..GT-105). Přeneseno z `GCP/pitevni_kniha_v8.md` — sémantická analýza + reevaluace (2026-08-21) potvrdila 5 entries s neinferovatelným hSNR datem; ~30 zbývajících záznamů inferovatelných z tréninkových dat LLM nebo příliš specifických (Bazoš scraping).
@@ -943,7 +953,7 @@ echo "$USER ALL=(root) NOPASSWD: /sbin/shutdown" > /etc/sudoers.d/shutdown
 
 ---
 
-## 4. Průřezová pravidla P1–P96 + P-GCP-01..05 (kanon; P84–P89 rezervovány epistemické řadě)
+## 4. Průřezová pravidla P1–P97 + P-GCP-01..05 (kanon; P84–P89 rezervovány epistemické řadě)
 
 ### P1 — Paralelizace
 Jakmile tool iteruje N>1 nezávislých zdrojů (repozitáře, soubory, API), použij `ThreadPoolExecutor`. Počet workerů: min(4, N). I/O-bound operace skálují lineárne do ~8 vláken.
@@ -1269,6 +1279,9 @@ Loggery s vlastním chainem (`propagate=False`) potřebují handler připojený 
 ### P96 — Žádný live I/O v unit testech
 Async/background cesty v testech vždy stubovat (monkeypatch runneru před submittem). Unit testy nesmí provádět live network I/O. Flaky test = determinismus bug, ne „občas se stane" — dvě zelená pásma full-suite za sebou = minimum gate. Reference: GT-105.
 
+### P97 — Sdílený deterministický cache s konečnou kapacitou musí mít Clear/invalidation strategii mezi nekorelovanými vstupy
+Stockfish transposition table (`Hash` MB) je deterministický cache s konečnou kapacitou. Po sérii nekorelovaných her (`lN4K3mtt` 90 ply → `hashfull 29.2%` na 64 pro 1×/tah → pipeline `3×` = 85% → `engine call timed out after 15s`) degraduje na `0 ACPL` pro všechny další hry (batch 20: 4/5 newest `0`). Řešení: (1) adaptivní `Hash` podle `ply+depth` (`game_analyzer.py:35` tabulka `d12→64, d14 64(<40)/128(<80)/256`), (2) `Clear Hash` po každé hře (`engine_client.py:clear_hash()`), ne po tahu (uvnitř hry hit rate pomáhá). Měřeno `hashfull<10%` target, `lN4K3mtt` 6.2→4.6s (-26%). Reference: GT-106.
+
 ### P-GCP-01 — Při 403 v GCP ověřit všech 5 autentizačních vrstev
 IAM role → Access Scopes (nejčastější příčina) → Metadata Server identity → Workspace vs Cloud scope mismatch → Service Account quota. Nejčastější selhání: vrstva 2 nebo 4. Reference: GT-GCP-001.
 
@@ -1543,17 +1556,17 @@ Při zakládání nového MCP repozitáře:
 
 | Metrika | Hodnota |
 |---------|---------|
-| Celkem GT | **108** (GT-001..GT-105, mezery GT-082/GT-084 + GT-GCP-001..GT-GCP-005) |
-| Fixed (vč. „Fixed / Mitigated", „Fixed (policy)") | 74 |
+| Celkem GT | **109** (GT-001..GT-106, mezery GT-082/GT-084 + GT-GCP-001..GT-GCP-005) |
+| Fixed (vč. „Fixed / Mitigated", „Fixed (policy)") | 75 |
 | Implemented | 6 |
 | Mitigated | 6 |
 | Documented | 18 |
 | Workaround | 3 |
 | Pending | 1 |
-| **Kontrolní součet** | **108** |
+| **Kontrolní součet** | **109** |
 
-Rozpad: environment/CI 11 · application logic 63 · cross-repo 17 · cross-LLM audit 5 (GT-061..065) · DBCL Phase 2 7 (GT-071..077) · data-correctness batch 1 (GT-079) · ASCII-NOM 1 (GT-080) · GCP infra 5 (GT-GCP-001..005).
+Rozpad: environment/CI 11 · application logic 64 · cross-repo 17 · cross-LLM audit 5 (GT-061..065) · DBCL Phase 2 7 (GT-071..077) · data-correctness batch 1 (GT-079) · ASCII-NOM 1 (GT-080) · engine adaptive cache 1 (GT-106) · GCP infra 5 (GT-GCP-001..005).
 
 ---
 
-*MCP_GROUND_TRUTH_postmortem_agregovany_v2.md — 2026-08-26 — v20 (souborová generace v2) — trim iterace A nad v1/v19 dle sémantické analýzy 2026-08-26: (1) dedup `Pravidlo:` textů entrií → ukazatele, kanonický text výhradně §4; (2) kanonizace P80–P83 a P90–P96 do §4 (ve v1 definovány pouze inline); (3) odstranění duplicitního footer changelogu, per-version poznámek ve statistikách a sebekorekčního narrativu (plná historie verzí = git log repa; komprese −30 % při zachování 108 GT záznamů, 48 Provenance polí a všech file:line referencí); (4) integritní opravy: titulek §4 (P1–P96), titulek §5 (82 checkpointů), reference GT-083 P71→P70, dokumentace mezer GT-082/GT-084 a P78/P79, stale rozsah v úvodu §3.7. Originál v1 zachován do validace v2 (rozhodnutí autora 2026-08-26); po validaci přesunout do `_ARCHIVE/`. Header/footer verze 20 konzistentní.*
+*MCP_GROUND_TRUTH_postmortem_agregovany_v2.md — 2026-08-31 — v21 (souborová generace v2) — trim iterace A nad v1/v19 dle sémantické analýzy 2026-08-26 + update 2026-08-31: (1) dedup `Pravidlo:` textů entrií → ukazatele, kanonický text výhradně §4; (2) kanonizace P80–P83 a P90–P97 do §4 (ve v1 definovány pouze inline); (3) odstranění duplicitního footer changelogu, per-version poznámek ve statistikách a sebekorekčního narrativu (plná historie verzí = git log repa; komprese −30 % při zachování 109 GT záznamů, 49 Provenance polí a všech file:line referencí); (4) integritní opravy: titulek §4 (P1–P97), titulek §5 (82 checkpointů), reference GT-083 P71→P70, dokumentace mezer GT-082/GT-084 a P78/P79, stale rozsah v úvodu §3.7 + GT-106/P97 (engine adaptive cache, batch 20 měření). Originál v1 zachován do validace v2 (rozhodnutí autora 2026-08-26); po validaci přesunout do `_ARCHIVE/`. Header/footer verze 21 konzistentní.*
