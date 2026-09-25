@@ -166,5 +166,19 @@
     "text": "Pri zacykleni v chybach >30 minut: smazat poskozeny soubor -> vlozit overeny blok kodu -> smazat data -> zacit z nuly.",
     "weight": "medium",
     "tags": ["gcp", "recovery", "cognitive"]
+  },
+  {
+    "id": "P98",
+    "title": "PS 5.1: stderr pod EAP=Stop = NativeCommandError; exit code bez kontextu neni diagnostika",
+    "text": "Nativni prikaz pres `2>&1` pod `$ErrorActionPreference='Stop'` hodi NativeCommandError NA RADKU VOLANI (exit=1 misto skutecneho exit=7), a to i pri exit=0 se jen stderr varovanim. Runner: docasny Continue v try/finally, $LASTEXITCODE zachytit okamzite do lokalni promenne, throw nese label + exit code + tail per-run logu s env hlavickou (PS verze, python path, cwd, git rev). Preflight Get-Command python.",
+    "weight": "high",
+    "tags": ["powershell", "exit-code", "observability", "subprocess"]
+  },
+  {
+    "id": "P99",
+    "title": "ASCII-only .ps1 vynucit testem, ne komentarem",
+    "text": "PS 5.1 cte ps1 bez BOM v ANSI codepage (cp1250); kazdy ne-ASCII bajt je potencialni phantom quote (0x94 = prava uvozovka). Pravidlo popisane v hlavicce souboru bez spustitelne kontroly se porusi (treti regrese). Guard: all(b < 128 for b in p.read_bytes()) nad scripts/**/*.ps1 v uz existujicim check kroku.",
+    "weight": "medium",
+    "tags": ["encoding", "ascii", "powershell", "invariant"]
   }
 ]

@@ -1,17 +1,18 @@
 {
   "schema_version": "1.0",
   "source": "MCP_GROUND_TRUTH_postmortem_agregovany_v2.md",
-  "source_version": 21,
-  "total_entries": 109,
-  "total_rules": 23,
+  "source_version": 22,
+  "total_entries": 111,
+  "total_rules": 26,
   "servers_sampled": [
     "cnc-tools",
     "linkedin-mcp-custom",
     "mcp-jobs",
     "lichess-analyzer",
     "workspace",
-    "gcp"
+    "gcp",
+    "kultura-db"
   ],
   "created": "2026-08-26",
-  "updated": "2026-08-31"
+  "updated": "2026-09-25"
 }
