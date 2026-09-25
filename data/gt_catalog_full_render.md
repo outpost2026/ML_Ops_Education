@@ -552,7 +552,7 @@
 **Tags:** p46 | llm
 
 #### GT-062 (lichess-020): llm
-**Server:** lichess-analyzer | **Status:** implemented
+**Server:** lichess-analyzer | **Status:** documented
 
 **Symptom:** Cross-LLM audit workflow validation (Methodology)
 **Root cause:** see source
@@ -975,18 +975,20 @@
 **Tags:** p-gcp-05
 
 #### GT-107 (kultura-db-001): subprocess
-**Server:** kultura-db | **Status:** documented
+**Server:** kultura-db | **Status:** fixed
 
 **Symptom:** `refresh_dashboards.ps1:20 char:30` -> `throw ("{0} exit={1}")` = jediny signal padu; zadny traceback, zadny per-run log. Beh 25.09.2026 07:42 zemrel po kroku 3, dnesni behy opakovane cervene, po restartu PC 2x zelene. Identifikace skutecne priciny trvala ~30 min mtime forenzniky misto precteni vyjimky.
 **Root cause:** (1) `Invoke-PyStep` vola `& python @PyArgs` bez `2>&1` a bez zapisu do logu - python stderr/traceback runner opousti, `$LASTEXITCODE` se transformuje na hole `exit=N` -> chyba bez kontextu. (2) Okno smrti dolozeno mtime: posledni zapis v repu `data/db/kultura.db` `07:42:14.778` = commit kroku 3; kroky 6-9 nenabehly (`data/poc_export/*.csv` mtime 24.09 21:18, footer dashboardu `Pull: 2026-09-24T21:18:13`, meteo_daily.csv 108 vs 109 radku v DB) -> smrt v okne prveho zapisu kroku 4/5/6. Read-only simulace kroku 4/5/6 (monkeypatch `sqlite3.connect` -> mode=ro, guard na `open`) cista (`SIM_STEP4_OK`, `SIM_STEP5_OK`) -> kod bez vady. [hypoteza, P~=0.6] transient zamek (SQLite default busy timeout 5 s, nebo file-level handle) drzeny procesem, ktery restart PC odstranil; presna vyjimka se nezachytila. (3) Overena past pri oprave: v PS 5.1 `& prog 2>&1` pod `$ErrorActionPreference='Stop'` vyhodi `NativeCommandError` NA RADKU VOLANI - script konci exit=1 misto skutecneho `exit=7`, a to i kdyz proces skoncil `exit=0` a na stderr slo jen varovani. Nasazeni logovani bez docasneho prepnuti EAP by pridalo novy typ padu na radku 19 drive, nez pobehne vlastni `throw` na radku 20.
-**Fix:** (1) `Invoke-PyStep`: docasne `$ErrorActionPreference='Continue'` uvnitr `try/finally`, `$code=$LASTEXITCODE` zachycen OKAMZITE po volani, `2>&1 | Tee-Object -FilePath $RunLog -Append`, `throw` nese label + exit code + tail 20 radku logu. (2) Hlavicka per-run logu: cas, `$PSVersionTable.PSVersion`, `(Get-Command python).Source`, cwd, `git rev-parse --short HEAD` + preflight `Get-Command python` (fail-fast). (3) `sqlite3.connect(db, timeout=30)` na 9 call site v ceste pipeline (meteo_client:211, refresh_archive_incremental:32, import_forecast:336, compute_intervals:78, seed_yield:118, export_poc:8, generate_forecast_dashboard:381, html_generator_v2:476, check_consistency:31). (4) Gate: negativni cesta (docasny `sys.exit(3)`) musi vypsat traceback z logu - otestovat DETEKCI selhani, ne jen happy path.
+**Fix:** (1) `Invoke-PyStep`: docasny `$ErrorActionPreference='Continue'` uvnitr try/finally, `$code=$LASTEXITCODE` zachycen OKAMZITE po pipeline, vystup smerovan `2>&1 | ForEach-Object` zaroven do per-run logu (UTF8, live) a na konzoli, `throw` nese label + exit code + log path + tail 20 radku. (2) Hlavicka per-run logu `reports/refresh_run_<ts>.log`: cas, `$PSVersionTable.PSVersion`, `(Get-Command python).Source`, cwd, `git rev-parse --short HEAD` + preflight `Get-Command python` (fail-fast). (3) `sqlite3.connect(..., timeout=30)` na 12 call site v ceste kaskady (kroky 1-10, vc. forecast_7day:32,338 krok 7 a hsnr_params:28 krok 9 - puvodne neuplnych 9 doplneno o kroky 7/9). (4) Gate overen negativni cestou: `sys.exit(3)` -> throw s exit=3 + stderr v logu; `RuntimeError` -> traceback v logu.
 **Pravidlo:** P98
 **Tags:** p98 | powershell | exit-code | observability | subprocess
+
 #### GT-108 (kultura-db-002): encoding
-**Server:** kultura-db | **Status:** documented
+**Server:** kultura-db | **Status:** fixed
 
 **Symptom:** `scripts/generate/refresh_dashboards.ps1` obsahuje ne-ASCII bajty `E2 80 94` (UTF-8 em-dash) na radku 15 v komentari, soubor je BEZ BOM. Hlavicka souboru (radky 8-9) pritom vyslovne zakazuje jakoukoli ne-ASCII stopu a popisuje presny mechanismus padu. Invariant porusen potreti.
 **Root cause:** PS 5.1 cte `.ps1` bez BOM v aktualni ANSI codepage (cp1250); UTF-8 sekvence `E2 80 94` dekoduje cp1250 tak, ze bajt `0x94` = prava uvozovka -> phantom quote, ktery rozbije parsovani skriptu. Dnes je bajt v komentari (neboli), ale: (a) hlavicka dokumentuje pravidlo, ktere sam soubor porusuje; (b) regrese se vratila i po dvou opravach - pravidlo popisane v komentari bez spustitelne kontroly se porusi (8151a0f 0 ne-ASCII -> 988edfc 9 ne-ASCII -> 75fb74c 0 -> 7de30d6 3 = soucasny stav).
-**Fix:** (1) Emdash na radku 15 nahradit pomlckou (ASCII-only obnova). (2) Invariant udelat spustitelnym: v `scripts/verify/check_consistency.py` pridat `check_ps1_ascii()` - pro kazdy `scripts/**/*.ps1` overit `all(b < 128 for b in p.read_bytes())` a hlasit offset prveho ne-ASCII bajtu; bezi v uz existujicim kroku [10/10], zadny novy krok. Komplement GT-080/P69 (nazvy souboru) a GT-014/P28 (emoji ve vystupu) - tato entry pokryva OBSAH .ps1.
+**Fix:** (1) Emdash na radku 15 nahrazen pomlkou - `non_ascii` v souboru 3 -> 0 (overeno poctem bajtu >127). (2) Invariant spustitelnym gate: `check_ps1_ascii()` v `scripts/verify/check_consistency.py` sekce [6] - pro kazdy `scripts/**/*.ps1` kontrola `all(b < 128)`, pri poruseni vypise offset prveho ne-ASCII bajtu a ukonci script exit 1 (bezi v uz existujicim kroku [10/10], zadny novy krok). Overeno negativnim testem (docasny .ps1 s E2 80 94 -> CHYBA + offset 17 + exit 1) i pozitivnim (1/1 ciste ASCII, exit 0). Komplement GT-080/P69 (nazvy souboru) a GT-014/P28 (emoji ve vystupu) - tato entry pokryva OBSAH .ps1.
 **Pravidlo:** P99
 **Tags:** p99 | encoding | ascii | powershell | invariant
+
