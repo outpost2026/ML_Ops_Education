@@ -18,7 +18,7 @@
     },
     "server": {
       "type": "string",
-      "enum": ["cnc-tools", "linkedin-mcp-custom", "mcp-jobs", "lichess-analyzer", "workspace", "gcp"],
+      "enum": ["cnc-tools", "linkedin-mcp-custom", "mcp-jobs", "lichess-analyzer", "workspace", "gcp", "kultura-db", "hostice-vodochody", "cad2llm"],
       "description": "MCP server or scope"
     },
     "status": {

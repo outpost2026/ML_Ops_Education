@@ -180,5 +180,75 @@
     "text": "PS 5.1 cte ps1 bez BOM v ANSI codepage (cp1250); kazdy ne-ASCII bajt je potencialni phantom quote (0x94 = prava uvozovka). Pravidlo popisane v hlavicce souboru bez spustitelne kontroly se porusi (treti regrese). Guard: all(b < 128 for b in p.read_bytes()) nad scripts/**/*.ps1 v uz existujicim check kroku.",
     "weight": "medium",
     "tags": ["encoding", "ascii", "powershell", "invariant"]
+  },
+  {
+    "id": "P100",
+    "title": "JScript/cscript: BOM, //B a rc=0 - kontrakt testu je SENTINEL na stdout, ne exit code",
+    "text": "JScript parser odmita UTF-8 BOM (zapis docasnych .js vzdy bez BOM); cscript //B potlaci WScript.Echo i zpravy o chybe; runtime error konci rc=0 (jen stderr), kompilacni chyba rc=1. Test musi cist SENTINEL pres WScript.StdOut.WriteLine (prefix + pocet) A rc soucasne, WScript.Quit(0|1) explicitne, ocekavane retezce ASCII-only.",
+    "weight": "high",
+    "tags": ["test", "wsh", "jscript", "encoding", "exit-code", "sentinel"]
+  },
+  {
+    "id": "P101",
+    "title": "Parita jazykovych implementaci kanonu: generovana fixture + exec v realnem runtime",
+    "text": "Dve implementace stejneho kanonu (Python <-> JS) drzte pres generovanou fixture z jednoho zdroje pravdy (build ji vygeneruje z Python kanonu); parity test spoustejte v realnem cilovem runtime (cscript/JScript ES3, ne prohlizec); povinna mutacni negativni kontrola dokazujici, ze harness umi failnout. Bez spustitelneho runtime neni parity test.",
+    "weight": "medium",
+    "tags": ["parity", "cross-language", "fixture", "testing"]
+  },
+  {
+    "id": "P102",
+    "title": "Mutabilni externi data ve statickem dokumentu: pull-stamp + regenerace, ne nemenny prose",
+    "text": "Predpoved a jina externi data nesmi lezet v statickem dokumentu bez datumu pullu. Kazde tvrzeni nese pull-stamp; dokument bud pravidelne generujte (build) nebo doplnte zivym fetchem + fallback embedem; pred editaci povinna regenerace; contract test nesmi pustit stale retezec. Forecast ma tvrdy horizont (Open-Meteo 16 dnu).",
+    "weight": "high",
+    "tags": ["staleness", "forecast", "regeneration", "contract-test"]
+  },
+  {
+    "id": "P103",
+    "title": "Producent musí být idempotentní: invariant „nezměněný vstup ⇒ 0 zápisů\"",
+    "text": "Každý producent, který generuje zápisovou dávku (patch, migraci, sync), musí být idempotentní: pro vstup shodný s cílovým stavem vygeneruje 0 příkazů. Nestavěj cílový stav a neposílej ho celý — počítej diff proti aktuálnímu stavu. Invariant „beze změny vstupu = 0 operací\" je spustitelný test; bez něj vypadá 211 příkazů jako úspěch. Reference: GT-112.",
+    "weight": "high",
+    "tags": ["idempotence", "diff", "patch", "invariant"]
+  },
+  {
+    "id": "P104",
+    "title": "Exportní/RPC kontrakt: jeden tvar odpovědi, jedna dispatch mapa",
+    "text": "Každá exportní nebo RPC cesta musí mít deklarovaný tvar odpovědi na jednom místě. Dvě metody vracející tutéž informaci v jiném tvaru = dvě pravdy a konzument musí znát implementaci. Dispatch mapuj jednou mapou a tvar odpovědi validuj; záměrné rozdíly (detail vs. agregát) dokumentuj, ne implicitně předpokládej. Reference: GT-113.",
+    "weight": "high",
+    "tags": ["contract", "rpc", "export", "dispatch"]
+  },
+  {
+    "id": "P105",
+    "title": "Persist boundary: reindexuj na hranici dávky, ne po každé operaci",
+    "text": "Zápis do indexu/DB nepatří do smyčky po jednotlivých operacích. Stanov hranici dávky (commit boundary) a reindexuj jednou; identitu entit drž persistentním ID, ne pořadím ani jménem, aby přežila reindex. Jinak 9 renamů = 9 reindexů a cena roste s počtem operací, ne s velikostí změny. Reference: GT-115.",
+    "weight": "medium",
+    "tags": ["persistence", "index", "batch", "boundary"]
+  },
+  {
+    "id": "P106",
+    "title": "Identita entity je persistentní ID, ne jméno ani cesta",
+    "text": "Jméno a hierarchická cesta jsou popisky, ne klíče. Párování, audit a dedup vždy přes persistentní identitu; jméno používej jen pro reporting. Duplicitní jména v různých kontejnerech a rename jinak rozbijí párování (audit 0/53 a 0/34 = „všechno špatně\", přestože data existují). Reference: GT-114.",
+    "weight": "high",
+    "tags": ["identity", "persistent-id", "naming", "audit"]
+  },
+  {
+    "id": "P107",
+    "title": "Kontejner ≠ přímá geometrie: klasifikuj dřív, než měříš",
+    "text": "Před geometrickými kontrolami klasifikuj entitu jako kontejner (group/component instance) nebo přímou mesh. Transformace kontejneru (rotace, bbox) není rotace/bbox geometrie uvnitř — měřit obojí na stejné úrovni vyrábí falešné BLOCK (28 BLOCK na validním modelu). Reference: GT-116.",
+    "weight": "high",
+    "tags": ["geometry", "container", "classification", "gate"]
+  },
+  {
+    "id": "P108",
+    "title": "Učení slovníku musí mít zpětnou vazbu do zápisu",
+    "text": "Resolver, který čte slovník, musí výsledek resoluce vracet jako kandidáta k zápisu (jméno + původ + jistota). Jednosměrné čtení znamená, že se slovník nikdy nenaučí a stejné nerozpoznané jméno se řeší znovu. Měř úspěšnost resoluce (7/9 unresolved → 0) jako test, ne dojmem z výstupu. Reference: GT-117.",
+    "weight": "medium",
+    "tags": ["vocabulary", "learning", "resolver", "feedback"]
+  },
+  {
+    "id": "P109",
+    "title": "Mapování role → system má jednoho vlastníka",
+    "text": "Je-li hodnota (např. `system`) odvozena z role, smí ji definovat právě jedno místo. Dvě definice (`vocab.roles`, `registry.tag_map`) plus třetí implicitní dopočet v konzumentovi (`kind==\"reference\"` přepíše `system`) vytvoří konflikt, který záplata v konzumentovi jen skryje. Oprava = migrace slovníku na jednoho vlastníka, ne podmínka v gate. Reference: GT-118.",
+    "weight": "high",
+    "tags": ["single-source-of-truth", "mapping", "vocabulary", "registry"]
   }
 ]

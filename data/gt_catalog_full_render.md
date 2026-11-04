@@ -1,6 +1,6 @@
 # MCP GT — Katalog chyb (generated from full JSONL)
 
-**Entries:** 111 | **Format:** JSONL-derived markdown
+**Entries:** 121 | **Format:** JSONL-derived markdown
 
 #### GT-001 (CNC-001): scraping
 **Server:** cnc-tools | **Status:** fixed
@@ -929,6 +929,15 @@
 **Pravidlo:** P96
 **Tags:** p96 | test
 
+#### GT-106 (lichess-033): chess-engine
+**Server:** lichess-analyzer | **Status:** fixed
+
+**Symptom:** Batch 20 her depth 12: 4/5 nejnovějších `0.0 ACPL, errors==moves (28-71)`, single `uqDyoNED` depth 12 `0 ACPL` po `lN4K3mtt` (90 ply, 18min). Předtím 5 her `0 errors` (6ERH4PMw 34, PIuXqVx4 86). `hashfull` pipeline `85%` → timeout.
+**Root cause:** `engine_client.py:55` `Hash 512 Threads 6` fix, sdílený `SimpleEngine` bez `Clear Hash` mezi nekorelovanými hrami. Hash = transposition table s konečnou kapacitou; po 5 hrách `lN4K3mtt` 90 ply `hashfull 29.2%` na 64 (1×/tah) → pipeline `3×` = 85% → `engine call timed out after 15s` (`engine_client.py:121`) → `game_analyzer.py:336` `cp_loss 0` → `0 ACPL`. Měření `KZX6vZ66` 29 ply `64→4.1% 2.3s` vs `lN4K3mtt` 90 ply `64→29.2% 6.2s` vs `128→7.0% 4.6s`.
+**Fix:** `engine_client.py:48` `get_engine(hash_mb)` + `clear_hash()` (`Hash 512→64-256`, `Threads 6→4`) + `game_analyzer.py:35` `choose_adaptive_hash(ply,depth)` deterministická tabulka `d12→64, d14 64(<40)/128(<80)/256(80+)` + `hash_tools.py` (0 heuristik) + batch 20 `C:\Users\PC\AppData\Local\Temp\opencode\systeq_batch_20260831\batch_adaptive_summary.json` + `feedback_calibration.json`. Výsledek: `lN4K3mtt` 6.2→4.6s (-26%), `uqDyoNED` 0→4.3 ACPL, batch 20 20/20 valid (dříve 4/5 corrupted).
+**Pravidlo:** P97
+**Tags:** p97 | engine
+
 #### GT-GCP-001 (GCP-009..015): infrastructure
 **Server:** gcp | **Status:** fixed
 
@@ -991,4 +1000,94 @@
 **Fix:** (1) Emdash na radku 15 nahrazen pomlkou - `non_ascii` v souboru 3 -> 0 (overeno poctem bajtu >127). (2) Invariant spustitelnym gate: `check_ps1_ascii()` v `scripts/verify/check_consistency.py` sekce [6] - pro kazdy `scripts/**/*.ps1` kontrola `all(b < 128)`, pri poruseni vypise offset prveho ne-ASCII bajtu a ukonci script exit 1 (bezi v uz existujicim kroku [10/10], zadny novy krok). Overeno negativnim testem (docasny .ps1 s E2 80 94 -> CHYBA + offset 17 + exit 1) i pozitivnim (1/1 ciste ASCII, exit 0). Komplement GT-080/P69 (nazvy souboru) a GT-014/P28 (emoji ve vystupu) - tato entry pokryva OBSAH .ps1.
 **Pravidlo:** P99
 **Tags:** p99 | encoding | ascii | powershell | invariant
+
+#### GT-109 (zakazky-001): test-runtime
+**Server:** hostice-vodochody | **Status:** fixed
+
+**Symptom:** Widget selftest bezel v cscript //B s prazdnym stdout - vypadal jako uspech bez jedineho vystupu; zapis testovaciho .js pres utf-8-sig -> `chyba kompilace: Byl ocekavan znak ';'` (1,8); runtime error -> rc=0 (jen text na stderr). Tri nezavisle pasti v jednom spusteni: test nemohl rozlisit pass/fail od ticheho padu.
+**Root cause:** (1) JScript parser UTF-8 BOM neodstranuje - BOM zamicha do prvniho tokenu a pada na necekany znak (s BOM nikdy neprojde, bez BOM bezi); (2) cscript //B (batch mode) potlaci WScript.Echo vystup i zpravy o chybe -> stdout prazdny; (3) WSH nezahlazuje JScript runtime error do exit code (compile error -> rc=1, runtime error -> rc=0). Exit code samotny neni kontrakt uspechu.
+**Fix:** (1) docasne .js zapisovat vzdy UTF-8 BEZ BOM (experiment: e1 bez BOM bezi, e2 s BOM -> kompilacni chyba); (2) misto WScript.Echo -> WScript.StdOut.WriteLine + explicitni WScript.Quit(0|1); (3) test cte SENTINEL na stdout (prefix 'SELFTEST-OK' + pocet pripadu) A zaroven rc==0 - oba signaly povinne; ocekavane retezce ASCII-only, aby mojibake codepage nemohl posunout vysledek. Overeno: selftest 62/62 v cscript, negativni mutace kanonu -> 'SELFTEST-FAIL' + rc=1, pytest 51+1.
+**Pravidlo:** P100
+**Tags:** test | wsh | jscript | encoding | exit-code | sentinel
+
+#### GT-110 (zakazky-002): parity
+**Server:** hostice-vodochody | **Status:** fixed
+
+**Symptom:** Dve implementace stejneho kanonu verdiktu (Python meteo_mesic.py <-> ES3 widget v HTML) bez spolecneho spousteciho runtime - na stroji zadny Node/Bun/Deno, JS bezi jen v prohlizeci. Parita drzena lidskou opatrnosti; posun wdIdx offsetu (+4 -> +3) zachycen az selftestem, ne review.
+**Root cause:** Cross-language parita bez generovaneho spoje: kazda implementace si drzi vlastni kopii logiky a nic je neporovnava. Testovat to, co neni spustitelne lokalne, konci v prohlizeci (nedeterministicky) nebo se vynecha.
+**Fix:** (1) fixture se neruci, ale GENERUJE z Python kanonu pri buildu (build_html_v4.gen_fixture()) - Python je jediny zdroj pravdy; (2) parity test bezi v realnem cilovem runtime (cscript/JScript = shodny ES3 engine jako konzumator, ne prohlizec); (3) povinna mutacni negativni kontrola (tmin<=0 -> tmin<-99) dokazuje, ze harness umi failnout - jinak je test jen dekorace; (4) kanonicky JS oddelen typeof document !== 'undefined' guardem. Overeno: 62/62 pripadu v JScriptu, pytest 51+1.
+**Pravidlo:** P101
+**Tags:** parity | cross-language | fixture | testing | es3
+
+#### GT-111 (zakazky-003): data-staleness
+**Server:** hostice-vodochody | **Status:** fixed
+
+**Symptom:** HTML v3 + rucni texty obsahovaly 'Vyhled 7.-13. 10.' a betonove okno 11.-12.10.; pull 9.10. je zrusil (Tmin 1.8 < 5 v okne). Dokument se stal nepravdivy bez jedine zmenky o vytvoreni ani data platnosti.
+**Root cause:** Mutabilni externi data (predpoved Open-Meteo) serializovana jako nemenny prose: zadne datum pullu, zadny mechanismus regenerace, staticky dokument neni schopen zmenit sam sebe. Druha vrstva: forecast API ma tvrdy limit 16 dnu (17. den -> HTTP 400), takze i rozsah tvrzeni je casove omezeny.
+**Fix:** (1) pull-stamp - datum pullu viditelne u kazdeho tvrzeni; (2) dynamicky widget - fetch Open-Meteo pri nacteni (CORS ACAAO:* plati i pro Origin: null -> fetch z file:// funguje; nad 16 dnu seasonal API), fallback = posledni embednuty JSON; (3) pred kazdou zmenou dokumentu povinna regenerace meteo_mesic.py -> build_html_v4.py; (4) contract test: retezec '7.-13.' ma ve v4 0 vyskytu; (5) deterministicky build (anchor replace_once s aserci presne 1 vyskytu, zadne now(), byte-identicky 2x beh, md5 zmrazene v3). Overeno: contract testy + 2x byte-identicky build + pytest 51+1.
+**Pravidlo:** P102
+**Tags:** staleness | forecast | regeneration | contract-test | determinism
+
+#### GT-112 (cad2llm-001): idempotence
+**Server:** cad2llm | **Status:** fixed
+
+**Symptom:** Metadata patch emitoval 211 zápisových příkazů i pro model, na kterém se nic nezměnilo; každý běh znovu přepisoval všechna jména a atributy. Patch nebyl idempotentní a z výstupu nešlo poznat, co se skutečně změnilo.
+**Root cause:** Producent (`propose_names`) stavěl cílový stav pro všechny entity a `build_patch` ho zapisoval celý; chyběl diff proti aktuálnímu stavu entity (`_current_field`). Bez invariantu „nezměněný vstup ⇒ 0 příkazů" se regrese neprojeví — 211 příkazů vypadá jako úspěch, ne jako chyba.
+**Fix:** `build_patch` počítá pouze rozdíl mezi návrhem a `_current_field`; invariant „beze změny modelu = 0 příkazů" je spustitelný test, ne komentář. Měřeno: 211 → 0 příkazů. `propose_names` už nenavrhuje jména existujícím entitám (near-miss: k destruktivnímu renamu nedošlo, ale cesta k němu byla otevřená).
+**Pravidlo:** P103
+**Tags:** p103 | idempotence | patch | diff
+
+#### GT-113 (cad2llm-002): contract-drift
+**Server:** cad2llm | **Status:** mitigated
+
+**Symptom:** Dvě exportní cesty pro tutéž informaci (`definitions_detail` vs `tag_consistency`) vracely odlišný tvar a jinou množinu klíčů; konzument musel znát, kterou metodu volat, a výsledky nešlo porovnat.
+**Root cause:** Exportní kontrakt nebyl deklarovaný na jednom místě: každá metoda v `exporter.rb` si stavěla vlastní hash a `bridge.rb` dispatch mapoval příkazy bez validace tvaru odpovědi. Dvě implementace téhož výstupu = dvě pravdy.
+**Fix:** Sjednocený tvar odpovědi a dispatch přes jednu mapu; rozdíl mezi `definitions_detail` (554–565) a `tag_consistency` (584–591) dokumentován jako záměrný (detail vs. agregát). Zbytkové riziko: kontrakt není strojově validovaný — proto mitigated, ne fixed.
+**Pravidlo:** P104
+**Tags:** p104 | contract | export | rpc
+
+#### GT-114 (cad2llm-003): identity
+**Server:** cad2llm | **Status:** mitigated
+
+**Symptom:** `tag_audit` hlásil 0/53 a 0/34 shod — tedy „všechno špatně" — přestože tagy na entitách existovaly. Audit porovnával jména z cesty entity, ne její trvalou identitu.
+**Root cause:** Identita entity vázaná na jméno/cestu (`bridge.rb` `tag_audit` 296–298, `info.modified` 287): po renamu nebo při duplicitních jménech v různých kontejnerech přestane cesta odpovídat. Jméno je popisek, ne klíč.
+**Fix:** Audit párován přes persistentní identitu; jméno slouží jen k reportingu. Měřeno: 0/53 + 0/34 → plné pokrytí. Plně neuzavřeno: `info.modified` zůstává heuristika, protože SketchUp neposkytuje spolehlivý dirty flag per entita — proto mitigated.
+**Pravidlo:** P106
+**Tags:** p106 | identity | audit | persistent-id
+
+#### GT-115 (cad2llm-004): performance
+**Server:** cad2llm | **Status:** fixed
+
+**Symptom:** Metadata zápis 63 operací (9 rename + 54 atributů) trval neúměrně dlouho; každá jednotlivá operace spouštěla reindexaci celého modelu.
+**Root cause:** `annotate.rb` reindexuje po každém `rename`/`set_tag` (`mutates_index?`, 475–477) — persist boundary byla uvnitř smyčky místo na konci dávky. 9 renamů = 9 reindexů, cena roste s počtem operací, ne s velikostí změny.
+**Fix:** Zápis do indexu jednou na hranici dávky; `persistent_id`/`hierarchy_path` (189–208) drží identitu mezi reindexy. Měřeno: 63 operací (9 rename + 54 attr), 0 errors. Wall-clock neměřen — uvádíme jen počty operací.
+**Pravidlo:** P105
+**Tags:** p105 | persistence | index | batch
+
+#### GT-116 (cad2llm-005): geometry
+**Server:** cad2llm | **Status:** fixed
+
+**Symptom:** Baseline B2: 28 BLOCK (24 rotation + 3 bbox + 1 mesh) na modelu, jehož geometrie byla v pořádku; gate blokoval validní kontejnery.
+**Root cause:** Gate nerozlišoval kontejner (group/component instance) od přímé mesh geometrie. Rotace a bbox kontejneru se vyhodnocovaly jako rotace/bbox geometrie uvnitř → falešné BLOCK. Kontejner a jeho obsah jsou dvě různé měřicí úrovně.
+**Fix:** Klasifikace container vs. direct mesh před geometrickými kontrolami; kontejner se hodnotí transformací, ne geometrií uvnitř. Měřeno: 28 BLOCK → 0. Zůstávají warningy: spatial 31 (28× FRAME_UNDECIDABLE, 2× FRAME_UNDECLARED_SCALE, 1× GEOM_ZERO_THICKNESS) + 1 info; geometry 4 warning + 28 info (27× FRAME_ROTATION_VS_GEOMETRY, 1× SEM_REFERENCE_PLANE).
+**Pravidlo:** P107
+**Tags:** p107 | geometry | container | gate
+
+#### GT-117 (cad2llm-006): resolution
+**Server:** cad2llm | **Status:** fixed
+
+**Symptom:** Self-learning slovník nechal 7 z 9 nerozpoznaných tagů nerozřešených; nová jména z modelu se nepropsala do slovníku a příští běh je nerozpoznal znovu.
+**Root cause:** Učení slovníku bylo jednosměrné: resolver slovník pouze četl, ale výsledek resoluce se nevracel jako kandidát k zápisu. Bez zpětné vazby se slovník nemůže naučit nic, co v něm na začátku nebylo.
+**Fix:** Naučená jména se zapisují do slovníku s původem a jistotou; derive 7/9 unresolved → 0. Ověřeno: Python 172 testů, Ruby 313. Učení je měřené jako test úspěšnosti resoluce, ne jako dojem z výstupu.
+**Pravidlo:** P108
+**Tags:** p108 | vocabulary | learning | resolver
+
+#### GT-118 (cad2llm-007): single-source-of-truth
+**Server:** cad2llm | **Status:** mitigated
+
+**Symptom:** Role `space_boundary` měla ve slovníku `system="space"`, ale v `registry.tag_map` `system="reference"`. Gate podle `kind=="reference"` implicitně přepsal `system` na `reference`, takže slovník a gate si odporovaly.
+**Root cause:** Dvě místa definují mapování role → system (`vocab.roles` a `registry.tag_map`) a třetí místo (`gate.py:634–635`, `kind=="reference"`) ho implicitně dopočítává. Role → system nemá jednoho vlastníka; konflikt se řeší na místě spotřeby, ne u zdroje.
+**Fix:** Gate už `system` nepřepisuje implicitně; po zápisu 1 operace je patch 0. Konflikt ve slovníku zůstává (dvě definice), proto mitigated — jedna pravda vyžaduje migraci slovníku, ne záplatu v gate.
+**Pravidlo:** P109
+**Tags:** p109 | single-source-of-truth | vocabulary | registry
 

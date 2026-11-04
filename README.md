@@ -9,7 +9,7 @@
 
 Projekt vznikl z jednoduchého trimmingu dat z `GT postmortem` dokumentu a organicky se rozvinul do širšího projektu zaměřeného na:
 
-1. **Formalizaci GT postmortem** do JSONL formátu (108 entries, -50% tokenů)
+1. **Formalizaci GT postmortem** do JSONL formátu (121 entries, −50 % tokenů)
 2. **Vylepšení retrieval pipeline** — od SequenceMatcher po BM25 + RRF + CLI nástroj
 3. **Osvojení ML Ops ontologie** — terminologie z oblasti AI/ML, která se shoduje s IT skills z trhu práce (MCP-Jobs skills catalog)
 
@@ -20,9 +20,9 @@ Projekt vznikl z jednoduchého trimmingu dat z `GT postmortem` dokumentu a organ
 ```
 ML_Ops_edukace/
 ├── data/                       # Datové soubory
-│   ├── gt_full.jsonl           # 108 GT entries (hlavní dataset)
+│   ├── gt_full.jsonl           # 121 GT entries (hlavní dataset)
 │   ├── gt_schema.json          # JSON Schema pro validaci
-│   ├── gt_rules.json           # 23 P-rules
+│   ├── gt_rules.json           # 36 P-rules
 │   ├── gt_meta.json            # Metadata
 │   ├── test_queries.json       # 25 test queries (CZ+EN)
 │   ├── gt_sample.jsonl         # 22-entry sample (historický)

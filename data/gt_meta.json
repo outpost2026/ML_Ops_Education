@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "source": "MCP_GROUND_TRUTH_postmortem_agregovany_v2.md",
-  "source_version": 22,
-  "total_entries": 111,
-  "total_rules": 26,
+  "source_version": 24,
+  "total_entries": 121,
+  "total_rules": 36,
   "servers_sampled": [
     "cnc-tools",
     "linkedin-mcp-custom",
@@ -11,8 +11,10 @@
     "lichess-analyzer",
     "workspace",
     "gcp",
-    "kultura-db"
+    "kultura-db",
+    "hostice-vodochody",
+    "cad2llm"
   ],
   "created": "2026-08-26",
-  "updated": "2026-09-25"
+  "updated": "2026-11-04"
 }
