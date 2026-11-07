@@ -2,9 +2,17 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "gt-postmortem-entry-v1",
   "title": "GT Postmortem Entry",
-  "description": "Atom-based structured record for MCP engineering postmortem knowledge",
+  "description": "Atom-based structured record for MCP engineering postmortem knowledge (schema v1.1: explicit not_documented markers replace the 'see source' placeholder)",
   "type": "object",
-  "required": ["id", "server", "status", "symptom", "root_cause", "fix", "rule"],
+  "required": [
+    "id",
+    "server",
+    "status",
+    "symptom",
+    "root_cause",
+    "fix",
+    "rule"
+  ],
   "properties": {
     "id": {
       "type": "string",
@@ -13,17 +21,36 @@
     },
     "aliases": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "Original IDs from source artifacts"
     },
     "server": {
       "type": "string",
-      "enum": ["cnc-tools", "linkedin-mcp-custom", "mcp-jobs", "lichess-analyzer", "workspace", "gcp", "kultura-db", "hostice-vodochody", "cad2llm"],
+      "enum": [
+        "cnc-tools",
+        "linkedin-mcp-custom",
+        "mcp-jobs",
+        "lichess-analyzer",
+        "workspace",
+        "gcp",
+        "kultura-db",
+        "hostice-vodochody",
+        "cad2llm"
+      ],
       "description": "MCP server or scope"
     },
     "status": {
       "type": "string",
-      "enum": ["fixed", "mitigated", "documented", "workaround", "pending", "implemented"]
+      "enum": [
+        "fixed",
+        "mitigated",
+        "documented",
+        "workaround",
+        "pending",
+        "implemented"
+      ]
     },
     "typ": {
       "type": "string",
@@ -35,7 +62,7 @@
     },
     "root_cause": {
       "type": "string",
-      "description": "Underlying systemic cause"
+      "description": "Underlying systemic cause. Empty string when the canonical document has no Root cause block; the reason is then in root_cause_status/root_cause_ref."
     },
     "fix": {
       "type": "string",
@@ -47,7 +74,9 @@
     },
     "rules_secondary": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "Additional P-rule references"
     },
     "provenance": {
@@ -56,25 +85,64 @@
     },
     "tags": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "Searchable classification tags"
     },
     "complexity": {
       "type": "string",
-      "enum": ["simple", "moderate", "complex"]
+      "enum": [
+        "simple",
+        "moderate",
+        "complex"
+      ]
     },
     "sub_bugs": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "description"],
+        "required": [
+          "id",
+          "description"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "description": { "type": "string" },
-          "rule": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "rule": {
+            "type": "string"
+          }
         }
       },
       "description": "Sub-bugs for multi-bug entries"
+    },
+    "root_cause_status": {
+      "type": "string",
+      "enum": [
+        "documented",
+        "not_documented"
+      ],
+      "description": "Absent means 'documented' (keeps entries small); explicit only when the cause is missing."
+    },
+    "root_cause_ref": {
+      "type": "string",
+      "description": "Anchor to the canonical document block, e.g. 'MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-041'."
+    },
+    "fix_status": {
+      "type": "string",
+      "enum": [
+        "documented",
+        "not_documented"
+      ],
+      "description": "Absent means 'documented'; explicit only when the fix is missing."
+    },
+    "fix_ref": {
+      "type": "string",
+      "description": "Anchor to the canonical document block when no fix text exists."
     }
   },
   "additionalProperties": false

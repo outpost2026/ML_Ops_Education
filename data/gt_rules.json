@@ -2,253 +2,867 @@
   {
     "id": "P1",
     "title": "Paralelizace",
-    "text": "Jakmile tool iteruje N>1 nezavislych zdroju (repozitare, soubory, API), pouzij ThreadPoolExecutor. Pocet workeru: min(4, N). I/O-bound operace skaluiji lineerne do ~8 vlaken.",
+    "text": "Jakmile tool iteruje N>1 nezávislých zdrojů (repozitáře, soubory, API), použij `ThreadPoolExecutor`. Počet workerů: min(4, N). I/O-bound operace skálují lineárne do ~8 vláken.",
     "weight": "high",
-    "tags": ["parallelism", "performance", "io-bound"]
+    "tags": [
+      "parallelism",
+      "performance",
+      "io-bound"
+    ],
+    "count": 1
   },
   {
     "id": "P2",
-    "title": "Casove konstanty",
-    "text": "Subprocess timeout v MCP toolu musi byt max 25% MCP client timeoutu. Client timeout 60s = subprocess timeout 15s. Fail fast, fail loud.",
+    "title": "Časové konstanty",
+    "text": "Subprocess timeout v MCP toolu musí být max 25% MCP client timeoutu. Client timeout 60s → subprocess timeout 15s. Fail fast, fail loud.",
     "weight": "high",
-    "tags": ["timeout", "reliability"]
+    "tags": [
+      "timeout",
+      "reliability"
+    ],
+    "count": 1
   },
   {
     "id": "P3",
     "title": "Read-only locky",
-    "text": "Kazdy read-only subprocess call (git, grep, diff) pouzivej ['git', '--no-optional-locks']. Eliminuje filesystem lock contention.",
+    "text": "Kazdý read-only subprocess call (git, grep, diff) používej `[\"git\", \"--no-optional-locks\"]`. Eliminuje filesystem lock contention.",
     "weight": "medium",
-    "tags": ["git", "filesystem", "locking"]
+    "tags": [
+      "git",
+      "filesystem",
+      "locking"
+    ],
+    "count": 1
   },
   {
     "id": "P4",
     "title": "JSON defenziva",
-    "text": "Kazdy JSON state deserializer: try/except + isinstance(v, dict) guard + auto-repair. Pocitej s corrupt daty.",
+    "text": "Kazdý JSON state deserializer: `try/except` + `isinstance(v, dict)` guard + auto-repair. Počítej s corrupt daty.",
     "weight": "high",
-    "tags": ["json", "defensive-programming", "data-integrity"]
+    "tags": [
+      "json",
+      "defensive-programming",
+      "data-integrity"
+    ],
+    "count": 1
   },
   {
     "id": "P5",
     "title": "Diagnostika",
-    "text": "@auditable na kazdem toolu. Povinne: ts, tool, duration_s, ok. Bez metriky neni diagnostika.",
+    "text": "`@auditable` na kazdém toolu. Povinné: `ts`, `tool`, `duration_s`, `ok`. Bez metriky není diagnostika.",
     "weight": "high",
-    "tags": ["observability", "metrics", "auditing"]
+    "tags": [
+      "observability",
+      "metrics",
+      "auditing"
+    ],
+    "count": 1
   },
   {
     "id": "P6",
     "title": "Timeout guard",
-    "text": "I/O tool s potencialem >10s = wrapper s concurrent.futures.TimeoutError.",
+    "text": "I/O tool s potenciálem >10s → wrapper s `concurrent.futures.TimeoutError`.",
     "weight": "medium",
-    "tags": ["timeout", "reliability"]
+    "tags": [
+      "timeout",
+      "reliability"
+    ],
+    "count": 1
+  },
+  {
+    "id": "P7",
+    "title": "Globální proměnné",
+    "text": "Kazdá funkce, která zapisuje do modulové globální proměnné, musí mít `global jméno`. Python bez `global` vytvorí lokální shadow — tichá ztráta dat.",
+    "count": 1
+  },
+  {
+    "id": "P8",
+    "title": "Pořadí operací",
+    "text": "Auth/navigace/destruktivní operace: auth first, navigace second. Nic mezi ně nevkládat.",
+    "count": 1
   },
   {
     "id": "P9",
-    "title": "Zadne CSS tridy v selektorech",
-    "text": "Pouzivej semanticke HTML atributy (href, aria-label, role). CSS tridy jsou ephemeral — A/B testy je meni bez varovani.",
+    "title": "Žádné CSS třídy v selektorech",
+    "text": "Používej sémantické HTML atributy (`href`, `aria-label`, `role`). CSS třídy jsou ephemeral — A/B testy je mení bez varování.",
     "weight": "high",
-    "tags": ["scraping", "css-selectors", "robustness"]
+    "tags": [
+      "scraping",
+      "css-selectors",
+      "robustness"
+    ],
+    "count": 14
+  },
+  {
+    "id": "P10",
+    "title": "Verifikace cest",
+    "text": "`Path.parents` je 0-indexovaný od nejbližšího rodice. Ověř `relative_to()` pred prvním pouzitím.",
+    "count": 1
   },
   {
     "id": "P11",
     "title": "Console script distribution",
-    "text": "Po uv sync vzdy overuj, ze konzolovy script je dostupny. Pokud where selze pridej .venv/Scripts do PATH nebo vytvor .bat wrapper.",
+    "text": "Po `uv sync` vzdy explicitně ověř, z ekonzolový script je dostupný:\n```bash\n.venv/Scripts/<tool> --help   # musí fungovat\nwhere <tool>                   # musí najít exe\n```\nPokud `where` selze → pridej `.venv/Scripts` do PATH nebo vytvor `.bat` wrapper.",
     "weight": "medium",
-    "tags": ["packaging", "distribution", "python"]
+    "tags": [
+      "packaging",
+      "distribution",
+      "python"
+    ],
+    "count": 2
+  },
+  {
+    "id": "P12",
+    "title": "Cross-shell launcher",
+    "text": "Kazdý CLI nástroj na Windows musí mít `.bat` wrapper v repo root:\n```batch\n@echo off\n\"%~dp0.venv\\Scripts\\<tool>.exe\" %*\n```",
+    "count": 1
   },
   {
     "id": "P13",
     "title": "Long-running batch operations",
-    "text": "MCP neni bezny REST API — je to vnorovana i/o smycka s presne jednim klientem. Synchronni batch = blokujici STDIO = timeout klienta = ztrata prace.",
+    "text": "MCP tool, který iteruje N>10 I/O operací, musí být buď:\n1. Asynchronní s progress streamingem (MCP `ctx.info()`), nebo\n2. Nahrazen CLI entry pointem, který obchází MCP transport timeout, nebo\n3. **Async submit+poll pattern** (GT-087): tool vrátí okamžitě `{job_id}`, práce běží v `ThreadPoolExecutor` na pozadí, klient polluje `search_status(job_id)` → `{status, elapsed_s, result}`. Jediná varianta, která drží produkční deliverable **bez CLI**.\n\nSoučasně: client timeout config (např. opencode `timeout` v `opencode.jsonc`) se vztahuje na **ListTools (fetching tools), NE na tool calls** — konfigurovaný timeout nechrání long-running calls; řešení je P13 pattern, ne zvětšení timeoutu (GT-087).\n\n**Varování (GT-089):** submit+poll NEchrání před stderr deadlockem — pokud timeouting `search_status`/`health_check` (ne jen submit), je server frozen (stderr pipe full, lastResort/StreamHandler), ne job běžící; root logger MUSÍ být na FileHandler (P25).",
     "weight": "high",
-    "tags": ["mcp", "async", "batch", "timeout"]
+    "tags": [
+      "mcp",
+      "async",
+      "batch",
+      "timeout"
+    ],
+    "count": 3
   },
   {
     "id": "P14",
     "title": "Windows path quoting",
-    "text": "Na Windows: vzdy quotuj cesty s mezerami v subprocess volani. PowerShell: & 'path with spaces.exe'. Bash (Git Bash): 'C:/path with spaces/file'. Spravna citace muze zmenit exit code z 1 na 0.",
+    "text": "- Vzdy `pathlib.Path` (nikdy string concatenation)\n- Pri predání cesty subprocessu: `str(resolved_path)` + explicitní quoting\n- Testuj cesty v cmd.exe, PowerShell i Git Bash\n- `_github\\` prefix ~70 chars → riziko MAX_PATH (260 chars)",
     "weight": "high",
-    "tags": ["windows", "path", "quoting", "cross-platform"]
+    "tags": [
+      "windows",
+      "path",
+      "quoting",
+      "cross-platform"
+    ],
+    "count": 0
+  },
+  {
+    "id": "P15",
+    "title": "Session monitoring",
+    "text": "Pred kazdým pipeline runem: (1) `is_logged_in()` + log `page.url`, (2) pokud auth selze, loguj response body (může být checkpoint), (3) `--login` flow bez restartu MCP serveru.",
+    "count": 1
+  },
+  {
+    "id": "P16",
+    "title": "PowerShell v bash = piš .ps1 soubor",
+    "text": "Nikdy nevkládej PowerShell one-linery do bash stringů. Vzdy: napiš `.ps1` script, spust pres `powershell -File scripts/operace.ps1`.",
+    "count": 1
   },
   {
     "id": "P17",
     "title": "Workspace context export",
-    "text": "tool_workspace_info() pri startu serveru + workspace root do stderr. LLM nema mechanismus jak zjistit ALLOWED_ROOTS.",
+    "text": "Kazdý MCP server pro LLM agenty musí:\n1. Při startu vypsat workspace root do stderr: `print(f\"[server] Workspace root: {root}\", file=sys.stderr)`\n2. Poskytnout `tool_workspace_info()` vracející root, guardrails profil, index summary\n3. Kontextové soubory prednačíst do cache pri startu",
     "weight": "medium",
-    "tags": ["mcp", "context", "llm"]
+    "tags": [
+      "mcp",
+      "context",
+      "llm"
+    ],
+    "count": 2
   },
   {
     "id": "P18",
-    "title": "Console encoding na Windows",
-    "text": "Na Windows: PYTHONIOENCODING='utf-8' + chcp 65001 pred spustenim Python skriptu. Bez toho: UnicodeEncodeError na diakritice a specialnich znacich.",
+    "title": "Console encoding na Windows (Unicode safety)",
+    "text": "1. `$env:PYTHONIOENCODING='utf-8'` pred kazdým python príkazem\n2. `sys.stdout.reconfigure(encoding='utf-8', errors='replace')` v startupu\n3. Emoji zakázána v kódu (.ai_guardrails.json)",
     "weight": "high",
-    "tags": ["windows", "encoding", "unicode"]
+    "tags": [
+      "windows",
+      "encoding",
+      "unicode"
+    ],
+    "count": 1
+  },
+  {
+    "id": "P19",
+    "title": "Structured logging v scrape path",
+    "text": "Kazdý scrape modul musí mít: per-card `logger.warning()`, skip counter, 0-ads `logger.error()` alert.",
+    "count": 1
+  },
+  {
+    "id": "P20",
+    "title": "ETL health check / session-start protocol",
+    "text": "Kazdý MCP server s externími zdroji musí mít: ETL runner + session-start health check + alert threshold (>20% pokles matched ads).",
+    "count": 1
+  },
+  {
+    "id": "P21",
+    "title": "L2 Resources (URI-adresovatelná data)",
+    "text": "Tool vyrobí data jednou, resource je zpřístupňuje opakovaně. URI schema: `server://{namespace}/{id}`.",
+    "count": 1
+  },
+  {
+    "id": "P22",
+    "title": "Windows PowerShell: nikdy `python -c` s komplexním kódem",
+    "text": "`python -c \"...\"` s f-stringy, vnorenými uvozovkami, cykly je křehký. Root cause: Windows API `CommandLineToArgvW` delí argument na mezerách.",
+    "count": 1
   },
   {
     "id": "P23",
     "title": "Windows encoding: PYTHONIOENCODING + PYTHONUTF8 + -X utf8",
-    "text": "Tri vrstvy UTF-8: (1) $env:PYTHONIOENCODING='utf-8', (2) $env:PYTHONUTF8=1, (3) python -X utf8. Kazda kryje jine scenario.",
+    "text": "Tri úrovne ochrany: (1) shell-level env var, (2) process-level `-X utf8`, (3) code-level `sys.stdout.reconfigure()`.",
     "weight": "high",
-    "tags": ["windows", "encoding", "python"]
+    "tags": [
+      "windows",
+      "encoding",
+      "python"
+    ],
+    "count": 2
+  },
+  {
+    "id": "P24",
+    "title": "Python version audit",
+    "text": "- Nikdy pre-release Python (< stable) pro MCP servery\n- `requires-python = \">=3.12.0,!=3.11.0rc1,!=3.11.0rc2\"` v pyproject.toml\n- Version check pri startu serveru",
+    "count": 1
+  },
+  {
+    "id": "P25",
+    "title": "stderr hygiene",
+    "text": "- Nikdy StreamHandler(sys.stderr) v MCP serveru\n- Logovat jen do FileHandler nebo rotating file\n- Audit log = file-based, ne stderr-based\n- Rozšířeno (GT-089): zákaz platí i pro IMPLICITNÍ cesty na stderr — `logging.lastResort` (root logger bez konfigurace = implicitní StreamHandler stderr) a `print(file=sys.stderr)`. Root logger MUSÍ být konfigurován na FileHandler od prvního startu: `logging.basicConfig(filename=..., level=..., force=True)`. Startup stderr printy max. 1 krátký řádek (P17).",
+    "count": 2
+  },
+  {
+    "id": "P26",
+    "title": "asyncio subprocess",
+    "text": "- Vsechna I/O v MCP tools pres `asyncio.create_subprocess_exec()`\n- `stdin=asyncio.subprocess.DEVNULL` pro git operace\n- `asyncio.wait_for(proc.communicate(), timeout=15)` pro fail-fast\n- Vzdy `cwd=` explicitně\n- `subprocess.run` zakázán v MCP tools",
+    "count": 1
+  },
+  {
+    "id": "P27",
+    "title": "MCP test pyramida",
+    "text": "1. Unit vrstva — testy logiky jednotlivých nástrojů\n2. Integration vrstva — testy MCP request/response (pres FastMCP.call_tool)\n3. E2E vrstva — testy pres reálný STDIO transport\n4. Smoke test po kazdé změně: `git_status(B2B-Knowledge-Base)` <5s",
+    "count": 2
+  },
+  {
+    "id": "P28",
+    "title": "Encoding audit v CI",
+    "text": "Kazdý build musí kontrolovat, ze zdrojové soubory neobsahují emoji:\n```bash\nrg \"[\\u2600-\\u27BF\\U0001F000-\\U0001FFFF]\" src/\n```",
+    "count": 1
+  },
+  {
+    "id": "P29",
+    "title": "FastMCP main() sync, nikdy async wrapper",
+    "text": "`app.run()` (FastMCP) interně volá `anyio.run()` = spoustí vlastní event loop. main() musí byt sync:\n\n```python\n# SPRAVNE\ndef main():\n    app.run()\n\nif __name__ == \"__main__\":\n    main()\n\n# CHYBNE — RuntimeError: Already running asyncio\nasync def main():\n    await app.run()\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())\n```\n\n**Rozsireni:** Po `pip install -e .` se `src` layoutem over `.pth` obsahuje project root, nejen `src/`.",
+    "count": 2
   },
   {
     "id": "P30",
     "title": "LLM response format fallback",
-    "text": "msg.get('content') or msg.get('reasoning') pro kazdeho providera. Ruzni LLM poskytovatele maji rozdilne response struktury.",
+    "text": "`data[\"choices\"][0][\"message\"][\"content\"]` není univerzální. Cerebras pouzívá `reasoning` místo `content`. Pouzívat `msg.get(\"content\") or msg.get(\"reasoning\")`.",
     "weight": "high",
-    "tags": ["llm", "api", "fallback"]
+    "tags": [
+      "llm",
+      "api",
+      "fallback"
+    ],
+    "count": 1
+  },
+  {
+    "id": "P31",
+    "title": "LLM max_tokens pro coaching",
+    "text": "Coaching pipeline s 6+ patterny a 5 sekcemi vyzaduje `max_tokens >= 4000`. Default 2000 testovat na reprezentativním vzorku.",
+    "count": 1
+  },
+  {
+    "id": "P32",
+    "title": "Cascade status exposure",
+    "text": "Cascade fallback musí expose per-provider status (attempted/skipped/error + tokens + cost) do výstupu. Nikdy netlacit stav provideru.",
+    "count": 1
+  },
+  {
+    "id": "P33",
+    "title": "Data format change consistency",
+    "text": "Po zmene datového formatu aktualizovat VŠECHNY konzumenty. Testovat s reprezentativními daty, ne jen unit testy.",
+    "count": 1
+  },
+  {
+    "id": "P34",
+    "title": "Cache schema versioning",
+    "text": "Cache/export JSON schema explicitne dokumentovat a verze kontrolovat. Konzumenti pouzívat fallback chain pres `.get()`.",
+    "count": 1
   },
   {
     "id": "P35",
-    "title": "Deterministicke kroky cacheovat",
-    "text": "Pokud krok neni nahodny (napr. Stockfish analyza), cacheuj vysledek. Re-run 5 her z cache = 0.1s misto 24 minut.",
+    "title": "Deterministické kroky cacheovat",
+    "text": "Stockfish analyza (deterministická) cacheovat pres `game_id + depth`. LLM inference ne — kazdý běh = nová odpoved.",
     "weight": "high",
-    "tags": ["caching", "deterministic", "performance"]
+    "tags": [
+      "caching",
+      "deterministic",
+      "performance"
+    ],
+    "count": 1
+  },
+  {
+    "id": "P36",
+    "title": "Provider model ID overení",
+    "text": "Vzdy volat `/v1/models` API pro discovery. Docs a UI jsou nespolehlivé. Testovat s minimálním promptem.",
+    "count": 1
+  },
+  {
+    "id": "P37",
+    "title": "Cost/benefit provider governance",
+    "text": "Kazdý provider v LLM cascade musí mít explicitní cost schválení. Drazsí alternativy (>2× cena za stejnou kvalitu) blokovat.",
+    "count": 1
+  },
+  {
+    "id": "P38",
+    "title": "SNR evaluation framework",
+    "text": "Porovnání LLM výstupu: vzdy pouzít SNR framework (grounding 30%, confidence 20%, phase data 15%, hallucinations 20%, structure 10%, concreteness 5%).",
+    "count": 1
+  },
+  {
+    "id": "P39",
+    "title": "Multi-API key management",
+    "text": "`.env` pro lokální vývoj, `auth.json` pro opencode, `.gitignore` pro oba. Kazdý provider muze mít jiný key management (free vs paid, shared vs dedicated).",
+    "count": 1
+  },
+  {
+    "id": "P40",
+    "title": "Env var warning na suboptimal values",
+    "text": "Env var s dopadem na kvalitu musí logovat varování pri hodnotách pod doporuceným minimem. Příklad: `LLM_MAX_TOKENS=2000` → warning \"recommended >=4000\".",
+    "count": 1
   },
   {
     "id": "P41",
-    "title": "Dvourovnova LLM cache",
-    "text": "Level 1: full LLM response (hodnota). Level 2: structured parse (hra+barva+profil). Klic: {game_id}_{color}_llm.json.",
+    "title": "Dvouúrovnová LLM cache (Level 2)",
+    "text": "Per-game LLM analyzu cacheovat do `{game_id}_llm.json`. Agregace pouzívá summaries z cache místo raw dat. Nová hra = 1 L2 call + 1 agregace, ne full re-run. **Aktualizace (v8):** u multi-perspektiva pipeline (dual-cache white+black) MUSÍ klíc obsahovat perspektivu — `{game_id}_{color}_llm.json`. Jinak oba pohledy sdílí soubor a last-writer-wins prepluje opacnou perspektivu. Reference: GT-079.",
     "weight": "high",
-    "tags": ["caching", "llm", "architecture"]
+    "tags": [
+      "caching",
+      "llm",
+      "architecture"
+    ],
+    "count": 2
+  },
+  {
+    "id": "P42",
+    "title": "Cascade resilience",
+    "text": "Timeout nebo error jednoho providera v cascade nesmí blokovat pipeline. Cascade je resilience pattern — dalsí provider v poradí prevezme.",
+    "count": 1
+  },
+  {
+    "id": "P43",
+    "title": "Pipeline mode (monolit vs inkrementalni)",
+    "text": "N≤30 → monolit (1 LLM call). N>30 → inkrementalni (per-game cache + aggregate). Golden rules: rychlá analýza = monolit, hromadná / PGN import = inkrementalni. Explicitní override pres `PIPELINE_MODE` env var.",
+    "count": 1
+  },
+  {
+    "id": "P44",
+    "title": "Contract testy mezi moduly (Consumer-Driven Contract)",
+    "text": "Kazdy modul v pipeline (Stockfish analyzer → prompt builder → LLM) musi mit contract test, ktery overuje konzistenci klícu mezi producerem a consumerem. Consumer definuje kontrakt (jake klíce potrebuje). Test je schema test na realnych datech + placeholder detection. Profesionalni nastroj: Pact. Lightweight varianta: `assert key in data` + `assert \"?\" not in prompt`. Reference: `01_METODIKY/05_testing/contract_testing_ontologie_v1.md`.",
+    "count": 1
+  },
+  {
+    "id": "P45",
+    "title": "API key health check pri startupu",
+    "text": "`verify_api_keys()` v `server.py`. Lightweight ping (max_tokens=1, timeout=10s, per-provider). Detekuje neplatny/vyprseny/rate-limited klic pred prvnim tool volanim. Fail fast. Reference: GT-060.",
+    "count": 1
+  },
+  {
+    "id": "P46",
+    "title": "Classification branches must be mutually exclusive",
+    "text": "Kazda kategorie v if/elif chainu musi mit vlastni append target. Spolecny cil = tichy data corruption. Unit test overuje, ze zadne dve kategorie nesdileji stejny cil. Reference: GT-061.",
+    "count": 1
   },
   {
     "id": "P47",
     "title": "Cross-LLM audit gate",
-    "text": "Pred major release: v1 twin scan + v2 code review. Cross-LLM audit = povinna brana.",
+    "text": "Pred major release: v1 twin scan (architektura, struktura, bez kodu) + v2 code review (implementace, verifikace). Ani jedna faze nestaci sama. Reference: GT-062.",
     "weight": "medium",
-    "tags": ["audit", "quality", "release"]
+    "tags": [
+      "audit",
+      "quality",
+      "release"
+    ],
+    "count": 1
+  },
+  {
+    "id": "P48",
+    "title": "Pattern confidence weighted by sample size",
+    "text": "`confidence = min(0.95, base * (1 - 1/(N+1))) * evidence_factor`. Minimal sample N >= 5. Hardcoded confidence neodrazi silu evidence. Reference: GT-063.",
+    "count": 2
+  },
+  {
+    "id": "P49",
+    "title": "Sanitize user-supplied identifiers before filesystem use",
+    "text": "`re.sub(r'[^a-zA-Z0-9_-]', '_', value)` na vsech vstupech (game_id, username, job_id) pred konstrukci File Path. Zaden user input nesmi byt primo segment v ceste. Reference: GT-065.",
+    "count": 1
+  },
+  {
+    "id": "P50",
+    "title": "Parametr clamp musí být signalizován",
+    "text": "Pokud clamp (max/min) implicitně ořezává uživatelský vstup, musí logovat warning: `f\"[clamp] {param}={value} clamped to {clamped}\"`. Tichý ořez = nekonzistentní chování. Reference: GT-066.",
+    "count": 1
+  },
+  {
+    "id": "P51",
+    "title": "Pending analysis warning",
+    "text": "Každý tool závislý na per-game cache musí před zpracováním zkontrolovat pending count a varovat uživatele. Struktura: cache-first → pending warning → processing → výsledek. Reference: GT-067.",
+    "count": 1
+  },
+  {
+    "id": "P52",
+    "title": "Ověř parametr knihovny před použitím",
+    "text": "`pip show <library> | grep Version` před použitím nového API parametru. API dokumentace Lichess a berserk dokumentace mohou být desynchronizované. Reference: GT-068.",
+    "count": 1
+  },
+  {
+    "id": "P53",
+    "title": "MCP tool list je initialize snapshot",
+    "text": "Po přidání nového toolu: (1) restart MCP server, (2) restart opencode session, (3) ověř v `list_tools`. Tool list se neaktualizuje za běhu. Reference: GT-069.",
+    "count": 1
+  },
+  {
+    "id": "P54",
+    "title": "Pattern discovery validace",
+    "text": "Nový pattern musí být validován: (a) N >= 30 pro statistickou signifikanci, (b) ratio >= 1.4 pro praktickou relevanti, (c) potvrzen v 2+ nezávislých analýzách. Reference: GT-070.",
+    "count": 1
   },
   {
     "id": "P55",
     "title": "Silent except je bug",
-    "text": "except Exception: pass neni ochrana — je to maskovani problemu. Kazdy except musi logovat nebo propoustet.",
+    "text": "Každý `except Exception: pass` je bug unless proven otherwise. Silent excepty musí být zalogovány. Reference: GT-071.",
     "weight": "high",
-    "tags": ["error-handling", "logging", "defensive"]
+    "tags": [
+      "error-handling",
+      "logging",
+      "defensive"
+    ],
+    "count": 1
+  },
+  {
+    "id": "P56",
+    "title": "Stockfish PV SAN konverze",
+    "text": "Stockfish PV multi-tahové sekvence musí být konvertovány do SAN sekvenčně na kopii boardu. `board.san(m)` validuje proti aktuální pozici, ne proti rootu. Reference: GT-071, GT-075.",
+    "count": 2
+  },
+  {
+    "id": "P57",
+    "title": "K0 noise channel",
+    "text": "K0 (orákulum/engine) je samostatný noise channel. Každý run reportuje: depth, engine_version, Threads, Hash, nps_benchmark. ACPL z různých depth nejsou srovnatelné bez K0 korekce. Reference: GT-072.",
+    "count": 1
+  },
+  {
+    "id": "P58",
+    "title": "Cache version governance",
+    "text": "Cache klíč musí obsahovat verzi kódu (`detector_version`). Při cache load: version mismatch → log warning → re-analyze. Nikdy nepoužívat stale cache po code change. Reference: GT-074.",
+    "count": 1
+  },
+  {
+    "id": "P59",
+    "title": "PV jsou sekvenční variace",
+    "text": "Stockfish PV v multi-PV módu jsou sekvenční variace, ne paralelní alternativy. Každý PV tah aplikovat na kopii boardu. Nikdy nevalidovat N-tý PV tah proti root pozici. Reference: GT-075.",
+    "count": 1
+  },
+  {
+    "id": "P60",
+    "title": "Engine lock isolation",
+    "text": "Engine lock vytváří coupling mezi analysis call. Exception uvnitř lock bloku může korumpovat stav engine pro následující volání. Mitigace: (a) žádné AssertionError uvnitř locku, (b) engine restart při timeout locku. Reference: GT-076.",
+    "count": 1
+  },
+  {
+    "id": "P61",
+    "title": "Truncated engine lines signalizace",
+    "text": "Engine lines count pod multipv_target musí být signalizován. Flag `truncated` a `logger.warning()` per BFS. Reference: GT-077.",
+    "count": 1
+  },
+  {
+    "id": "P62",
+    "title": "Ruff --fix je destruktivní, side-effect importy s noqa",
+    "text": "Ruff `--fix` maže side-effect importy (F401 unused import) — u registračního patternu `@app.tool()` to ruší registrace toolů. Side-effect importy MUSÍ mít `# noqa: F401` per line. Po každém `ruff --fix`: povinně `git diff` + registrační smoke check (`app._tool_manager._tools` count). Pytest destruktivní smazání registrace nezachytí. Doplnění (GT-081): ruff v automatizaci (CI) běží jako `--check` (read-only) — kontrola. `--fix` je **lidská** operace s `git diff` review — mutace. Separace kontroly od mutace je povinná; `--fix` nikdy do CI gate. Reference: GT-078, GT-081.",
+    "count": 2
   },
   {
     "id": "P63",
-    "title": "getattr s defaultem maskuje neexistujici atributy",
-    "text": "getattr(obj, 'field', default) na LLM response = ticha data degradace. Default = warning, ne ticha nahrada.",
+    "title": "getattr s defaultem maskuje neexistující atributy",
+    "text": "`getattr(obj, \"neexistujici\", default)` vrací default **bez jakékoli signalizace** — u LLM input pipeline to znamená 100 % garbage v promptu (detekováno na `opening_report`, `opponent_pool`: `opening_name`, `player_color`, `acpl`, `result`). Model pole MUSÍ být čtená přes reálné atributy (`a.game.opening`, `a.total_acpl`) — pak neexistující atribut vyhodí AttributeError při testech. Jestliže default je nutný: logovat warning při použití. Reference: GT-079.",
     "weight": "high",
-    "tags": ["llm", "data-integrity", "defensive"]
+    "tags": [
+      "llm",
+      "data-integrity",
+      "defensive"
+    ],
+    "count": 0
+  },
+  {
+    "id": "P64",
+    "title": "Contract evoluce na živých datech je additive",
+    "text": "Rozšíření povinného klíčového seznamu contract testu, který iteruje REÁLNÁ cache data, zlomí běh na starších souborech (149× cache bez nového klíče). Nový data klíč = (a) additive test `assert data.get(key, default)` MÍSTO rozšíření `PROMPT_TOP_LEVEL_KEYS`, (b) `.get(key, default)` v deserializaci — ne KeyError. Evoluce contractu nikdy nesmí vynutit migraci legacy dat. Reference: GT-079.",
+    "count": 0
+  },
+  {
+    "id": "P65",
+    "title": "Timeout cleanup cílí referenci, která volala",
+    "text": "`evaluate_move` používá LOKÁLNÍ engine (vlastní instance), ale timeout handler kvitil sdružený `_engine` → kolaterální zabití konkurující analýzy + zbytečný restart. Cleanup funkce MUSÍ přijmout referenci (`_run_engine_call(fn, timeout_s, engine=None)`) a zabít právě ten objekt, který volání spustil. Reference: GT-079.",
+    "count": 0
+  },
+  {
+    "id": "P66",
+    "title": "Fail-fast nad tichou substitucí",
+    "text": "Validace nemá akceptovat hodnotu, kterou implementace neumí, a nahradit ji substitucí — hlásí neimplementovaný vstup chybou (`source='chesscom' → error dict`). Tichá substituce = klidná špatná data. Výjimka: degradace s markerem (P67). Reference: GT-079.",
+    "count": 0
+  },
+  {
+    "id": "P67",
+    "title": "Degradace dat potřebuje počitatelný marker",
+    "text": "`except Exception: pass` + `cp_loss = 0` při selhání evaluate_move klasifikovalo chybný tah jako \"best\" → ACPL systematicky optimistický bez indikace. Degradace MUSÍ být (a) spočítaná (`GameAnalysis.evaluation_errors` čítač, error dict i výjimka → +1), (b) vystavená do LLM promptu (`Eval errors: N (ACPL may be optimistic)`). Rozšíření P55 (log) o měřitelnou expozici. Reference: GT-079.",
+    "count": 0
+  },
+  {
+    "id": "P68",
+    "title": "Legacy cache pole s defaultem má guard před parserem",
+    "text": "Starší cache soubory mají pole s prázdným/default defaultem (`m.fen=\"\"`) → `chess.Board(fen=\"\")` vyhodí ValueError a zhrotí celou detekci. Pole, které parser zpracovává, musí mít guard na prázdnou hodnotu (`and m.fen`), konzistentní napříč všemi detekčními funkcemi. Reference: GT-079.",
+    "count": 0
   },
   {
     "id": "P69",
-    "title": "Nazvy souboru/adresaru jen ASCII",
-    "text": "Vsechny nazvy souboru/adresaru ASCII [A-Za-z0-9._-]. Overeni .scripts/ascii_filenames_check.ps1 (exit 0).",
+    "title": "Názvy souborů/adresářů jen ASCII (konvence ASCII-NOM)",
+    "text": "Názvy souborů a adresářů povolují POUZE `[A-Za-z0-9._-]` — žádná diakritika, mezery, ani non-breaking hyphen (U+2011). Obsah souborů zůstává UTF-8 s diakritikou (konvence platí pro názvy, ne obsah). Důvod: ne-ASCII názvy (a) generují mojibake v git objektech (cp1250 vs UTF-8 — GT-080), (b) U+2011 je vizuálně identický s `-` ale jiný codepoint → rozbíjí copy-paste/grep/RAG, (c) cyklický encoding dluh. Transliterace: `Normalize(FormD)` + drop NonSpacingMark, mezera→`_`, U+2011→`-`, ostatní ne-ASCII→`_`. Ověření: `.scripts/ascii_filenames_check.ps1` (exit 0 = OK). Reference: GT-080.",
     "weight": "high",
-    "tags": ["filenames", "ascii", "encoding"]
+    "tags": [
+      "filenames",
+      "ascii",
+      "encoding"
+    ],
+    "count": 1
   },
   {
     "id": "P70",
-    "title": "Scraping pipeline s detail fetch = 3 faze",
-    "text": "Collect URLs -> Parallel fetch details -> Filter/merge. Kazda faze ma vlastni error handling.",
+    "title": "Scraping pipeline s detail fetch = 3 fáze",
+    "text": "(1) Collect unikátních URL přes všechny query (set pro dedup), (2) parallel fetch s per-portal throttle (ThreadPoolExecutor, max_workers=4), (3) filter nad naplněnou cache. Sekvenční detail fetch = bottleneck, který eskaluje lineárně s počtem matched ads. Reference: GT-083.",
     "weight": "high",
-    "tags": ["scraping", "pipeline", "architecture"]
+    "tags": [
+      "scraping",
+      "pipeline",
+      "architecture"
+    ],
+    "count": 1
+  },
+  {
+    "id": "P71",
+    "title": "Cache failure sentinel: 3 stavy (nezkoušeno / úspěch / selhalo)",
+    "text": "Cache pro výsledky s možným selháním MUSÍ rozlišovat 3 stavy: (1) nezkoušeno (`None`/absence klíče), (2) úspěch (hodnota), (3) selhalo (sentinel `_FAILED = object()`). Bez sentinelu = opětovné fetch pokusy pro permanentně selhané URL. Reference: GT-085.",
+    "count": 1
+  },
+  {
+    "id": "P72",
+    "title": "Lint rule set je součást dependency kontraktu",
+    "text": "Bez explicitního `[tool.ruff.lint] select` driftuje rule set s verzí nástroje (ruff>=0.6 bez horní hranice → nová default pravidla → CI fail bez změny kódu). Deterministický `select` (stabilní E4/E7/E9/F + explicitně vybraná moderní pravidla) = single source of truth; intencionální výjimky (BLE001 graceful degradation, E501 design trade-off) se dokumentují v `ignore`, ne v kódu. Komplement GT-081. Reference: GT-086.",
+    "count": 1
+  },
+  {
+    "id": "P73",
+    "title": "Test izolace: žádné destruktivní operace proti sdílené DB",
+    "text": "Testy NESMÍ destruktivně zasahovat do dat, která sama nevytvořily. `TRUNCATE`/`DROP`/`DELETE` v test fixture je povolen POUZE proti izolované test DB (dedikovaná databáze/schéma/transakce s rollbackem). Společná `DATABASE_URL` pro testy a produkci/dev = kritická chyba (vysoká pravděpodobnost destrukce). Reference: GT-088.",
+    "count": 2
+  },
+  {
+    "id": "P74",
+    "title": "Tracking/session parametry NESMÍ být součástí dedup klíče",
+    "text": "Scrape URL často obsahují session/tracking parametry, které se mění každý běh: jobs.cz `searchId=<UUID>`, prace.cz `rps=<int>`, profesia `search_id`, `utm_*`. UNIQUE(url) pak nechytí duplicity stejného inzerátu (52 duplicit / 20 skupin v live DB). Stripping patří do **centrálního bodu** (`Ad.__post_init__` / `normalize_url`), ne do per-provider kódu — per-provider řešení drifuje (profesia měla `_clean_detail_url`, jobs/pracecz žádný). Zachovat ostatní query parametry (`page`, sort), odstranit jen tracking. Reference: GT-090.",
+    "count": 1
+  },
+  {
+    "id": "P75",
+    "title": "Cross-portal dedup: sdílený fuzzy klíč + DB enforcement + deterministická priorita",
+    "text": "Stejný inzerát je cross-publikovaný napříč portály (LMC network: jobs.cz+prace.cz, ManpowerGroup: jenprace+profesia). In-memory dedup nestačí napříč běhy. Vyžaduje: (a) **sdílený normalizovaný fuzzy klíč** (lowercase → NFKD strip diakritiky → en/em-dash→hyphen → kolaps whitespace) mezi pipeline `_dedup` i DB `upsert_ads` — jinak divergence; (b) **DB-level enforcement** (fuzzy sloupce + index, batched lookup `unnest(%s::text[])` = 1 round-trip, ne per-ad SELECT); (c) **deterministickou prioritu vítěze** — bohatost dat (description > salary > company > location), tie-break first-seen (existující radka si podrží URL+portal, bez churn), nikoli hardcoded portál ranking. Reference: GT-091.",
+    "count": 1
+  },
+  {
+    "id": "P76",
+    "title": "Anti-bot/consent-page detekce je kombinace hlaviček, ne samotný UA",
+    "text": "Bot-detekce (Seznam.cz) reaguje na kombinaci `User-Agent` + `Accept` hlavičky — default HttpClient s UA Chrome/120 + Accept deterministicky vrací consent page (5/5 reprodukce). Fix = per-portal header varianta (UA Chrome/126 BEZ Accept) aplikovaná v `__init__` providera, respektující mockeri. Default HttpClient NEJEDNÁ jako univerzální řešení pro všechny portály. Deterministickou blokaci vždy ověř live testem (5/5), ne předpokladem. Reference: GT-092.",
+    "count": 1
   },
   {
     "id": "P77",
-    "title": "0 karet na strance N>1 = end-of-list, ne layout change",
-    "text": "Pokud search vrati 0 vysledku na strance N>1, je to normalni end-of-list, ne chyba layoutu.",
+    "title": "0 karet na stránce N>1 = end-of-list (INFO), ne layout change (ERROR)",
+    "text": "`parse_listings` logoval ERROR \"container selector returned 0 cards — likely broken\" pro libovolnou stránku. False-positive: config `pages` (10) > reálný počet stránek (profesia Praha = 8) → trailing stránky existují s 200 OK a normálním title, ale 0 karet = za koncem seznamu. Rozlišení podle page kontextu: **page 1 + 0 karet = ERROR** (reálný layout change/blok), **page > 1 + 0 karet = INFO** \"end of listing reached, stopping\". `parse_listings` přijímá `page` parametr (default 1, abstraktní signatura v base.py), `scrape_all` předává aktuální stránku. Není to chyba v datech — je to normální ukončení paginace. Reference: GT-094.",
     "weight": "medium",
-    "tags": ["scraping", "pagination", "error-handling"]
+    "tags": [
+      "scraping",
+      "pagination",
+      "error-handling"
+    ],
+    "count": 1
   },
   {
-    "id": "P-GCP-01",
-    "title": "Pri 403 v GCP overit vsech 5 autentizacnich vrstev",
-    "text": "IAM role -> Access Scope -> Metadata Server identity -> Workspace vs Cloud scope mismatch -> Service Account quota.",
-    "weight": "high",
-    "tags": ["gcp", "auth", "403"]
+    "id": "P80",
+    "title": "Unicode-aware parsing regionálních formátů",
+    "text": "Při parsování textových dat s regionálními formáty testuj regex proti reálným datům včetně Unicode variací (en-dash U+2013, non-breaking space U+00A0, různé quote znaky). Nikdy nepředpokládej ASCII-only vstup v multilingual scraping pipeline. En-dash a hyphen-minus jsou vizuálně identické — nutný DB audit, ne vizuální kontrola kódu. Reference: GT-095.",
+    "count": 1
   },
   {
-    "id": "P-GCP-05",
-    "title": "Hard Reset protokol",
-    "text": "Pri zacykleni v chybach >30 minut: smazat poskozeny soubor -> vlozit overeny blok kodu -> smazat data -> zacit z nuly.",
-    "weight": "medium",
-    "tags": ["gcp", "recovery", "cognitive"]
+    "id": "P81",
+    "title": "Cross-portal dedup signál: title+company, ne URL",
+    "text": "Cross-portal analytika nikdy nepoužívá URL jako dedup klíč (každý portál má unikátní URL schéma → overlap metrika vždy 0). Používej title+company (nebo fuzzy_title+fuzzy_company). URL-based dedup platí jen uvnitř jednoho portálu. Reference: GT-096.",
+    "count": 1
+  },
+  {
+    "id": "P82",
+    "title": "Modular refactor: žádné vzájemné importy",
+    "text": "Při refactoru na balíčky: závislosti se předávají jako parametry (dependency injection), ne importem. Vzor: `tabs/*.py` importuje `metrics`, `filters`, `components`, nikdy `app.py`. Reference: GT-097.",
+    "count": 1
+  },
+  {
+    "id": "P83",
+    "title": "Contract testy při package splitu mandatory",
+    "text": "Contract testy jsou součástí kroku package split, ne backlogu. Povinné vrstvy: (a) purity (zakázané importy), (b) interface (signatury funkcí), (c) layers (směry importů). Bez nich je modulární architektura křehká. Reference: GT-098.\n\n> **Rezervace P84–P89:** epistemická řada — Gate protokol destruktivních operací. Kanon: `05_EPISTEMIKA/02_agentni_pravidla/EPISTEMICKE-PRAVIDLA-AGENTNI-PRACE.md` §5.4. (P78/P79 nebyly přiděleny.)",
+    "count": 1
+  },
+  {
+    "id": "P90",
+    "title": "Frontend smoke test gate + reintrodukce fixu",
+    "text": "UI layout změny kolem interaktivních komponent ověř ručním smoke testem — pytest nerenderuje frontend. Znovu-povolení dříve odstraněného triggeru bez reprodukce originálního selhání = reintrodukce bugu; fix bez post-fix verifikace na stejném scénáři není fix. Reference: GT-099.",
+    "count": 1
+  },
+  {
+    "id": "P91",
+    "title": "Print-before-raise defense",
+    "text": "API s print-before-raise side efektem se neprobouzí „dotykem a try/except\" — proběhlý výstup nelze chytit výjimkou. Ověř stav přímo (existence souboru / dokumentovaný flag) nebo potlač konkrétní logger. Reference: GT-100.",
+    "count": 1
+  },
+  {
+    "id": "P92",
+    "title": "Dependency kontrakt = jeden zdroj pravdy",
+    "text": "pyproject = kontrakt; requirements/deploy soubory = ručně synchronizované deriváty. Po každém version bumpu `pip install -e .` (dist-info metadata se nepřegenerují sama). Verification gate obsahuje `pip check`. Při „u mě padá, u tebe ne\" porovnej i `pip list`, ne jen kód. Reference: GT-101.",
+    "count": 1
+  },
+  {
+    "id": "P93",
+    "title": "Package-data build verification",
+    "text": "Data soubory vedle modulu deklaruj v `[tool.setuptools.package-data]` A ověř build inspekcí (`pip wheel` + namelist) — konfigurace sama není důkaz. Broad-except kolem kritické funkce bez logování maskuje totální rozpad funkce (komplement P55). Reference: GT-102.",
+    "count": 1
+  },
+  {
+    "id": "P94",
+    "title": "Structural dispatch over name matching",
+    "text": "Když rodina funkcí nemá stabilní jmenný kontrakt, váž strukturou (pozice/arity), ne jmény parametrů — jména jsou v Pythonu jen doporučení. Dispatcher pokrývající rodinu ověř runtime smoke testem celé rodiny, ne vzorkem. Reference: GT-103.",
+    "count": 1
+  },
+  {
+    "id": "P95",
+    "title": "Framework logger direct attach + idempotentní setup",
+    "text": "Loggery s vlastním chainem (`propagate=False`) potřebují handler připojený přímo na svůj uzel — root config nestačí. Setup funkce volané z render cyklu musí být idempotentní (guard flag), jinak duplicity handlerů/registrací. Reference: GT-104.",
+    "count": 1
+  },
+  {
+    "id": "P96",
+    "title": "Žádný live I/O v unit testech",
+    "text": "Async/background cesty v testech vždy stubovat (monkeypatch runneru před submittem). Unit testy nesmí provádět live network I/O. Flaky test = determinismus bug, ne „občas se stane\" — dvě zelená pásma full-suite za sebou = minimum gate. Reference: GT-105.",
+    "count": 1
+  },
+  {
+    "id": "P97",
+    "title": "Sdílený deterministický cache s konečnou kapacitou musí mít Clear/invalidation strategii mezi nekorelovanými vstupy",
+    "text": "Stockfish transposition table (`Hash` MB) je deterministický cache s konečnou kapacitou. Po sérii nekorelovaných her (`lN4K3mtt` 90 ply → `hashfull 29.2%` na 64 pro 1×/tah → pipeline `3×` = 85% → `engine call timed out after 15s`) degraduje na `0 ACPL` pro všechny další hry (batch 20: 4/5 newest `0`). Řešení: (1) adaptivní `Hash` podle `ply+depth` (`game_analyzer.py:35` tabulka `d12→64, d14 64(<40)/128(<80)/256`), (2) `Clear Hash` po každé hře (`engine_client.py:clear_hash()`), ne po tahu (uvnitř hry hit rate pomáhá). Měřeno `hashfull<10%` target, `lN4K3mtt` 6.2→4.6s (-26%). Reference: GT-106.",
+    "count": 1
   },
   {
     "id": "P98",
-    "title": "PS 5.1: stderr pod EAP=Stop = NativeCommandError; exit code bez kontextu neni diagnostika",
-    "text": "Nativni prikaz pres `2>&1` pod `$ErrorActionPreference='Stop'` hodi NativeCommandError NA RADKU VOLANI (exit=1 misto skutecneho exit=7), a to i pri exit=0 se jen stderr varovanim. Runner: docasny Continue v try/finally, $LASTEXITCODE zachytit okamzite do lokalni promenne, throw nese label + exit code + tail per-run logu s env hlavickou (PS verze, python path, cwd, git rev). Preflight Get-Command python.",
+    "title": "PS 5.1: stderr pod EAP=Stop = NativeCommandError; `exit=N` bez kontextu není diagnostika",
+    "text": "Nativní příkaz volaný přes `2>&1` pod `$ErrorActionPreference='Stop'` hodí `NativeCommandError` **na řádku volání** (script skončí `exit=1` místo skutečného `exit=7`), a to i když proces skončil `exit=0` a na stderr šlo jen varování. Runner tedy: (1) dočasný `Continue` uvnitř `try/finally`, `$LASTEXITCODE` zachytit **ihned** do lokální proměnné, (2) `throw`/`fail` musí nést label + exit code + tail per-run logu, (3) per-run log s env hlavičkou (čas, `$PSVersionTable.PSVersion`, `(Get-Command python).Source`, cwd, `git rev-parse --short HEAD`), (4) preflight `Get-Command python` = fail-fast. `exit=N` bez tracebacku v logu není diagnostika — je to 30minutová mtime forenznika. Reference: GT-107.",
     "weight": "high",
-    "tags": ["powershell", "exit-code", "observability", "subprocess"]
+    "tags": [
+      "powershell",
+      "exit-code",
+      "observability",
+      "subprocess"
+    ],
+    "count": 1
   },
   {
     "id": "P99",
-    "title": "ASCII-only .ps1 vynucit testem, ne komentarem",
-    "text": "PS 5.1 cte ps1 bez BOM v ANSI codepage (cp1250); kazdy ne-ASCII bajt je potencialni phantom quote (0x94 = prava uvozovka). Pravidlo popisane v hlavicce souboru bez spustitelne kontroly se porusi (treti regrese). Guard: all(b < 128 for b in p.read_bytes()) nad scripts/**/*.ps1 v uz existujicim check kroku.",
+    "title": "ASCII-only `.ps1` vynucit testem, ne komentářem",
+    "text": "PS 5.1 čte `.ps1` bez BOM v aktuální ANSI codepage (cp1250); každý ne-ASCII bajt je potenciální phantom quote (`0x94` = `\"`). Pravidlo popsané v hlavičce souboru, ale nevynucené spustitelnou kontrolou, se poruší — třetí regrese naměřená na revizích (`8151a0f` 0 → `988edfc` 9 → `75fb74c` 0 → `7de30d6` 3 ne-ASCII bajtů). Guard: `all(b < 128 for b in p.read_bytes())` nad `scripts/**/*.ps1` připojený k už běžícímu check kroku (žádný nový krok). Komplement P69 (názvy souborů) a P28 (emoji ve výstupu) — zde jde o **obsah** `.ps1`. Reference: GT-108.",
     "weight": "medium",
-    "tags": ["encoding", "ascii", "powershell", "invariant"]
+    "tags": [
+      "encoding",
+      "ascii",
+      "powershell",
+      "invariant"
+    ],
+    "count": 1
   },
   {
     "id": "P100",
-    "title": "JScript/cscript: BOM, //B a rc=0 - kontrakt testu je SENTINEL na stdout, ne exit code",
-    "text": "JScript parser odmita UTF-8 BOM (zapis docasnych .js vzdy bez BOM); cscript //B potlaci WScript.Echo i zpravy o chybe; runtime error konci rc=0 (jen stderr), kompilacni chyba rc=1. Test musi cist SENTINEL pres WScript.StdOut.WriteLine (prefix + pocet) A rc soucasne, WScript.Quit(0|1) explicitne, ocekavane retezce ASCII-only.",
+    "title": "JScript/cscript: kontrakt testu je sentinel na stdout, ne exit code",
+    "text": "JScript parser odmítá UTF-8 BOM (dočasné `.js` zapisovat **vždy bez BOM**); `cscript //B` potlačí `WScript.Echo` i zprávy o chybě; runtime error končí `rc=0` (jen na stderr), kompilační chyba `rc=1`. Exit code sám o sobě není kontrakt úspěchu. Test musí číst **sentinel** přes `WScript.StdOut.WriteLine` (prefix + počet případů) **a zároveň** `rc` — oba signály povinně; `WScript.Quit(0|1)` explicitně; očekávané řetězce ASCII-only, aby mojibake codepage nemohl posunout výsledek. Komplement P98 (PS runner, jiná vrstva) a P99 (stejná encoding rodina, jiný konzument). Reference: GT-109.",
     "weight": "high",
-    "tags": ["test", "wsh", "jscript", "encoding", "exit-code", "sentinel"]
+    "tags": [
+      "test",
+      "wsh",
+      "jscript",
+      "encoding",
+      "exit-code",
+      "sentinel"
+    ],
+    "count": 1
   },
   {
     "id": "P101",
-    "title": "Parita jazykovych implementaci kanonu: generovana fixture + exec v realnem runtime",
-    "text": "Dve implementace stejneho kanonu (Python <-> JS) drzte pres generovanou fixture z jednoho zdroje pravdy (build ji vygeneruje z Python kanonu); parity test spoustejte v realnem cilovem runtime (cscript/JScript ES3, ne prohlizec); povinna mutacni negativni kontrola dokazujici, ze harness umi failnout. Bez spustitelneho runtime neni parity test.",
+    "title": "Parita jazykových implementací kanonu: generovaná fixture + exec v reálném runtime",
+    "text": "Dvě implementace stejného kanonu (Python ↔ JS) držet přes **generovanou fixture** z jednoho zdroje pravdy — build ji vygeneruje z Python kanonu, nikdy ručně. Parity test spouštět v **reálném cílovém runtime** (cscript/JScript ES3 = shodný engine jako konzumátor, ne prohlížeč). Povinná **mutační negativní kontrola** (úmyslná porušená varianta → test musí failnout) — jinak je test jen dekorace. Bez spustitelného runtime parity test neexistuje. Reference: GT-110.",
     "weight": "medium",
-    "tags": ["parity", "cross-language", "fixture", "testing"]
+    "tags": [
+      "parity",
+      "cross-language",
+      "fixture",
+      "testing"
+    ],
+    "count": 1
   },
   {
     "id": "P102",
-    "title": "Mutabilni externi data ve statickem dokumentu: pull-stamp + regenerace, ne nemenny prose",
-    "text": "Predpoved a jina externi data nesmi lezet v statickem dokumentu bez datumu pullu. Kazde tvrzeni nese pull-stamp; dokument bud pravidelne generujte (build) nebo doplnte zivym fetchem + fallback embedem; pred editaci povinna regenerace; contract test nesmi pustit stale retezec. Forecast ma tvrdy horizont (Open-Meteo 16 dnu).",
+    "title": "Mutabilní externí data ve statickém dokumentu: pull-stamp + regenerace, ne neměnný prose",
+    "text": "Předpověď a jiná externí data nesmí ležet ve statickém dokumentu bez data pullu. Každé tvrzení nese **pull-stamp**; dokument buď pravidelně generujte (build) nebo doplňte živým fetchem + fallback embedem; před editací povinná regenerace; contract test nesmí pustit stale řetězec. Forecast má tvrdý horizont (Open-Meteo 16 dní, 17. den → HTTP 400). Rodina P20 (externí data se mění) / P58 (stale data bez version klíče) — zde doména: předpověď v dokumentu. Reference: GT-111.",
     "weight": "high",
-    "tags": ["staleness", "forecast", "regeneration", "contract-test"]
+    "tags": [
+      "staleness",
+      "forecast",
+      "regeneration",
+      "contract-test"
+    ],
+    "count": 1
   },
   {
     "id": "P103",
-    "title": "Producent musí být idempotentní: invariant „nezměněný vstup ⇒ 0 zápisů\"",
-    "text": "Každý producent, který generuje zápisovou dávku (patch, migraci, sync), musí být idempotentní: pro vstup shodný s cílovým stavem vygeneruje 0 příkazů. Nestavěj cílový stav a neposílej ho celý — počítej diff proti aktuálnímu stavu. Invariant „beze změny vstupu = 0 operací\" je spustitelný test; bez něj vypadá 211 příkazů jako úspěch. Reference: GT-112.",
+    "title": "Idempotentní producent: nezměněný vstup ⇒ 0 zápisů",
+    "text": "Každý producent, který generuje zápisovou dávku (patch, migraci, sync), musí být idempotentní: pro vstup shodný s cílovým stavem vygeneruje **0 příkazů**. Nestavěj cílový stav a neposílej ho celý — počítej diff proti aktuálnímu stavu (`_current_field`). Invariant „beze změny vstupu = 0 operací\" je spustitelný test; bez něj vypadá 211 příkazů jako úspěch. Reference: GT-112.",
     "weight": "high",
-    "tags": ["idempotence", "diff", "patch", "invariant"]
+    "tags": [
+      "idempotence",
+      "diff",
+      "patch",
+      "invariant"
+    ],
+    "count": 1
   },
   {
     "id": "P104",
     "title": "Exportní/RPC kontrakt: jeden tvar odpovědi, jedna dispatch mapa",
     "text": "Každá exportní nebo RPC cesta musí mít deklarovaný tvar odpovědi na jednom místě. Dvě metody vracející tutéž informaci v jiném tvaru = dvě pravdy a konzument musí znát implementaci. Dispatch mapuj jednou mapou a tvar odpovědi validuj; záměrné rozdíly (detail vs. agregát) dokumentuj, ne implicitně předpokládej. Reference: GT-113.",
     "weight": "high",
-    "tags": ["contract", "rpc", "export", "dispatch"]
+    "tags": [
+      "contract",
+      "rpc",
+      "export",
+      "dispatch"
+    ],
+    "count": 1
   },
   {
     "id": "P105",
-    "title": "Persist boundary: reindexuj na hranici dávky, ne po každé operaci",
+    "title": "Persist boundary: reindexuj na hranici dávky",
     "text": "Zápis do indexu/DB nepatří do smyčky po jednotlivých operacích. Stanov hranici dávky (commit boundary) a reindexuj jednou; identitu entit drž persistentním ID, ne pořadím ani jménem, aby přežila reindex. Jinak 9 renamů = 9 reindexů a cena roste s počtem operací, ne s velikostí změny. Reference: GT-115.",
     "weight": "medium",
-    "tags": ["persistence", "index", "batch", "boundary"]
+    "tags": [
+      "persistence",
+      "index",
+      "batch",
+      "boundary"
+    ],
+    "count": 1
   },
   {
     "id": "P106",
     "title": "Identita entity je persistentní ID, ne jméno ani cesta",
     "text": "Jméno a hierarchická cesta jsou popisky, ne klíče. Párování, audit a dedup vždy přes persistentní identitu; jméno používej jen pro reporting. Duplicitní jména v různých kontejnerech a rename jinak rozbijí párování (audit 0/53 a 0/34 = „všechno špatně\", přestože data existují). Reference: GT-114.",
     "weight": "high",
-    "tags": ["identity", "persistent-id", "naming", "audit"]
+    "tags": [
+      "identity",
+      "persistent-id",
+      "naming",
+      "audit"
+    ],
+    "count": 1
   },
   {
     "id": "P107",
     "title": "Kontejner ≠ přímá geometrie: klasifikuj dřív, než měříš",
     "text": "Před geometrickými kontrolami klasifikuj entitu jako kontejner (group/component instance) nebo přímou mesh. Transformace kontejneru (rotace, bbox) není rotace/bbox geometrie uvnitř — měřit obojí na stejné úrovni vyrábí falešné BLOCK (28 BLOCK na validním modelu). Reference: GT-116.",
     "weight": "high",
-    "tags": ["geometry", "container", "classification", "gate"]
+    "tags": [
+      "geometry",
+      "container",
+      "classification",
+      "gate"
+    ],
+    "count": 1
   },
   {
     "id": "P108",
     "title": "Učení slovníku musí mít zpětnou vazbu do zápisu",
     "text": "Resolver, který čte slovník, musí výsledek resoluce vracet jako kandidáta k zápisu (jméno + původ + jistota). Jednosměrné čtení znamená, že se slovník nikdy nenaučí a stejné nerozpoznané jméno se řeší znovu. Měř úspěšnost resoluce (7/9 unresolved → 0) jako test, ne dojmem z výstupu. Reference: GT-117.",
     "weight": "medium",
-    "tags": ["vocabulary", "learning", "resolver", "feedback"]
+    "tags": [
+      "vocabulary",
+      "learning",
+      "resolver",
+      "feedback"
+    ],
+    "count": 1
   },
   {
     "id": "P109",
     "title": "Mapování role → system má jednoho vlastníka",
     "text": "Je-li hodnota (např. `system`) odvozena z role, smí ji definovat právě jedno místo. Dvě definice (`vocab.roles`, `registry.tag_map`) plus třetí implicitní dopočet v konzumentovi (`kind==\"reference\"` přepíše `system`) vytvoří konflikt, který záplata v konzumentovi jen skryje. Oprava = migrace slovníku na jednoho vlastníka, ne podmínka v gate. Reference: GT-118.",
     "weight": "high",
-    "tags": ["single-source-of-truth", "mapping", "vocabulary", "registry"]
+    "tags": [
+      "single-source-of-truth",
+      "mapping",
+      "vocabulary",
+      "registry"
+    ],
+    "count": 1
+  },
+  {
+    "id": "P-GCP-01",
+    "title": "Při 403 v GCP ověřit všech 5 autentizačních vrstev",
+    "text": "IAM role → Access Scopes (nejčastější příčina) → Metadata Server identity → Workspace vs Cloud scope mismatch → Service Account quota. Nejčastější selhání: vrstva 2 nebo 4. Reference: GT-GCP-001.",
+    "weight": "high",
+    "tags": [
+      "gcp",
+      "auth",
+      "403"
+    ],
+    "count": 1
+  },
+  {
+    "id": "P-GCP-02",
+    "title": "Crontab ≠ SSH",
+    "text": "Absolutní cesty ke všemu: Python interpret, systémové binárky, pracovní adresář. `sudo` jen s NOPASSWD v sudoers.d. GCP region explicitní, ne default. Reference: GT-GCP-002.",
+    "count": 1
+  },
+  {
+    "id": "P-GCP-03",
+    "title": "Serverless = Immutable",
+    "text": "Uložení souboru ≠ nasazení; oprava za běhu = nemožná. Každá změna = `gcloud deploy`. Reference: GT-GCP-003.",
+    "count": 1
+  },
+  {
+    "id": "P-GCP-04",
+    "title": "GCS je jediná trvalá paměť",
+    "text": "GCP Cloud Functions: `/tmp/` = RAM, po doběhu smaže vše. Start = download z GCS, konec = upload do GCS. Žádný trvalý stav v kontejneru. Reference: GT-GCP-004.",
+    "count": 1
+  },
+  {
+    "id": "P-GCP-05",
+    "title": "Hard Reset protokol",
+    "text": "Při zacyklení v chybách >30 minut: smazat poškozený soubor → vložit ověřený blok kódu → smazat data → začít z nuly. Reset není prohra, je optimalizace času. Reference: GT-GCP-005.",
+    "weight": "medium",
+    "tags": [
+      "gcp",
+      "recovery",
+      "cognitive"
+    ],
+    "count": 1
   }
 ]

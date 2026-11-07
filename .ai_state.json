@@ -2,25 +2,31 @@
   "session": {
     "id": "2026-08-31_ML_Ops_edukace_GLOSSARY_v2_hSNR",
     "started": "2026-08-28T14:00:00+02:00",
-    "updated": "2026-08-31T22:32:32+00:00",
+    "updated": "2026-11-04T12:00:00+00:00",
     "mode": "build",
-    "agent": "muse-spark-1.2",
+    "agent": "opencode",
     "branch": "main",
-    "head": "c01c675",
-    "head_message": "[ML_OPS] docs: RETRIEVAL_RESEARCH hSNR 3 lines + GLOSSARY v2 hSNR curated (21 termu)"
+    "head": "PENDING",
+    "head_message": "[DATA] P0 balík: freshness guard, abstention, 106 rules, re-extrakce"
   },
   "repo": {
     "name": "ML_Ops_edukace",
     "path": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\_github\\ML_Ops_edukace",
     "character": "experimental, vyukove & adopcni — agregace poznatku z ziveho studia a tvorby POC RAG/QER/RTF",
     "korpus": {
-      "gt_entries": 108,
+      "gt_entries": 121,
       "kb_docs": 121,
       "total_docs_with_MLOps": 135,
       "avg_tokens_gt": 134,
       "avg_tokens_kb_4000w": 415,
       "avg_tokens_kb_full": 2329,
-      "docs_subdir": "docs/ 13 MD (vs root 0 MD po ea464a9 mv) — kanon lowercase docs (git index Docs capital na Windows, case-insensitive)"
+      "docs_subdir": "docs/ 13 MD (vs root 0 MD po ea464a9 mv) — kanon lowercase docs (git index Docs capital na Windows, case-insensitive)",
+      "gt_rules": 106,
+      "gt_source_version": 24,
+      "gt_dataset_sha256": "d7d7522202eb3f66ae56846e6a7942f49fa80202d04e531ebad53680d1292a39",
+      "gt_rules_sha256": "0cff5b939776ec6601c08ac74f9ee51a31e80a432814d7558dd9715673fead97",
+      "gt_root_cause_documented": 95,
+      "gt_root_cause_not_documented": 26
     },
     "docs_subdir": {
       "path": "docs/",
@@ -83,6 +89,26 @@
       "baseline": "MRR 0.7857 Prec 0.5714 Recall 0.7143 Hits 6/7 — single rare vibecoding df4 score=sum staci",
       "P0": "MRR 0.4286 (-45%) Prec 0.3333 Recall 0.3333 Hits 3/7 — Seq sum rank1 AGENTS miss",
       "delta_time": "-151ms (-89.7%) 17ms vs 168ms, tokens 161 vs 176"
+    },
+    "p0_baseline": {
+      "file": "results/p0_baseline.json",
+      "measured": "2026-11-04",
+      "queries": 50,
+      "before": {
+        "entries": 121,
+        "rules": 36,
+        "mrr": 0.638,
+        "hits": 38,
+        "src": "git HEAD 68f6e67"
+      },
+      "after": {
+        "entries": 121,
+        "rules": 106,
+        "mrr": 0.6367,
+        "hits": 38
+      },
+      "dataset_sha256": "d7d7522202eb3f66ae56846e6a7942f49fa80202d04e531ebad53680d1292a39",
+      "note": "Historická čísla 0.6613/0.7067/0.84 z results/*.json jsou z jiných retrieverů a bez hashe — nesrovnávat."
     }
   },
   "artifacts_this_session": [

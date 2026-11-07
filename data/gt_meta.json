@@ -3,18 +3,19 @@
   "source": "MCP_GROUND_TRUTH_postmortem_agregovany_v2.md",
   "source_version": 24,
   "total_entries": 121,
-  "total_rules": 36,
+  "total_rules": 106,
   "servers_sampled": [
+    "cad2llm",
     "cnc-tools",
-    "linkedin-mcp-custom",
-    "mcp-jobs",
-    "lichess-analyzer",
-    "workspace",
     "gcp",
-    "kultura-db",
     "hostice-vodochody",
-    "cad2llm"
+    "kultura-db",
+    "lichess-analyzer",
+    "linkedin-mcp-custom",
+    "mcp-jobs"
   ],
   "created": "2026-08-26",
-  "updated": "2026-11-04"
+  "updated": "2026-11-04",
+  "entries_sha256": "d7d7522202eb3f66ae56846e6a7942f49fa80202d04e531ebad53680d1292a39",
+  "rules_sha256": "0cff5b939776ec6601c08ac74f9ee51a31e80a432814d7558dd9715673fead97"
 }

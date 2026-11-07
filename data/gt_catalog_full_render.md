@@ -366,8 +366,8 @@
 **Server:** mcp-jobs | **Status:** implemented
 
 **Symptom:** 6-layer encoding stack
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-041)_
+**Fix:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-041)_
 **Pravidlo:** P23
 **Tags:** encoding | encoding
 
@@ -375,8 +375,8 @@
 **Server:** mcp-jobs | **Status:** documented
 
 **Symptom:** Session compact — MCP workdir vs source code
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-042)_
+**Fix:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-042)_
 **Pravidlo:** P17
 **Tags:** session
 
@@ -447,7 +447,7 @@
 **Server:** lichess-analyzer | **Status:** fixed
 
 **Symptom:** 5 her = 24 min; 99.9 % času Stockfish (deterministický krok).
-**Root cause:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-050)_
 **Fix:** Cache-first: check `data/game_cache/{game_id}...json` (depth-gated) → hit = reuse, miss = analyze+store. Re-run 5 her = 0.1 s.
 **Pravidlo:** P35
 **Tags:** p35
@@ -465,8 +465,8 @@
 **Server:** lichess-analyzer | **Status:** documented
 
 **Symptom:** SNR evaluation framework
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-052)_
+**Fix:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-052)_
 **Pravidlo:** P38
 **Tags:** p38
 
@@ -474,8 +474,8 @@
 **Server:** lichess-analyzer | **Status:** fixed
 
 **Symptom:** DeepSeek Chat — cost ban policy
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-053)_
+**Fix:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-053)_
 **Pravidlo:** P37
 **Tags:** p37
 
@@ -483,8 +483,8 @@
 **Server:** lichess-analyzer | **Status:** documented
 
 **Symptom:** Multi-provider API key management
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-054)_
+**Fix:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-054)_
 **Pravidlo:** P39
 **Tags:** p39
 
@@ -492,7 +492,7 @@
 **Server:** lichess-analyzer | **Status:** fixed
 
 **Symptom:** `LLM_MAX_TOKENS` tiše fallbackuje na 2000 bez varování o nedostatečnosti.
-**Root cause:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-055)_
 **Fix:** Startup warning při hodnotách pod doporučeným minimem.
 **Pravidlo:** P40
 **Tags:** p40
@@ -501,8 +501,8 @@
 **Server:** lichess-analyzer | **Status:** implemented
 
 **Symptom:** Nová hra → LLM layer znovu na VŠECHNY hry; lineární růst prompt size a cost.
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-056)_
+**Fix:** Dvouúrovňová cache — L1 Stockfish (`{game_id}_{color}_d{depth}.json`) + L2 per-game LLM analýza (`{game_id}_{color}_llm.json`); agregace používá L2 summaries; nová hra = 1 L2 call + 1 agregacní call. Implementace `src/services/game_llm_cache.py`.
 **Pravidlo:** P41
 **Tags:** p41 | cache | llm
 
@@ -519,8 +519,8 @@
 **Server:** lichess-analyzer | **Status:** implemented
 
 **Symptom:** Pipeline mode — monolit vs inkrementální cache
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-058)_
+**Fix:** `run_coaching_pipeline(mode="auto")` — auto-detekce + explicitní override `PIPELINE_MODE` env var.
 **Pravidlo:** P43
 **Tags:** p43 | cache
 
@@ -528,8 +528,8 @@
 **Server:** lichess-analyzer | **Status:** fixed
 
 **Symptom:** _build_game_prompt wrong key names → low SNR
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-059)_
+**Fix:** Správné klíče; `_compute_accuracy()`/`_compute_phase_stats()` v `auto_annotate()`; repair skript pro 18 stale cache souborů; 13 contract testů.
 **Pravidlo:** P44
 **Tags:** p44
 
@@ -537,8 +537,8 @@
 **Server:** lichess-analyzer | **Status:** implemented
 
 **Symptom:** Iterační optimalizace — JSON validation, CI/CD, unit testy služeb, API key check
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-060)_
+**Fix:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-060)_
 **Pravidlo:** P45
 **Tags:** p45 | json | test
 
@@ -555,8 +555,8 @@
 **Server:** lichess-analyzer | **Status:** documented
 
 **Symptom:** Cross-LLM audit workflow validation (Methodology)
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-062)_
+**Fix:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-062)_
 **Pravidlo:** P47
 **Tags:** p47 | llm
 
@@ -564,8 +564,8 @@
 **Server:** lichess-analyzer | **Status:** documented
 
 **Symptom:** (1) Confidence hardcoded (0.6/0.5/0.8/0.7/0.7) nezávisle na N a síle evidence; (2) Pattern G `frequency` = zaokrouhlená blunder rate místo počtu postžených her → semantický mismatch filtru `frequency >= min_occurrences` (pattern projde/neprojde z jiného důvodu než zamýšleno).
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-063)_
+**Fix:** Confidence = f(N, evidence_strength); minimální N=5 pro confidence >0.5; Pattern G frequency = len(game_ids).
 **Pravidlo:** P48
 **Tags:** p48 | pattern
 
@@ -573,8 +573,8 @@
 **Server:** lichess-analyzer | **Status:** documented
 
 **Symptom:** `diagnostician.py:52` používá absolutní počet blunderů v middlegame → bias vůči dlouhým hram.
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-064)_
+**Fix:** Normalizace `blunder_rate = blunder_count / moves_in_phase`; threshold na rate.
 **Pravidlo:** P48
 **Tags:** analytics
 
@@ -582,8 +582,8 @@
 **Server:** lichess-analyzer | **Status:** mitigated
 
 **Symptom:** `game_id`/`username` přímo v cestách bez sanitizace (`game_analyzer.py:14-15`, `lichess_client.py:47-48,74-77`) — `game_id="../../sensitive"` může zapisovat/číst mimo cache adresář.
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-065)_
+**Fix:** `re.sub(r'[^a-zA-Z0-9_-]', '_', value)` na všech user-supplied identifikátorech před konstrukcí cesty.
 **Pravidlo:** P49
 **Tags:** p49 | path | security
 
@@ -591,7 +591,7 @@
 **Server:** lichess-analyzer | **Status:** fixed
 
 **Symptom:** `fetch_games(max_games=999)` tiše vrátí max 50 her; stejný clamp v `match_patterns` a `diagnose_player` — žádný warning, cache/index nekonzistence (načteno 50, index hlásí 63).
-**Root cause:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-066)_
 **Fix:** Clamp na 999 + odstranění tichých clampů + `get_pending_analysis()` kontrola rozdílu index vs cache.
 **Pravidlo:** P50
 **Tags:** p50
@@ -600,7 +600,7 @@
 **Server:** lichess-analyzer | **Status:** fixed
 
 **Symptom:** Tool volaný na N hrách z toho M neanalyzováno → nekompletní výsledky bez upozornění (falešný pocit kompletnosti).
-**Root cause:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-067)_
 **Fix:** `get_pending_analysis()` (index vs cache diff) + warning + batch tool `analyze_pending`.
 **Pravidlo:** P51
 **Tags:** p51
@@ -609,7 +609,7 @@
 **Server:** lichess-analyzer | **Status:** documented
 
 **Symptom:** `export_by_player(..., before=...)` → TypeError. Berserk 0.14 parametr neexponuje (přidán 0.15+); Lichess API ho podporuje, knihovna ne.
-**Root cause:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-068)_
 **Fix:** Reverze kódu; upgrade až bude berserk 0.15+ dostupný.
 **Pravidlo:** P52
 **Tags:** p52
@@ -619,7 +619,7 @@
 
 **Symptom:** Nový tool registrován v Python/FastMCP, ale neviditelný v opencode client tool listu.
 **Root cause:** Host drží tool-list snapshot z prvního initialize handshaku; nerevaliduje při reconnectu/session refresh. Tool existuje v procesu (`app._tool_manager.list_tools()`), volatelný přímo, ale ne přes UI.
-**Fix:** see source
+**Fix:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-069)_
 **Pravidlo:** P53
 **Tags:** p53 | cache
 
@@ -627,8 +627,8 @@
 **Server:** lichess-analyzer | **Status:** documented
 
 **Symptom:** Pattern G (Color as modulator) — new pattern detection
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-070)_
+**Fix:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-070)_
 **Pravidlo:** P54
 **Tags:** p54 | pattern
 
@@ -636,8 +636,8 @@
 **Server:** lichess-analyzer | **Status:** fixed
 
 **Symptom:** 30/101 BFS (30 %) má 0 engine_lines; postihuje i ground truth hry. `analyze_position(multipv=3)` vrací `[]`.
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** (1) `engine_client.py:86` — `board.san(m)` validuje všechny PV tahy proti ROOT pozici, ale PV jsou sekvenční: po prvním tahu se board mění → třetí tah `g5e6` kontrolováno proti rootu kde g5 je prázdné → AssertionError; (2) `game_analyzer.py:329-333` — `try/except Exception: pass` error kompletně skryje; (3) AssertionError propaguje přes engine lock a korumpuje stav pro následující volání. PV: f3g5(Nf3-g5), g6e5(Nxg6xe5), g5e6(Ng5xe6) Root: f3->g5 OK g6->e5 OK g5->e6 FAILS (g5 empty!) Fix: board.copy() -> push postupne -> OK
+**Fix:** Sekvenční konverze na `board.copy()` + try/except; silent pass → `_logger.warning()`; `engine.analysis(board, Limit(depth=depth))`.
 **Pravidlo:** P55
 **Tags:** p55 | engine
 
@@ -646,7 +646,7 @@
 
 **Symptom:** kNAMNYUF ply 63: 607 cp (d12) vs 773 cp (d14) = 171cp rozdíl. ACPL z různých depth runů nejsou srovnatelné (RUN_003 vs RUN_004).
 **Root cause:** Depth impactuje eval precision (~3× rychlejší d12 = méně přesný); K0 variance nekvantifikována ani reportována.
-**Fix:** see source
+**Fix:** Každý run reportuje K0 metriky (depth, engine_version, Threads, Hash, nps); INC ground truth re-fetch na jednotné depth; logovat depth mismatch při cache load.
 **Pravidlo:** P57
 **Tags:** p57
 
@@ -654,7 +654,7 @@
 **Server:** lichess-analyzer | **Status:** fixed
 
 **Symptom:** Volání bez `Limit(depth=depth)` — Stockfish sahá do libovolné hloubky na nestabilních pozicích (timeout risk, plýtvání compute).
-**Root cause:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-073)_
 **Fix:** `engine.analysis(board, chess.engine.Limit(depth=depth))`.
 **Pravidlo:** P56
 **Tags:** engine | depth
@@ -664,7 +664,7 @@
 
 **Symptom:** Po opravě kódu vrací `use_cache=True` stale BFS s 0 engine_lines; uživatel musí cache ručně mazat.
 **Root cause:** Cache JSON nemá `detector_version`/`code_version` klíč → nelze detekovat starší generaci kódu.
-**Fix:** see source
+**Fix:** Při cache load porovnat detector_version; mismatch → re-analyze.
 **Pravidlo:** P58
 **Tags:** p58 | cache
 
@@ -672,8 +672,8 @@
 **Server:** lichess-analyzer | **Status:** fixed
 
 **Symptom:** Stockfish PV multi-move SAN conversion — domain knowledge gap
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-075)_
+**Fix:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-075)_
 **Pravidlo:** P59
 **Tags:** p59
 
@@ -682,7 +682,7 @@
 
 **Symptom:** AssertionError uvnitř lock bloku korumpuje engine stav → selhávají všechny následující analýzy v runu.
 **Root cause:** `_acquire_analysis_lock`/`_release` coupling mezi nezávislými calls; `finally` release provede i po AssertionError, ale engine může zůstat nekonzistentní.
-**Fix:** see source
+**Fix:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-076)_
 **Pravidlo:** P60
 **Tags:** p60 | engine
 
@@ -690,8 +690,8 @@
 **Server:** lichess-analyzer | **Status:** pending
 
 **Symptom:** BFS s méně než multipv_target engine_lines projdou bez upozornění — nelze identifikovat částečné výpadky.
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-077)_
+**Fix:** `truncated` flag v BlunderFactSheet (`len(engine_lines) < multipv_target`) + warning per BFS.
 **Pravidlo:** P61
 **Tags:** p61
 
@@ -710,8 +710,8 @@
 **Symptom:** Data-correctness batch 1+2 — 6 merged bugů LLM input pipeline
 **Root cause:** LLM prompt čten přes neexistující atributy/getattr defaulty bez signalizace — data bez markeru kvality = falešná autorita.
 **Fix:** Reálná pole modelu + color-aware win_rate; `_resolve_colors()` z PGN headerů; KB_ROOT 4× ".." + import-time check + timestamp; klíč `{game_id}_{color}_llm.json`; `_run_engine_call(fn, timeout_s, engine=None)` cílí volající referenci; `evaluation_errors` čítač + prompt marker „Eval errors: N"; guard `and m.fen`.
-**Pravidlo:** P63–P68
-**Tags:** p63–p68 | llm
+**Pravidlo:** P63
+**Tags:** llm | p63 | p68
 
 #### GT-080 (workspace-wide): encoding
 **Server:** lichess-analyzer | **Status:** fixed
@@ -726,8 +726,8 @@
 **Server:** lichess-analyzer | **Status:** documented
 
 **Symptom:** Architektonický původ ruffu — CI gate, ne pre-commit hook
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-081)_
+**Fix:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-081)_
 **Pravidlo:** P62
 **Tags:** p62
 
@@ -735,8 +735,8 @@
 **Server:** lichess-analyzer | **Status:** documented
 
 **Symptom:** Detail fetch sekvenčně uvnitř filter fáze → ~30 s jen na fetch při 46 matched ads; bottleneck eskaluje lineárně s počtem ads.
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-083)_
+**Fix:** (1) Collect unikátních URL přes všechny query (set dedup), (2) parallel fetch `ThreadPoolExecutor(max_workers=4)` + per-portal throttle 0.5s, neúspěch = `_FAILED` sentinel (GT-085), (3) filter nad naplněnou cache.
 **Pravidlo:** P70
 **Tags:** p70
 
@@ -744,8 +744,8 @@
 **Server:** lichess-analyzer | **Status:** documented
 
 **Symptom:** Selhaný detail fetch zapsán jako None — stejná hodnota jako „nezkoušeno" → opětovné fetch pokusy pro permanentně selhané URL.
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-085)_
+**Fix:** Sentinel `_FAILED = object()`; zápis `detail if detail else _FAILED`; čtení `if cached is not _FAILED and cached`.
 **Pravidlo:** P71
 **Tags:** p71 | cache | pattern
 
@@ -753,7 +753,7 @@
 **Server:** lichess-analyzer | **Status:** fixed
 
 **Symptom:** CI failoval `ruff check` s 70 chybami bez jakékoli změny kódu.
-**Root cause:** see source
+**Root cause:** `ruff>=0.6` bez horní hranice → CI nainstaloval 0.16.3; projekt neměl žádný `[tool.ruff]` config → aktivní default pravidla driftující s verzí (nová UP045/BLE001/DTZ005/RUF012/PIE810/FURB136).
 **Fix:** Explicitní `[tool.ruff.lint]` select (stabilní E4/E7/E9/F + moderní UP/RUF/PIE/FURB/DTZ) + ignore BLE001 zdokumentovaný; E501 záměrně mimo (design trade-off); kódové fixy (RUF012 ClassVar, DTZ datetime.now(UTC), PIE810 tuple, RUF003 en-dash).
 **Pravidlo:** P72
 **Tags:** p72
@@ -762,8 +762,8 @@
 **Server:** lichess-analyzer | **Status:** fixed
 
 **Symptom:** `search_from_config` přes MCP → -32001; CLI běh fungoval (34.5 s). Server „neodpovídá".
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** (1) Sync pipeline v toolu = 34–45s reálné latence > client-side JSON-RPC/stdio timeout; (2) opencode `timeout: 180000` platí JEN pro ListTools, NE pro tool calls — prokázáno probe přes správný stdio_client (33.9 s OK).
+**Fix:** Async submit+poll — `ThreadPoolExecutor(max_workers=2)` + `_JOB_STORE`; search tooly vrátí okamžitě `{job_id, status}` (~0.02 s); nový tool `search_status(job_id)` → `{status, elapsed_s, result}`; fast-path validace zůstává sync.
 **Pravidlo:** P13
 **Tags:** p13 | timeout
 
@@ -772,7 +772,7 @@
 
 **Symptom:** Po `pytest tests/test_db.py` s nastavenou DATABASE_URL zmizela data z PostgreSQL (ads 70→3, pipeline_runs 5→2) — historické ETL runs nevratně.
 **Root cause:** Fixture `conn()` dělá `TRUNCATE ... RESTART IDENTITY CASCADE`; skip guard kontroluje jen existenci env var; testy se připojují na stejnou DB jako dev/produkce. Produkční layer je INSERT-only → destrukce výhradně z test kódu.
-**Fix:** see source
+**Fix:** Separátní test DB nebo transakce s rollbackem; TRUNCATE jen na data vytvořená testem samým.
 **Pravidlo:** P73
 **Tags:** p73 | test
 
@@ -780,8 +780,8 @@
 **Server:** lichess-analyzer | **Status:** fixed
 
 **Symptom:** I po submit+poll (GT-087) timeouť i rychlé tooly (`search_status`, `health_check`) při plném runu; ad-hoc searchy a CLI fungovaly.
-**Root cause:** see source
-**Fix:** see source
+**Root cause:** Žádný logging config → root logger aktivoval `logging.lastResort` (implicitní StreamHandler stderr); full run generuje stovky warningů → naplní sdílenou STDIO pipe (4–64 KB) → event loop freeze → i poll tooly timeoutují. Submit+poll NECHÁNÍ před tímto deadlockem.
+**Fix:** `logging.basicConfig(filename=data/mcp-jobs.log, level=INFO, encoding="utf-8", force=True)` — FileHandler only; startup stderr printy max 1 řádek.
 **Pravidlo:** P25
 **Tags:** p25 | timeout
 
@@ -817,7 +817,7 @@
 
 **Symptom:** Test projde izolovaně, failuje v plné sadě (187 testů) — `_query_store` obsahuje 2 záznamy místo 1.
 **Root cause:** Modulový globální dict sdílený testy bez per-test resetu; collection order určuje výsledek.
-**Fix:** see source
+**Fix:** Reset v fixture (teardown); plná izolace globálního stavu odložena (pre-existing).
 **Pravidlo:** P73
 **Tags:** p73 | test
 
@@ -861,7 +861,7 @@
 **Server:** lichess-analyzer | **Status:** implemented
 
 **Symptom:** Po 5 krocích refactoru (filters, metrics, package split, bulk status) chybělo testování integrity modulů; contract testy byly v artifactu v sekci „Later/backlog" — bez explicitního dotazu by zůstaly neimplementovány.
-**Root cause:** see source
+**Root cause:** _(nedokumentovano v kanonu; viz MCP_GROUND_TRUTH_postmortem_agregovany_v2.md#GT-098)_
 **Fix:** `tests/test_dashboard_contract.py` — 9 testů: purity (metrics/styling nesmí importovat streamlit), interface (signatury), layers (směry importů).
 **Pravidlo:** P83
 **Tags:** p83 | test
@@ -943,7 +943,7 @@
 
 **Symptom:** Opakované `403 Insufficient Permission` / `403 Scopes Error` / SA storage quota, přestože kód má správné SCOPES a složka sdílena. Debug po jedné vrstvě = nikdy celek.
 **Root cause:** Autentizace je 5vrstvá, interakce vrstev není popsána v jednom dokumentu: (1) IAM role, (2) Access Scopes (výchozí=uzamčeno), (3) Metadata Server (tokeny), (4) Workspace vs Cloud (`auth/drive` ≠ `cloud-platform`), (5) Service Account quota (SA na osobním účtu = 0 bajtů).
-**Fix:** see source
+**Fix:** (1) `gcloud iam roles describe`, (2) VM → Edit → Access Scopes → full access, (3) `curl -H "Metadata-Flavor: Google"`, (4) Workspace: `Credentials.from_service_account_file()`, ne `google.auth.default()`, (5) osobní účty: bez SA (alternativa Telegram Bot API).
 **Pravidlo:** P-GCP-01
 **Tags:** p-gcp-01 | gcp
 
@@ -979,7 +979,7 @@
 
 **Symptom:** Ztráta přehledu o stavu kódu; kupí se chyby z nepozornosti; pocit bezmoci nad systémem.
 **Root cause:** Pracovní paměť má limit — po ~2 h inkrementálních změn bez kontextového resetu je kognitivní zátěž nefaktorovatelná; debug session → kaskáda drobných změn → ztráta orientace.
-**Fix:** see source
+**Fix:** (1) Smazat poškozený soubor, (2) vložit 100% ověřený blok, (3) smazat data v Bucketu, (4) začít z bodu nula.
 **Pravidlo:** P-GCP-05
 **Tags:** p-gcp-05
 
@@ -1090,4 +1090,3 @@
 **Fix:** Gate už `system` nepřepisuje implicitně; po zápisu 1 operace je patch 0. Konflikt ve slovníku zůstává (dvě definice), proto mitigated — jedna pravda vyžaduje migraci slovníku, ne záplatu v gate.
 **Pravidlo:** P109
 **Tags:** p109 | single-source-of-truth | vocabulary | registry
-

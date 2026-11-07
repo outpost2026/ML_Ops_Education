@@ -3,6 +3,8 @@
 **Datum:** 2026-08-26 | **Autor:** outpost2026
 **Status:** Aktivní vývoj | **Původ:** GT postmortem formalizace → organický růst
 
+<!-- gt-stats: entries=121 rules=106 source_version=24 -->
+
 ---
 
 ## Kontext
@@ -22,7 +24,7 @@ ML_Ops_edukace/
 ├── data/                       # Datové soubory
 │   ├── gt_full.jsonl           # 121 GT entries (hlavní dataset)
 │   ├── gt_schema.json          # JSON Schema pro validaci
-│   ├── gt_rules.json           # 36 P-rules
+│   ├── gt_rules.json           # 106 P-rules (P1-P109 + P-GCP-01..05, title+text)
 │   ├── gt_meta.json            # Metadata
 │   ├── test_queries.json       # 25 test queries (CZ+EN)
 │   ├── gt_sample.jsonl         # 22-entry sample (historický)
@@ -31,7 +33,8 @@ ML_Ops_edukace/
 │   ├── extract_v2_improved.py  # Vylepšený extractor (108 entries)
 │   ├── benchmark_full.py       # Plný benchmark
 │   ├── test_all.py             # Test runner
-│   ├── render_md.py            # JSONL → markdown
+│   ├── render_full.py          # JSONL → gt_catalog_full_render.md
+│   ├── render_md.py            # (historický) sample → markdown
 │   ├── ensemble_retrieval.py   # BM25+Seq RRF (VÍTĚZ)
 │   ├── svd_expansion_retrieval.py  # SVD + query expansion + weighted RRF
 │   ├── mmr_retrieval.py        # MMR (diverzita)
@@ -53,6 +56,7 @@ ML_Ops_edukace/
 │   ├── d1_word2vec_benchmark.json    # Word2Vec (selhalo)
 │   ├── glove_benchmark.json    # GloVe (selhalo)
 │   ├── enrichment_benchmark.json     # Metadata enrichment
+│   ├── p0_baseline.json       # P0 balík: before/after s SHA-256 datasetu
 │   ├── retrieval_comparison.json
 │   └── compression_comparison.json
 ├── retrieve.py                 # CLI retrieval nástroj
@@ -76,11 +80,12 @@ ML_Ops_edukace/
 | Nález | Hodnota |
 |-------|---------|
 | JSONL komprese vs v2 markdown | -49.7% bytes, -49.1% tokens |
-| JSONL MRR vs v2 (fuzzy) | +5.4% (0.661 vs 0.627) |
-| JSONL Precision@3 vs v2 | -3.3% (0.580 vs 0.600) |
-| Retrieval metrik: SequenceMatcher | Baseline (0.627 MRR) |
-| Retrieval metrik: BM25+Seq RRF | **0.7067 MRR** (vítěz) |
+| Dataset (aktuální) | 121 entries, 106 pravidel, SHA-256 `d7d75222…2a39` |
+| Retrieval 121 entries, 50 dotazů | **MRR 0.6367**, Hits@5 38/50, Prec@3 0.5900, Recall@5 0.6233 |
+| P0 balík (freshness + abstention + rules + re-extrakce) | MRR −0,2 %, hits ±0, pravidel 36 → **106** |
 | CLI nástroj | `python -X utf8 retrieve.py "dotaz"` |
+
+> Historické hodnoty z 26. 8. (0.6613 / 0.7067 / 0.84) pocházejí z jiných retrieverů a jiného datasetu a **nemají hash datasetu** → nejsou reprodukovatelné, nesrovnávat. Aktuální čísla viz `results/p0_baseline.json`.
 
 ---
 
@@ -125,4 +130,4 @@ python -X utf8 scripts/test_all.py
 
 ---
 
-*Vytvořeno: 2026-08-26 | Poslední aktualizace: 2026-08-26*
+*Vytvořeno: 2026-08-26 | Poslední aktualizace: 2026-11-04*

@@ -1,0 +1,33 @@
+{
+  "measured": "2026-11-07",
+  "queries": "C:\\Users\\PC\\Documents\\Repozitar_Dev\\_github\\ML_Ops_edukace\\data\\test_queries.json",
+  "query_count": 50,
+  "engine": {
+    "before": "git 68f6e67 (bm25 k1=1.5 b=0.75, rrf k=60, no abstention)",
+    "after": "P0 bundle (freshness guard, abstention, rules catalog, re-extraction)"
+  },
+  "before": {
+    "entries": 121,
+    "rules": 36,
+    "dataset_sha256": "3cfe32574ef1133a024dd055ef1fcb7e9f400238468c3935add989eeeefc9589",
+    "n": 50,
+    "hits": 38,
+    "mrr": 0.638,
+    "prec3": 0.6033,
+    "recall5": 0.6333,
+    "abstained": 2,
+    "latency_ms_avg": 17.5
+  },
+  "after": {
+    "entries": 121,
+    "rules": 106,
+    "dataset_sha256": "d7d7522202eb3f66ae56846e6a7942f49fa80202d04e531ebad53680d1292a39",
+    "n": 50,
+    "hits": 38,
+    "mrr": 0.6367,
+    "prec3": 0.59,
+    "recall5": 0.6233,
+    "abstained": 2,
+    "latency_ms_avg": 12.73
+  }
+}

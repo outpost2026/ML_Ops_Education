@@ -1,0 +1,4 @@
+# Data artifacts are hashed (gt_meta.json: entries_sha256 / rules_sha256) and are
+# mirrored from mcp-retrieval. Pin LF so a checkout cannot change the hashes.
+*.jsonl text eol=lf
+*.json  text eol=lf
