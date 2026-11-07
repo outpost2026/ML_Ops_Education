@@ -2,12 +2,12 @@
   "session": {
     "id": "2026-08-31_ML_Ops_edukace_GLOSSARY_v2_hSNR",
     "started": "2026-08-28T14:00:00+02:00",
-    "updated": "2026-11-04T12:00:00+00:00",
+    "updated": "2026-11-07T07:30:00+00:00",
     "mode": "build",
     "agent": "opencode",
     "branch": "main",
-    "head": "PENDING",
-    "head_message": "[DATA] P0 balík: freshness guard, abstention, 106 rules, re-extrakce"
+    "head": "b14e84a",
+    "head_message": "[DATA] update: sync zrcadel P0 balik - 106 rules, re-extrakce 4 root cause + 18 fixu, render, p0_baseline s hashem"
   },
   "repo": {
     "name": "ML_Ops_edukace",
